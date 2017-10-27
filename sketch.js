@@ -21,7 +21,7 @@ function setup() {
         start: 0,
         stop: 0
     }
-    items.push(new Weapon("melee", "brown", 100, 5, 10, 90, 60));
+    items.push(new Weapon("melee", "brown", 100, 10, 10, 90, 60));
 }
 
 // DRAW FUNCTION - Loops @ 60FPS by default

@@ -2,18 +2,20 @@
 class Weapon {
     constructor(type, color, size, speed, damage, range, attackCd) {
         this.type = type;
+        this.color = color;
         this.size = size;
         this.speed = speed;
         this.damage = damage;
         this.range = range;
-        this.color = color;
+        this.atkCd = attackCd;
+        this.actualCd = attackCd;
     }
 }
 
 //attacking
 function keyPressed() {
     if (keyCode == 38) {
-        if (items[activeWeapon].atkCd == 0) {
+        if (items[activeWeapon].actualCd == 0) {
             isAttacking = true;
             if (items[activeWeapon].type == "melee") {
                 attackScope.start = 270 - (items[activeWeapon].range / 2);
@@ -22,7 +24,7 @@ function keyPressed() {
         }
     }
     if (keyCode == 40) {
-        if (items[activeWeapon].atkCd == 0) {
+        if (items[activeWeapon].actualCd == 0) {
             isAttacking = true;
             if (items[activeWeapon].type == "melee") {
                 attackScope.start = 90 - (items[activeWeapon].range / 2);
@@ -31,7 +33,7 @@ function keyPressed() {
         }
     }
     if (keyCode == 37) {
-        if (items[activeWeapon].atkCd == 0) {
+        if (items[activeWeapon].actualCd == 0) {
             isAttacking = true;
             if (items[activeWeapon].type == "melee") {
                 attackScope.start = 180 - (items[activeWeapon].range / 2);
@@ -40,7 +42,7 @@ function keyPressed() {
         }
     }
     if (keyCode == 39) {
-        if (items[activeWeapon].atkCd == 0) {
+        if (items[activeWeapon].actualCd == 0) {
             isAttacking = true;
             if (items[activeWeapon].type == "melee") {
                 attackScope.start = 360 - (items[activeWeapon].range / 2);
@@ -52,13 +54,15 @@ function keyPressed() {
 
 function attack() {
     if (isAttacking) {
-        items[activeWeapon].atkCd = 0;
+        items[activeWeapon].actualCd = items[activeWeapon].atkCd;
         if (items[activeWeapon].type == "melee") {
             attackScope.start += items[activeWeapon].speed;
             meleeAttack();
         }
     } else {
-        items[activeWeapon].atkCd--;
+        if (items[activeWeapon].actualCd > 0) {
+            items[activeWeapon].actualCd--;
+        }
     }
 }
 
