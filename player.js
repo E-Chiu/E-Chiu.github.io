@@ -1,3 +1,75 @@
+//player values
+class Player {
+    constructor() {
+        this.pos = createVector(20, 20);
+        this.size = 60;
+        this.speed = 2;
+    }
+
+    //attacking
+    attack() {
+        if (isAttacking) {
+            items[activeWeapon].actualCd = items[activeWeapon].atkCd;
+            if (items[activeWeapon].type == "melee") {
+                attackScope.start += items[activeWeapon].speed;
+                player.meleeAttack();
+            }
+        } else {
+            if (items[activeWeapon].actualCd > 0) {
+                items[activeWeapon].actualCd--;
+            }
+        }
+    }
+
+    meleeAttack() {
+        let length = items[activeWeapon].size;
+        let theta = attackScope.start;
+        let opposite = sin(theta) * length;
+        let adjacent = cos(theta) * length;
+
+        stroke(items[activeWeapon].color);
+        strokeWeight(10);
+        line(player.pos.x, player.pos.y, player.pos.x + adjacent, player.pos.y + opposite);
+        if (attackScope.start >= attackScope.end) {
+            isAttacking = false;
+        }
+    }
+
+    //drawing and moving
+    draw() {
+        //moving
+        fill("grey");
+        strokeWeight(0);
+        ellipse(player.pos.x, player.pos.y, player.size);
+        if (keyIsDown(87)) {
+            player.pos.y -= player.speed;
+        }
+        if (keyIsDown(83)) {
+            player.pos.y += player.speed;
+        }
+        if (keyIsDown(65)) {
+            player.pos.x -= player.speed;
+        }
+        if (keyIsDown(68)) {
+            player.pos.x += player.speed;
+        }
+
+        if (player.pos.x <= 32.5) {
+            player.pos.x = 32.5;
+        }
+        if (player.pos.x >= 967.5) {
+            player.pos.x = 967.5;
+        }
+        if (player.pos.y <= 32.5) {
+            player.pos.y = 32.5;
+        }
+        if (player.pos.y >= 679.5) {
+            player.pos.y = 679.5;
+        }
+    }
+
+}
+
 //equipping a new weapon
 class Weapon {
     constructor(type, color, size, speed, damage, range, attackCd) {
@@ -49,66 +121,5 @@ function keyPressed() {
                 attackScope.end = 360 + (items[activeWeapon].range / 2);
             }
         }
-    }
-}
-
-function attack() {
-    if (isAttacking) {
-        items[activeWeapon].actualCd = items[activeWeapon].atkCd;
-        if (items[activeWeapon].type == "melee") {
-            attackScope.start += items[activeWeapon].speed;
-            meleeAttack();
-        }
-    } else {
-        if (items[activeWeapon].actualCd > 0) {
-            items[activeWeapon].actualCd--;
-        }
-    }
-}
-
-function meleeAttack() {
-    let length = items[activeWeapon].size;
-    let theta = attackScope.start;
-    let opposite = sin(theta) * length;
-    let adjacent = cos(theta) * length;
-
-    stroke(items[activeWeapon].color);
-    strokeWeight(10);
-    line(player.x, player.y, player.x + adjacent, player.y + opposite);
-    if (attackScope.start >= attackScope.end) {
-        isAttacking = false;
-    }
-}
-
-//drawing and moving
-function drawPlayer() {
-    //moving
-    fill("grey");
-    strokeWeight(0);
-    ellipse(player.x, player.y, player.size, player.size);
-    if (keyIsDown(87)) {
-        player.y -= player.speed;
-    }
-    if (keyIsDown(83)) {
-        player.y += player.speed;
-    }
-    if (keyIsDown(65)) {
-        player.x -= player.speed;
-    }
-    if (keyIsDown(68)) {
-        player.x += player.speed;
-    }
-
-    if (player.x <= 32.5) {
-        player.x = 32.5;
-    }
-    if (player.x >= 967.5) {
-        player.x = 967.5;
-    }
-    if (player.y <= 32.5) {
-        player.y = 32.5;
-    }
-    if (player.y >= 679.5) {
-        player.y = 679.5;
     }
 }
