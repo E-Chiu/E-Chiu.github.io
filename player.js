@@ -4,34 +4,38 @@ class Player {
         this.pos = createVector(20, 20);
         this.size = 60;
         this.speed = 2;
+        this.isAttacking = false;
+        this.attackScope = {
+            start: 0,
+            stop: 0
+        }
     }
 
     //attacking
     attack() {
-        if (isAttacking) {
+        if (player.isAttacking) {
             items[activeWeapon].actualCd = items[activeWeapon].atkCd;
             if (items[activeWeapon].type == "melee") {
-                attackScope.start += items[activeWeapon].speed;
+                player.attackScope.start += items[activeWeapon].speed;
                 player.meleeAttack();
             }
-        } else {
-            if (items[activeWeapon].actualCd > 0) {
-                items[activeWeapon].actualCd--;
-            }
+        } else if (items[activeWeapon].actualCd > 0) {
+            items[activeWeapon].actualCd--;
+
         }
     }
 
     meleeAttack() {
         let length = items[activeWeapon].size;
-        let theta = attackScope.start;
+        let theta = player.attackScope.start;
         let opposite = sin(theta) * length;
         let adjacent = cos(theta) * length;
 
         stroke(items[activeWeapon].color);
         strokeWeight(10);
         line(player.pos.x, player.pos.y, player.pos.x + adjacent, player.pos.y + opposite);
-        if (attackScope.start >= attackScope.end) {
-            isAttacking = false;
+        if (player.attackScope.start >= player.attackScope.end) {
+            player.isAttacking = false;
         }
     }
 
@@ -88,37 +92,37 @@ class Weapon {
 function keyPressed() {
     if (keyCode == 38) {
         if (items[activeWeapon].actualCd == 0) {
-            isAttacking = true;
+            player.isAttacking = true;
             if (items[activeWeapon].type == "melee") {
-                attackScope.start = 270 - (items[activeWeapon].range / 2);
-                attackScope.end = 270 + (items[activeWeapon].range / 2);
+                player.attackScope.start = 270 - (items[activeWeapon].range / 2);
+                player.attackScope.end = 270 + (items[activeWeapon].range / 2);
             }
         }
     }
     if (keyCode == 40) {
         if (items[activeWeapon].actualCd == 0) {
-            isAttacking = true;
+            player.isAttacking = true;
             if (items[activeWeapon].type == "melee") {
-                attackScope.start = 90 - (items[activeWeapon].range / 2);
-                attackScope.end = 90 + (items[activeWeapon].range / 2);
+                player.attackScope.start = 90 - (items[activeWeapon].range / 2);
+                player.attackScope.end = 90 + (items[activeWeapon].range / 2);
             }
         }
     }
     if (keyCode == 37) {
         if (items[activeWeapon].actualCd == 0) {
-            isAttacking = true;
+            player.isAttacking = true;
             if (items[activeWeapon].type == "melee") {
-                attackScope.start = 180 - (items[activeWeapon].range / 2);
-                attackScope.end = 180 + (items[activeWeapon].range / 2);
+                player.attackScope.start = 180 - (items[activeWeapon].range / 2);
+                player.attackScope.end = 180 + (items[activeWeapon].range / 2);
             }
         }
     }
     if (keyCode == 39) {
         if (items[activeWeapon].actualCd == 0) {
-            isAttacking = true;
+            player.isAttacking = true;
             if (items[activeWeapon].type == "melee") {
-                attackScope.start = 360 - (items[activeWeapon].range / 2);
-                attackScope.end = 360 + (items[activeWeapon].range / 2);
+                player.attackScope.start = 360 - (items[activeWeapon].range / 2);
+                player.attackScope.end = 360 + (items[activeWeapon].range / 2);
             }
         }
     }

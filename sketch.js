@@ -4,8 +4,6 @@ let enemies = [];
 let items = [];
 let lives = 3;
 let activeWeapon = 0;
-let isAttacking = false;
-let attackScope;
 
 // SETUP FUNCTION - Runs once at beginning of program
 function setup() {
@@ -13,11 +11,7 @@ function setup() {
     background("black");
     angleMode(DEGREES);
     player = new Player();
-    attackScope = {
-        start: 0,
-        stop: 0
-    }
-    enemies.push(new Enemy("green", 900, 600, 50, 1, 40, 60, 10))
+    enemies.push(new Enemy("green", 900, 600, 50, 1, 40, 60, 10, 40, 50));
     items.push(new Weapon("melee", "brown", 100, 10, 10, 90, 60));
 }
 
@@ -33,6 +27,7 @@ function draw() {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].draw();
         enemies[i].track();
+        enemies[i].attack();
     }
     //display;
     drawHud();
