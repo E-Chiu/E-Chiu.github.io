@@ -29,7 +29,7 @@ function drawHud() {
 
     fill("red");
     stroke("white");
-    for (let i = 0; i < lives; i++) {
+    for (let i = 0; i < player.lives; i++) {
         if (i < 3) {
             ellipse(i * 50 + 40, 740, 36, 36);
         }
