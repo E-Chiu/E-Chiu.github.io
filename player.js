@@ -36,8 +36,19 @@ class Player {
         stroke(items[this.activeWeapon].color);
         strokeWeight(10);
         line(player.pos.x, player.pos.y, player.pos.x + adjacent, player.pos.y + opposite);
+        this.hitbox(player.pos.x, player.pos.y, player.pos.x + adjacent, player.pos.y + opposite);
         if (player.attackScope.start >= player.attackScope.end) {
             player.isAttacking = false;
+        }
+    }
+
+    hitbox(x1, y1, x2, y2) {
+        for (let i = 0; i < enemies.length; i++) {
+            if (dist(enemies[i].pos.x, enemies[i].pos.y, x1, y1) < enemies[i].size ||
+                dist(enemies[i].pos.x, enemies[i].pos.y, x2, y2) < enemies[i].size ||
+                dist(enemies[i].pos.x, enemies[i].pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < enemies[i].size) {
+                enemies[i].health -= items[this.activeWeapon].damage;
+            }
         }
     }
 
