@@ -1,6 +1,7 @@
 //player values
 class Player {
     constructor() {
+        this.canHit = true;
         this.pos = createVector(20, 20);
         this.size = 60;
         this.speed = 2;
@@ -39,6 +40,7 @@ class Player {
         this.hitbox(player.pos.x, player.pos.y, player.pos.x + adjacent, player.pos.y + opposite);
         if (player.attackScope.start >= player.attackScope.end) {
             player.isAttacking = false;
+            this.canHit = true;
         }
     }
 
@@ -47,7 +49,13 @@ class Player {
             if (dist(enemies[i].pos.x, enemies[i].pos.y, x1, y1) < enemies[i].size ||
                 dist(enemies[i].pos.x, enemies[i].pos.y, x2, y2) < enemies[i].size ||
                 dist(enemies[i].pos.x, enemies[i].pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < enemies[i].size) {
-                enemies[i].health -= items[this.activeWeapon].damage;
+                if (this.canHit) {
+                    this.canHit = false;
+                    enemies[i].actualHealth -= items[this.activeWeapon].damage;
+                    let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
+                    moveVector.setMag(enemies[i].speed);
+                    this.pos.sub(moveVector);
+                }
             }
         }
     }

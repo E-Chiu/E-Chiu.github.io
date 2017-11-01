@@ -11,7 +11,7 @@ function setup() {
     angleMode(DEGREES);
     player = new Player();
     //color, x, y, size, speed, range, attackCd, health, attackAngle, swordLength
-    enemies.push(new SwordDude("green", 900, 600, 50, 1, 10, "brown", 60, 100, 50, 5));
+    enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, "brown", 60, 100, 50, 5));
     items.push(new Weapon("melee", "brown", 100, 10, 10, 90, 60));
 }
 

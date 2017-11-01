@@ -18,7 +18,7 @@ class Enemy {
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
         strokeWeight(0);
         fill("green");
-        rect(this.pos.x + this.size / 2, this.pos.y + this.size / 2, this.size - this.actualHealth / this.maxHealth * 100, 10);
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
     }
 
     track() {
