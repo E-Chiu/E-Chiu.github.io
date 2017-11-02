@@ -1,3 +1,4 @@
+//base guy
 class Enemy {
     constructor(color, x, y, size, speed, health) {
         this.color = color;
@@ -6,6 +7,7 @@ class Enemy {
         this.speed = speed;
         this.maxHealth = health;
         this.actualHealth = health;
+        this.canHit = false;
     }
 
     draw() {
@@ -25,11 +27,16 @@ class Enemy {
         let moveVector = p5.Vector.sub(player.pos, this.pos);
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
+        if (dist(this.x, this.y, player.x, player.y) < player.size - 25) {
+            player.lives --;
+            player.gotHit = true;
+        }
     }
 
 
 }
 
+//Swings a sword
 class SwordDude extends Enemy {
     constructor(color, x, y, size, speed, health, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
         super(color, x, y, size, speed, health);
@@ -45,6 +52,7 @@ class SwordDude extends Enemy {
             end: 0
         }
         this.isAttacking = false;
+        this.canHit = false;
     }
     swing() {
         let length = this.swordLength;
@@ -54,9 +62,9 @@ class SwordDude extends Enemy {
         stroke(this.weaponColor);
         strokeWeight(10);
         line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite)
         if (this.attackScope.start >= this.attackScope.end) {
             this.isAttacking = false;
-
         }
     }
     canAttack() {
@@ -78,4 +86,18 @@ class SwordDude extends Enemy {
             this.actualCd--;
         }
     }
+
+    hitbox(x1, y1, x2, y2) {
+        for (let i = 0; i < enemies.length; i++) {
+            if (dist(player.pos.x, player.pos.y, x1, y1) < player.size - 25 ||
+                dist(player.pos.x, player.pos.y, x2, y2) < player.size - 25 ||
+                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size - 25) {
+                if (player.canHit) {
+                    player.canHit = false;
+                    player.lives--;
+                }
+            }
+        }
+    }
+
 }
