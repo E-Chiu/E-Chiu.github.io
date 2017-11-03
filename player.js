@@ -1,7 +1,10 @@
 //player values
 class Player {
     constructor() {
+        this.alpha = 255;
         this.canHit = true;
+        this.gotHit = false;
+        this.timer = 0;
         this.pos = createVector(20, 20);
         this.size = 60;
         this.speed = 2;
@@ -64,14 +67,32 @@ class Player {
     }
 
     //invulnerability when hit
-    gotHit() {
-        
+    invul() {
+        if (this.timer % 15 == 0) {
+            if (this.timer == 15) {
+                this.alpha = 0;
+            } else if (this.timer == 30) {
+                this.alpha = 255;
+            } else if (this.timer == 45) {
+                this.alpha = 0;
+            } else if(this.timer == 60) {
+                this.alpha = 255;
+            }
+        }
+        if (this.gotHit) {
+            this.timer++;
+            if (this.timer % 61 == 0) {
+                this.canHit = true;
+                this.gotHit = false;
+                this.timer = 0;
+            }
+        }
     }
 
     //drawing and moving
     draw() {
         //moving
-        fill("grey");
+        fill(125, 125, 125, this.alpha);
         strokeWeight(0);
         ellipse(this.pos.x, this.pos.y, this.size);
         if (keyIsDown(87)) {

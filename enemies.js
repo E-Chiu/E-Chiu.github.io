@@ -28,12 +28,18 @@ class Enemy {
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.x, this.y, player.x, player.y) < player.size - 25) {
-            player.lives --;
+            player.lives--;
             player.gotHit = true;
         }
     }
+}
 
-
+function killOff() {
+    for (let i = 0; i < enemies.length; i++) {
+        if (enemies[i].actualHealth <= 0) {
+            enemies.splice(i, 1);
+        }
+    }
 }
 
 //Swings a sword
@@ -91,9 +97,10 @@ class SwordDude extends Enemy {
         for (let i = 0; i < enemies.length; i++) {
             if (dist(player.pos.x, player.pos.y, x1, y1) < player.size - 25 ||
                 dist(player.pos.x, player.pos.y, x2, y2) < player.size - 25 ||
-                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size - 25) {
+                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size - 28) {
                 if (player.canHit) {
                     player.canHit = false;
+                    player.gotHit = true;
                     player.lives--;
                 }
             }
