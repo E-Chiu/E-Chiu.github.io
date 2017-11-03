@@ -58,7 +58,7 @@ class SwordDude extends Enemy {
             end: 0
         }
         this.isAttacking = false;
-        this.canHit = false;
+        this.canHit = true;
     }
     swing() {
         let length = this.swordLength;
@@ -95,9 +95,9 @@ class SwordDude extends Enemy {
 
     hitbox(x1, y1, x2, y2) {
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(player.pos.x, player.pos.y, x1, y1) < player.size - 25 ||
-                dist(player.pos.x, player.pos.y, x2, y2) < player.size - 25 ||
-                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size - 28) {
+            if (dist(player.pos.x, player.pos.y, x1, y1) < player.size / 2 ||
+                dist(player.pos.x, player.pos.y, x2, y2) < player.size / 2 ||
+                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size / 2) {
                 if (player.canHit) {
                     player.canHit = false;
                     player.gotHit = true;

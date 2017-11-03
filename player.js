@@ -48,19 +48,17 @@ class Player {
             }
         }
     }
-
-    //calculate if hit enemy
+    //calculate if hit enemysd
     hitbox(x1, y1, x2, y2) {
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(enemies[i].pos.x, enemies[i].pos.y, x1, y1) < enemies[i].size - 25 ||
-                dist(enemies[i].pos.x, enemies[i].pos.y, x2, y2) < enemies[i].size - 25 ||
-                dist(enemies[i].pos.x, enemies[i].pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < enemies[i].size - 25) {
+            if (dist(enemies[i].pos.x, enemies[i].pos.y, (x1 + x2) * ((i + 1) / 20), (y1 + y2) * ((i + 1) / 20)) < enemies[i].size / 2) {
                 if (enemies[i].canHit) {
                     enemies[i].canHit = false;
                     enemies[i].actualHealth -= items[this.activeWeapon].damage;
                     let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
                     moveVector.setMag(items[this.activeWeapon].knockback);
                     enemies[i].pos.sub(moveVector);
+                    killOff();
                 }
             }
         }
@@ -75,7 +73,7 @@ class Player {
                 this.alpha = 255;
             } else if (this.timer == 45) {
                 this.alpha = 0;
-            } else if(this.timer == 60) {
+            } else if (this.timer == 60) {
                 this.alpha = 255;
             }
         }

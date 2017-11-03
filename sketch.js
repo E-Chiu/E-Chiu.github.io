@@ -14,7 +14,7 @@ function setup() {
     //sword = color, x, y, size, speed, health, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
     enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, "brown", 60, 100, 50, 5));
     enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, "grey", 60, 100, 50, 5));
-    enemies.push(new SwordDude("blue", 100, 900, 200, 3, 10, "white", 60, 180, 300, 10));
+    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, "white", 60, 180, 300, 10));
     items.push(new Weapon("melee", "brown", 100, 10, 10, 90, 60, 40));
 }
 
@@ -34,7 +34,6 @@ function draw() {
         enemies[i].draw();
         enemies[i].track();
     }
-    killOff();
     //display;
     drawHud();
     drawMap();
