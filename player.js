@@ -48,17 +48,21 @@ class Player {
             }
         }
     }
-    //calculate if hit enemysd
+    //calculate if hit enemies
     hitbox(x1, y1, x2, y2) {
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(enemies[i].pos.x, enemies[i].pos.y, (x1 + x2) * ((i + 1) / 20), (y1 + y2) * ((i + 1) / 20)) < enemies[i].size / 2) {
-                if (enemies[i].canHit) {
-                    enemies[i].canHit = false;
-                    enemies[i].actualHealth -= items[this.activeWeapon].damage;
-                    let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
-                    moveVector.setMag(items[this.activeWeapon].knockback);
-                    enemies[i].pos.sub(moveVector);
-                    killOff();
+            for (let j = 0; j < items[this.activeWeapon].size; j++) {
+                //console.log(j+1);
+                if (dist(enemies[i].pos.x, enemies[i].pos.y, x1 + (x2 - x1) * ((j + 1) / 100), y1 + (y2 - y1) * ((j + 1) / 100)) < enemies[i].size / 2) {
+                    if (enemies[i].canHit) {
+                        enemies[i].canHit = false;
+                        enemies[i].actualHealth -= items[this.activeWeapon].damage;
+                        let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
+                        moveVector.setMag(items[this.activeWeapon].knockback);
+                        enemies[i].pos.sub(moveVector);
+                        killOff();
+                        break;
+                    }
                 }
             }
         }

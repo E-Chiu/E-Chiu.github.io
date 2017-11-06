@@ -12,9 +12,10 @@ function setup() {
     player = new Player();
     //normal dudes = color, x, y, size, speed, health
     //sword = color, x, y, size, speed, health, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
-    enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, "brown", 60, 100, 50, 5));
-    enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, "grey", 60, 100, 50, 5));
-    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, "white", 60, 180, 300, 10));
+    enemies.push(new Enemy("green", 900, 300, 50, 1, 30));
+//    enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, "brown", 60, 100, 50, 5));
+//    enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, "grey", 60, 100, 50, 5));
+//    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, "white", 60, 180, 300, 10));
     items.push(new Weapon("melee", "brown", 100, 10, 10, 90, 60, 40));
 }
 
@@ -29,8 +30,10 @@ function draw() {
     player.invul();
     //enemy
     for (let i = 0; i < enemies.length; i++) {
-        enemies[i].attack();
-        enemies[i].canAttack();
+        if (enemies[i] instanceof SwordDude) {
+            enemies[i].attack();
+            enemies[i].canAttack();
+        }
         enemies[i].draw();
         enemies[i].track();
     }

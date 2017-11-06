@@ -27,9 +27,10 @@ class Enemy {
         let moveVector = p5.Vector.sub(player.pos, this.pos);
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
-        if (dist(this.x, this.y, player.x, player.y) < player.size - 25) {
-            player.lives--;
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2) {
+            player.canHit = false;
             player.gotHit = true;
+            player.lives--;
         }
     }
 }
