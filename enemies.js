@@ -22,12 +22,12 @@ class Enemy {
         fill("green");
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
     }
-
+    //following player
     track() {
         let moveVector = p5.Vector.sub(player.pos, this.pos);
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
-        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2) {
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
             player.canHit = false;
             player.gotHit = true;
             player.lives--;
@@ -61,6 +61,7 @@ class SwordDude extends Enemy {
         this.isAttacking = false;
         this.canHit = true;
     }
+    //attacking
     swing() {
         let length = this.swordLength;
         let theta = this.attackScope.start;
@@ -96,16 +97,15 @@ class SwordDude extends Enemy {
 
     hitbox(x1, y1, x2, y2) {
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(player.pos.x, player.pos.y, x1, y1) < player.size / 2 ||
-                dist(player.pos.x, player.pos.y, x2, y2) < player.size / 2 ||
-                dist(player.pos.x, player.pos.y, (x1 + x2) / 2, (y1 + y2) / 2) < player.size / 2) {
-                if (player.canHit) {
-                    player.canHit = false;
-                    player.gotHit = true;
-                    player.lives--;
+            for (let j = 0; j < this.swordLength; j++) {
+                if (dist(player.pos.x, player.pos.y, x1 + (x2 - x1) * ((j + 1) / this.swordLength), y1 + (y2 - y1) * ((j + 1) / this.swordLength)) < player.size / 2) {
+                    if (player.canHit) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        player.lives--;
+                    }
                 }
             }
         }
     }
-
 }

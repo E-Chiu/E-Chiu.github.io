@@ -22,8 +22,10 @@ class Player {
         if (this.isAttacking) {
             items[this.activeWeapon].actualCd = items[this.activeWeapon].atkCd;
             if (items[this.activeWeapon].type == "melee") {
-                this.attackScope.start += items[this.activeWeapon].speed;
-                this.meleeAttack();
+                for (let i = 0; i < items[this.activeWeapon].speed; i++) {
+                    this.attackScope.start += 1;
+                    this.meleeAttack();
+                }
             }
         } else if (items[this.activeWeapon].actualCd > 0) {
             items[this.activeWeapon].actualCd--;
@@ -52,8 +54,7 @@ class Player {
     hitbox(x1, y1, x2, y2) {
         for (let i = 0; i < enemies.length; i++) {
             for (let j = 0; j < items[this.activeWeapon].size; j++) {
-                //console.log(j+1);
-                if (dist(enemies[i].pos.x, enemies[i].pos.y, x1 + (x2 - x1) * ((j + 1) / 100), y1 + (y2 - y1) * ((j + 1) / 100)) < enemies[i].size / 2) {
+                if (dist(enemies[i].pos.x, enemies[i].pos.y, x1 + (x2 - x1) * ((j + 1) / items[this.activeWeapon].size), y1 + (y2 - y1) * ((j + 1) / items[this.activeWeapon].size)) < enemies[i].size / 2) {
                     if (enemies[i].canHit) {
                         enemies[i].canHit = false;
                         enemies[i].actualHealth -= items[this.activeWeapon].damage;
@@ -125,22 +126,6 @@ class Player {
     }
 
 }
-
-//equipping a new weapon
-class Weapon {
-    constructor(type, color, size, speed, damage, range, attackCd, knockback) {
-        this.type = type;
-        this.color = color;
-        this.size = size;
-        this.speed = speed;
-        this.damage = damage;
-        this.range = range;
-        this.atkCd = attackCd;
-        this.actualCd = attackCd;
-        this.knockback = knockback;
-    }
-}
-
 //attacking
 function keyPressed() {
     if (keyCode == 38) {
