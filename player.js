@@ -34,19 +34,21 @@ class Player {
     }
 
     meleeAttack() {
-        let length = items[this.activeWeapon].size;
-        let theta = this.attackScope.start;
-        let opposite = sin(theta) * length;
-        let adjacent = cos(theta) * length;
+        if (this.isAttacking) {
+            let length = items[this.activeWeapon].size;
+            let theta = this.attackScope.start;
+            let opposite = sin(theta) * length;
+            let adjacent = cos(theta) * length;
 
-        stroke(items[this.activeWeapon].color);
-        strokeWeight(10);
-        line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
-        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
-        if (this.attackScope.start >= this.attackScope.end) {
-            this.isAttacking = false;
-            for (let i = 0; i < enemies.length; i++) {
-                enemies[i].canHit = true;
+            stroke(items[this.activeWeapon].color);
+            strokeWeight(10);
+            line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+            this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+            if (this.attackScope.start >= this.attackScope.end) {
+                this.isAttacking = false;
+                for (let i = 0; i < enemies.length; i++) {
+                    enemies[i].canHit = true;
+                }
             }
         }
     }
@@ -128,6 +130,7 @@ class Player {
 }
 //attacking
 function keyPressed() {
+    //attacking
     if (keyCode == 38) {
         if (items[player.activeWeapon].actualCd == 0) {
             player.isAttacking = true;
@@ -162,6 +165,24 @@ function keyPressed() {
                 player.attackScope.start = 360 - (items[player.activeWeapon].range / 2);
                 player.attackScope.end = 360 + (items[player.activeWeapon].range / 2);
             }
+        }
+    }
+    //switching weapons
+    if (keyCode == 81) {
+      for(let i = 0; i < 3; i ++){
+          if(items[player.activeWeapon] - 1 < 0) {
+              player.activeWeapon == 2;
+          }
+      }
+    } else if (keyCode == 69) {
+        if (player.activeWeapon + 1 > 2) {
+            if (items[player.activeWeapon - 2] != 0) {
+                player.activeWeapon = 0;
+            }
+        } else if (items[player.activeWeapon - 1] != 0) {
+            player.activeWeapon = 1;
+        } else if (items[player.activeWeaponeapon + 1] != 0) {
+            player.activeWeapon++;
         }
     }
 }

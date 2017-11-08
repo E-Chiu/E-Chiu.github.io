@@ -51,15 +51,14 @@ let weapons = [
         size: 70,
         speed: 100,
         damage: 1,
-        range: 1,
+        range: 2,
         attackCd: 1,
         knockback: 20
     }
 ];
 
 let consumables = [
-
-
+    
 ];
 
 let charms = [
