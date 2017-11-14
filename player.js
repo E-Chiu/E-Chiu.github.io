@@ -8,7 +8,8 @@ class Player {
         this.pos = createVector(20, 20);
         this.size = 60;
         this.speed = 2;
-        this.lives = 3;
+        this.lives = 2;
+        this.maxLives = 3;
         this.activeWeapon = 0;
         this.isAttacking = false;
         this.attackScope = {
@@ -169,20 +170,25 @@ function keyPressed() {
     }
     //switching weapons
     if (keyCode == 81) {
-      for(let i = 0; i < 3; i ++){
-          if(items[player.activeWeapon] - 1 < 0) {
-              player.activeWeapon == 2;
-          }
-      }
-    } else if (keyCode == 69) {
-        if (player.activeWeapon + 1 > 2) {
-            if (items[player.activeWeapon - 2] != 0) {
+            if (player.activeWeapon == 0) {
+                player.activeWeapon = 2;
+            } else if (player.activeWeapon == 1) {
                 player.activeWeapon = 0;
+            } else if (player.activeWeapon == 2) {
+                player.activeWeapon = 1;
             }
-        } else if (items[player.activeWeapon - 1] != 0) {
+    } else if (keyCode == 69) {
+        if (player.activeWeapon == 0) {
             player.activeWeapon = 1;
-        } else if (items[player.activeWeaponeapon + 1] != 0) {
-            player.activeWeapon++;
+        } else if (player.activeWeapon == 1) {
+            player.activeWeapon = 2;
+        } else if (player.activeWeapon == 2) {
+            player.activeWeapon = 0;
         }
+    }
+    
+    //using items
+    if(keyCode > 48 && keyCode < 53) {
+        items[keyCode - 49].activate();
     }
 }

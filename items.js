@@ -1,7 +1,7 @@
 //all items
 let weapons = [
     {
-        name:"stick",
+        name: "stick",
         type: "melee",
         color: "brown",
         size: 100,
@@ -12,7 +12,7 @@ let weapons = [
         knockback: 40
     },
     {
-        name:"sword",
+        name: "sword",
         type: "melee",
         color: 178,
         size: 140,
@@ -23,7 +23,7 @@ let weapons = [
         knockback: 50
     },
     {
-        name:"katana",
+        name: "katana",
         type: "melee",
         color: "white",
         size: 120,
@@ -34,7 +34,7 @@ let weapons = [
         knockback: 15
     },
     {
-        name:"axe",
+        name: "axe",
         type: "melee",
         color: "brown",
         size: 70,
@@ -45,7 +45,7 @@ let weapons = [
         knockback: 90
     },
     {
-         name:"dagger",
+        name: "dagger",
         type: "melee",
         color: "white",
         size: 70,
@@ -58,7 +58,16 @@ let weapons = [
 ];
 
 let consumables = [
-    
+    {
+        name: "hp pot",
+        amount: 1,
+        activate: function () {
+            if (player.lives < player.maxLives) {
+                player.lives ++;
+                this.amount --;
+            }
+        }
+    }
 ];
 
 let charms = [
