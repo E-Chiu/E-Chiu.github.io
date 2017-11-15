@@ -63,11 +63,28 @@ let consumables = [
         amount: 1,
         activate: function () {
             if (player.lives < player.maxLives) {
-                player.lives ++;
-                this.amount --;
+                player.lives++;
+                this.amount--;
             }
         }
-    }
+    },
+    {
+        name: "shield",
+        amount: 1,
+        activate: function () {
+            if (player.hasShield == false) {
+                player.hasShield = true;
+                this.amount--;
+            }
+        }
+    },
+    {
+        name: "roar",
+        amount: 1,
+        activate: function () {
+            player.roar = true;
+            }
+        }
 ];
 
 let charms = [

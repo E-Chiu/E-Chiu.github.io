@@ -1,6 +1,8 @@
 //player values
 class Player {
     constructor() {
+        this.hasShield = false;
+        this.roar = false;
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -8,7 +10,7 @@ class Player {
         this.pos = createVector(20, 20);
         this.size = 60;
         this.speed = 2;
-        this.lives = 2;
+        this.lives = 3;
         this.maxLives = 3;
         this.activeWeapon = 0;
         this.isAttacking = false;
@@ -28,11 +30,15 @@ class Player {
                     this.meleeAttack();
                 }
             }
-        } else if (items[this.activeWeapon].actualCd > 0) {
-            items[this.activeWeapon].actualCd--;
+        }
+        for (let i = 0; i < 3; i++) {
+            if (items[i].actualCd > 0) {
+                items[i].actualCd--;
 
+            }
         }
     }
+
 
     meleeAttack() {
         if (this.isAttacking) {
@@ -101,6 +107,22 @@ class Player {
         fill(125, 125, 125, this.alpha);
         strokeWeight(0);
         ellipse(this.pos.x, this.pos.y, this.size);
+        if (this.hasShield) {
+            stroke(61, 232, 255);
+            strokeWeight(2);
+            noFill();
+            ellipse(this.pos.x, this.pos.y, this.size + 20)
+        }
+
+        if (this.roar) {
+            stroke("red");
+            strokeWeight("2");
+            noFill();
+            for (let i = 0; i < 60; i++) {
+                ellipse(player.pos.x, player.pos.y, player.size + (i + 10));
+            }
+        }
+        
         if (keyIsDown(87)) {
             this.pos.y -= this.speed;
         }
@@ -170,13 +192,13 @@ function keyPressed() {
     }
     //switching weapons
     if (keyCode == 81) {
-            if (player.activeWeapon == 0) {
-                player.activeWeapon = 2;
-            } else if (player.activeWeapon == 1) {
-                player.activeWeapon = 0;
-            } else if (player.activeWeapon == 2) {
-                player.activeWeapon = 1;
-            }
+        if (player.activeWeapon == 0) {
+            player.activeWeapon = 2;
+        } else if (player.activeWeapon == 1) {
+            player.activeWeapon = 0;
+        } else if (player.activeWeapon == 2) {
+            player.activeWeapon = 1;
+        }
     } else if (keyCode == 69) {
         if (player.activeWeapon == 0) {
             player.activeWeapon = 1;
@@ -186,9 +208,9 @@ function keyPressed() {
             player.activeWeapon = 0;
         }
     }
-    
+
     //using items
-    if(keyCode > 48 && keyCode < 53) {
+    if (keyCode > 48 && keyCode < 53) {
         items[keyCode - 49].activate();
     }
 }

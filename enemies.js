@@ -28,9 +28,15 @@ class Enemy {
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            player.canHit = false;
-            player.gotHit = true;
-            player.lives--;
+            if (player.hasShield) {
+                player.canHit = false;
+                player.gotHit = true;
+                player.hasShield = false;
+            } else {
+                player.canHit = false;
+                player.gotHit = true;
+                player.lives--;
+            }
         }
     }
 }
@@ -100,9 +106,15 @@ class SwordDude extends Enemy {
             for (let j = 0; j < this.swordLength; j++) {
                 if (dist(player.pos.x, player.pos.y, x1 + (x2 - x1) * ((j + 1) / this.swordLength), y1 + (y2 - y1) * ((j + 1) / this.swordLength)) < player.size / 2) {
                     if (player.canHit) {
-                        player.canHit = false;
-                        player.gotHit = true;
-                        player.lives--;
+                        if (player.hasShield) {
+                            player.canHit = false;
+                            player.gotHit = true;
+                            player.hasShield = false;
+                        } else {
+                            player.canHit = false;
+                            player.gotHit = true;
+                            player.lives--;
+                        }
                     }
                 }
             }
