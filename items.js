@@ -82,7 +82,7 @@ let consumables = [
         name: "roar",
         amount: 1,
         activate: function () {
-            player.roar = true;
+            player.canRoar = true;
             }
         }
 ];

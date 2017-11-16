@@ -2,7 +2,7 @@
 class Player {
     constructor() {
         this.hasShield = false;
-        this.roar = false;
+        this.canRoar = false;
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -14,6 +14,7 @@ class Player {
         this.maxLives = 3;
         this.activeWeapon = 0;
         this.isAttacking = false;
+        this.roarSize = 0;
         this.attackScope = {
             start: 0,
             end: 0
@@ -101,6 +102,17 @@ class Player {
         }
     }
 
+    //using the roar consumable
+    roar() {
+        if (this.roar) {
+            stroke("red");
+            strokeWeight(2);
+            noFill();
+            ellipse(player.pos.x, player.pos.y, this.roarSize);
+            this.roarSize += 10;
+        }
+    }
+
     //drawing and moving
     draw() {
         //moving
@@ -113,16 +125,6 @@ class Player {
             noFill();
             ellipse(this.pos.x, this.pos.y, this.size + 20)
         }
-
-        if (this.roar) {
-            stroke("red");
-            strokeWeight("2");
-            noFill();
-            for (let i = 0; i < 60; i++) {
-                ellipse(player.pos.x, player.pos.y, player.size + (i + 10));
-            }
-        }
-        
         if (keyIsDown(87)) {
             this.pos.y -= this.speed;
         }
