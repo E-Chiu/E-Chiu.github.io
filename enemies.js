@@ -1,13 +1,15 @@
 //base guy
 class Enemy {
     constructor(color, x, y, size, speed, health) {
+        this.dot = 0;
         this.color = color;
         this.pos = createVector(x, y);
         this.size = size;
         this.speed = speed;
         this.maxHealth = health;
         this.actualHealth = health;
-        this.canHit = false;
+        this.timer = 0;
+        this.canHit = true;
     }
 
     draw() {
@@ -21,6 +23,10 @@ class Enemy {
         strokeWeight(0);
         fill("green");
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        if(this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
     }
     //following player
     track() {

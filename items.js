@@ -79,11 +79,31 @@ let consumables = [
         }
     },
     {
-        name: "roar",
+        name: "roar of fear",
         amount: 1,
         activate: function () {
             player.canRoar = true;
-            }
+            player.roarType = "fear";
+            this.amount--;
+        }
+        },
+    {
+        name: "roar of ice",
+        amount: 1,
+        activate: function () {
+            player.canRoar = true;
+            player.roarType = "ice";
+            this.amount--;
+        }
+        },
+    {
+        name: "roar of fire",
+        amount: 1,
+        activate: function () {
+            player.canRoar = true;
+            player.roarType = "fire";
+            this.amount--;
+        }
         }
 ];
 
