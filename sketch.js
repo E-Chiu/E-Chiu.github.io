@@ -50,7 +50,7 @@ function draw() {
     player.attack();
     player.draw();
     player.invul();
-    player.roar();
+    player.ring();
     //enemy
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i] instanceof SwordDude) {

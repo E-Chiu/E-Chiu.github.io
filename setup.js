@@ -13,6 +13,7 @@ function drawMap() {
 //drawing the hud
 function drawHud() {
     fill("grey");
+    strokeWeight(0);
     rect(-1, 710, 1001, 100);
     fill("black");
     for (let i = 0; i < 10; i++) {

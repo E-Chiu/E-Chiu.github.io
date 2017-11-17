@@ -1,7 +1,7 @@
 //all items
 let weapons = [
     {
-        name: "stick",
+        name: "Stick",
         type: "melee",
         color: "brown",
         size: 100,
@@ -12,7 +12,7 @@ let weapons = [
         knockback: 40
     },
     {
-        name: "sword",
+        name: "Sword",
         type: "melee",
         color: 178,
         size: 140,
@@ -23,7 +23,7 @@ let weapons = [
         knockback: 50
     },
     {
-        name: "katana",
+        name: "Katana",
         type: "melee",
         color: "white",
         size: 120,
@@ -34,7 +34,7 @@ let weapons = [
         knockback: 15
     },
     {
-        name: "axe",
+        name: "Axe",
         type: "melee",
         color: "brown",
         size: 70,
@@ -45,7 +45,7 @@ let weapons = [
         knockback: 90
     },
     {
-        name: "dagger",
+        name: "Dagger",
         type: "melee",
         color: "white",
         size: 70,
@@ -59,7 +59,7 @@ let weapons = [
 
 let consumables = [
     {
-        name: "hp pot",
+        name: "Health Potion",
         amount: 1,
         activate: function () {
             if (player.lives < player.maxLives) {
@@ -69,7 +69,7 @@ let consumables = [
         }
     },
     {
-        name: "shield",
+        name: "Energy Shield",
         amount: 1,
         activate: function () {
             if (player.hasShield == false) {
@@ -79,29 +79,29 @@ let consumables = [
         }
     },
     {
-        name: "roar of fear",
+        name: "Ring of Fear",
         amount: 1,
         activate: function () {
-            player.canRoar = true;
-            player.roarType = "fear";
+            player.canRing = true;
+            player.ringType = "fear";
             this.amount--;
         }
         },
     {
-        name: "roar of ice",
+        name: "Ring of Ice",
         amount: 1,
         activate: function () {
-            player.canRoar = true;
-            player.roarType = "ice";
+            player.canRing = true;
+            player.ringType = "ice";
             this.amount--;
         }
         },
     {
-        name: "roar of fire",
+        name: "Ring of Fire",
         amount: 1,
         activate: function () {
-            player.canRoar = true;
-            player.roarType = "fire";
+            player.canRing = true;
+            player.ringType = "fire";
             this.amount--;
         }
         }

@@ -2,10 +2,10 @@
 class Player {
     constructor() {
         this.hasShield = false;
-        this.canRoar = false;
-        this.roarSize = 0;
-        this.roarType;
-        this.maxRoar = 0;
+        this.canRing = false;
+        this.ringSize = 0;
+        this.ringType;
+        this.maxRing = 0;
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -104,9 +104,9 @@ class Player {
         }
     }
 
-    //using the roar consumables
-    roar() {
-        if (this.roarType == "fear") {
+    //using the ring consumables
+    ring() {
+        if (this.ringType == "fear") {
             for (let i = 0; i < enemies.length; i++) {
                 if (enemies[i].timer > 0) {
                     enemies[i].timer--;
@@ -116,50 +116,50 @@ class Player {
                 }
             }
         }
-        if (this.canRoar) {
-            if (this.roarType == "fear") {
+        if (this.canRing) {
+            if (this.ringType == "fear") {
                 stroke("red");
                 strokeWeight(5);
                 noFill();
-                this.maxRoar = 300;
+                this.maxRing = 300;
             }
-            if (this.roarType == "ice") {
+            if (this.ringType == "ice") {
                 stroke(0, 255, 255);
                 strokeWeight(8);
                 noFill();
-                this.maxRoar = 200;
+                this.maxRing = 250;
             }
-            if (this.roarType == "fire") {
+            if (this.ringType == "fire") {
                 stroke("orange");
                 strokeWeight(12);
                 noFill();
-                this.maxRoar = 500;
+                this.maxRing = 500;
             }
-            ellipse(player.pos.x, player.pos.y, this.roarSize);
-            this.roarSize += 20;
+            ellipse(player.pos.x, player.pos.y, this.ringSize);
+            this.ringSize += 20;
             for (let i = 0; i < enemies.length; i++) {
-                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
-                    if (this.roarType == "fear") {
+                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.ringSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
+                    if (this.ringType == "fear") {
                         enemies[i].canHit = false;
                         enemies[i].actualHealth -= 10;
                         enemies[i].speed = enemies[i].speed * -0.5;
                         enemies[i].timer = 120;
                         killOff();
                     }
-                    if (this.roarType == "ice") {
+                    if (this.ringType == "ice") {
                         enemies[i].color = [0, 255, 255, 200];
                         enemies[i].canHit = false;
                         enemies[i].speed = 0;
                     }
-                    if (this.roarType == "fire") {
+                    if (this.ringType == "fire") {
                         enemies[i].dot = 0.1;
                         enemies[i].canHit = false;
                     }
                 }
             }
-            if (this.roarSize >= this.maxRoar) {
-                this.canRoar = false;
-                this.roarSize = 0;
+            if (this.ringSize >= this.maxRing) {
+                this.canRing = false;
+                this.ringSize = 0;
                 for (let i = 0; i < enemies.length; i++) {
                     if (enemies[i].canHit == false) {
                         enemies[i].canHit = true;
