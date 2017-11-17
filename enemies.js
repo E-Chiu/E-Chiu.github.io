@@ -10,6 +10,7 @@ class Enemy {
         this.actualHealth = health;
         this.timer = 0;
         this.canHit = true;
+        this.blackHoled = false;
     }
 
     draw() {
@@ -23,14 +24,19 @@ class Enemy {
         strokeWeight(0);
         fill("green");
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
-        if(this.dot > 0) {
+        if (this.dot > 0) {
             this.actualHealth -= this.dot;
             killOff();
         }
     }
     //following player
     track() {
-        let moveVector = p5.Vector.sub(player.pos, this.pos);
+        let moveVector;
+        if (this.blackHoled == false) {
+            moveVector = p5.Vector.sub(player.pos, this.pos);
+        } else if (this.blackHoled == true) {
+            moveVector = p5.Vector.sub(player.static, this.pos);
+        }
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {

@@ -79,29 +79,40 @@ let consumables = [
         }
     },
     {
-        name: "Ring of Fear",
+        name: "Roar of Fear",
         amount: 1,
         activate: function () {
-            player.canRing = true;
-            player.ringType = "fear";
+            player.canRoar = true;
+            player.roarType = "fear";
             this.amount--;
         }
         },
     {
-        name: "Ring of Ice",
+        name: "Roar of Ice",
         amount: 1,
         activate: function () {
-            player.canRing = true;
-            player.ringType = "ice";
+            player.canRoar = true;
+            player.roarType = "ice";
             this.amount--;
         }
         },
     {
-        name: "Ring of Fire",
+        name: "Roar of Fire",
         amount: 1,
         activate: function () {
-            player.canRing = true;
-            player.ringType = "fire";
+            player.canRoar = true;
+            player.roarType = "fire";
+            this.amount--;
+        }
+        },
+    {
+        name: "Black Hole",
+        amount: 1,
+        activate: function () {
+            player.static.x = player.pos.x;
+            player.static.y = player.pos.y;
+            player.canRoar = true;
+            player.roarType = "black hole";
             this.amount--;
         }
         }
@@ -128,3 +139,64 @@ class Weapon {
         this.knockback = knockback;
     }
 }
+
+//class Roar {
+//    constructor(stroke, strokeWeight, roarSize, roarType, maxRoar) {
+//        this.stroke = stroke;
+//        this.strokeWeight = strokeWeight;
+//        this.roarSize = roarSize;
+//        this.roarType = roarType;
+//        this.maxRoar = maxRoar;
+//    }
+//
+//    roar() {
+//        if (this.roarType == "fear") {
+//            for (let i = 0; i < enemies.length; i++) {
+//                if (enemies[i].timer > 0) {
+//                    enemies[i].timer--;
+//                }
+//                if (enemies[i].timer == 1) {
+//                    enemies[i].speed = enemies[i].speed * -2;
+//                }
+//            }
+//        }
+//        ellipse(player.pos.x, player.pos.y, this.roarSize);
+//        this.roarSize += 20;
+//        for (let i = 0; i < enemies.length; i++) {
+//            if (dist(player.pos.x, player.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
+//                if (this.roarType == "fear") {
+//                    enemies[i].canHit = false;
+//                    enemies[i].actualHealth -= 10;
+//                    enemies[i].speed = enemies[i].speed * -0.5;
+//                    enemies[i].timer = 120;
+//                    killOff();
+//                }
+//                if (this.roarType == "ice") {
+//                    enemies[i].color = [0, 255, 255, 200];
+//                    enemies[i].canHit = false;
+//                    enemies[i].speed = 0;
+//                }
+//                if (this.roarType == "fire") {
+//                    enemies[i].dot = 0.1;
+//                    enemies[i].canHit = false;
+//                }
+//            }
+//        }
+//        if (this.roarSize >= this.maxRoar) {
+//            this.canRoar = false;
+//            this.roarSize = 0;
+//            for (let i = 0; i < enemies.length; i++) {
+//                if (enemies[i].canHit == false) {
+//                    enemies[i].canHit = true;
+//                }
+//            }
+//        }
+//    }
+//
+//    class BlackHole extends Roar {
+//        constructor(stroke, strokeWeight, roarSize, roarType, maxRoar, staticX, staticY) {
+//            super(stroke, strokeWeight, roarSize, roarType, maxRoar);
+//            this.static = createVector(staticX, staticY);
+//            this.holeNum = -1;
+//        }
+//    }

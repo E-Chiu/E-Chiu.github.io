@@ -1,11 +1,12 @@
 //player values
 class Player {
     constructor() {
+        //items
         this.hasShield = false;
-        this.canRing = false;
-        this.ringSize = 0;
-        this.ringType;
-        this.maxRing = 0;
+        this.canRoar = false;
+        this.roars = [];
+
+        //player stats
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -104,9 +105,9 @@ class Player {
         }
     }
 
-    //using the ring consumables
-    ring() {
-        if (this.ringType == "fear") {
+    //using the roar consumables
+    roar() {
+        if (this.roarType == "fear") {
             for (let i = 0; i < enemies.length; i++) {
                 if (enemies[i].timer > 0) {
                     enemies[i].timer--;
@@ -116,53 +117,91 @@ class Player {
                 }
             }
         }
-        if (this.canRing) {
-            if (this.ringType == "fear") {
+        if (this.canRoar) {
+            if (this.roarType == "fear") {
+                //roars.push(new Roar("red", 5, 0, "fear", 300));
                 stroke("red");
                 strokeWeight(5);
                 noFill();
-                this.maxRing = 300;
+                this.maxRoar = 300;
             }
-            if (this.ringType == "ice") {
+            if (this.roarType == "ice") {
+                //roars.push(new Roar([0, 255, 255], 8, 0, "ice", 250));
                 stroke(0, 255, 255);
                 strokeWeight(8);
                 noFill();
-                this.maxRing = 250;
+                this.maxRoar = 250;
             }
-            if (this.ringType == "fire") {
+            if (this.roarType == "fire") {
+                //roars.push(new Roar('orange', 12, 0, "fire", 500));
                 stroke("orange");
                 strokeWeight(12);
                 noFill();
-                this.maxRing = 500;
+                this.maxRoar = 500;
             }
-            ellipse(player.pos.x, player.pos.y, this.ringSize);
-            this.ringSize += 20;
+            if (this.roarType == "black hole") {
+                //roars.push(new BlackHole([74, 0, 112], 15, 200, "black hole", 0, player.pos.x, player.pos.y));
+                stroke(74, 0, 112);
+                strokeWeight(15);
+                noFill();
+                this.maxRoar = 0;
+            }
+            if (this.roarType != "black hole") {
+                ellipse(this.pos.x, this.pos.y, this.roarSize);
+                this.roarSize += 20;
+            } else if (this.roarType == "black hole") {
+                ellipse(this.static.x, this.static.y, this.roarSize);
+                this.roarSize -= 5;
+            }
             for (let i = 0; i < enemies.length; i++) {
-                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.ringSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
-                    if (this.ringType == "fear") {
-                        enemies[i].canHit = false;
-                        enemies[i].actualHealth -= 10;
-                        enemies[i].speed = enemies[i].speed * -0.5;
-                        enemies[i].timer = 120;
-                        killOff();
+                if (this.roarType != "black hole") {
+                    if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
+                        if (this.roarType == "fear") {
+                            enemies[i].canHit = false;
+                            enemies[i].actualHealth -= 10;
+                            enemies[i].speed = enemies[i].speed * -0.5;
+                            enemies[i].timer = 120;
+                            killOff();
+                        }
+                        if (this.roarType == "ice") {
+                            enemies[i].color = [0, 255, 255, 200];
+                            enemies[i].canHit = false;
+                            enemies[i].speed = 0;
+                        }
+                        if (this.roarType == "fire") {
+                            enemies[i].dot = 0.1;
+                            enemies[i].canHit = false;
+                        }
                     }
-                    if (this.ringType == "ice") {
-                        enemies[i].color = [0, 255, 255, 200];
-                        enemies[i].canHit = false;
-                        enemies[i].speed = 0;
-                    }
-                    if (this.ringType == "fire") {
-                        enemies[i].dot = 0.1;
-                        enemies[i].canHit = false;
+                } else {
+                    if (dist(this.static.x, this.static.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2) {
+                        if (this.roarType == "black hole") {
+                            enemies[i].blackHoled = true;
+                        }
                     }
                 }
             }
-            if (this.ringSize >= this.maxRing) {
-                this.canRing = false;
-                this.ringSize = 0;
-                for (let i = 0; i < enemies.length; i++) {
-                    if (enemies[i].canHit == false) {
-                        enemies[i].canHit = true;
+            if (this.roarType != "black hole") {
+                if (this.roarSize >= this.maxRoar) {
+                    this.canRoar = false;
+                    this.roarSize = 0;
+                    for (let i = 0; i < enemies.length; i++) {
+                        if (enemies[i].canHit == false) {
+                            enemies[i].canHit = true;
+                        }
+                    }
+                }
+            } else {
+                if (this.roarSize <= this.maxRoar) {
+                    this.roarSize = 200;
+                    this.holeNum++;
+                    if (this.holeNum == 6) {
+                        this.canRoar = false;
+                        this.roarSize = 0;
+                        this.holeNum = -1;
+                        for (let i = 0; i < enemies.length; i++) {
+                            enemies[i].blackHoled = false;
+                        }
                     }
                 }
             }
