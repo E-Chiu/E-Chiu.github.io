@@ -31,12 +31,12 @@ function setup() {
     items.splice(1, 1, new Weapon(itemLibrary[0][2].type, itemLibrary[0][2].color, itemLibrary[0][2].size, itemLibrary[0][2].speed,
         itemLibrary[0][2].damage, itemLibrary[0][2].range, itemLibrary[0][2].attackCd, itemLibrary[0][2].knockback));
 
-        items.splice(3,1, consumables[0]);
-        items.splice(4,1, consumables[1]);
-    //    items.splice(3, 1, consumables[2]);
-    //        items.splice(3, 1, consumables[3]);
-    //        items.splice(5, 1, consumables[4]);
-    //        items.splice(4, 1, consumables[5]);
+    //        items.splice(3,1, consumables[0]);
+    //        items.splice(4,1, consumables[1]);
+    items.splice(3, 1, consumables[2]);
+    items.splice(4, 1, consumables[3]);
+    items.splice(5, 1, consumables[4]);
+    items.splice(6, 1, consumables[5]);
 
     items.splice(2, 1, new Weapon(itemLibrary[0][3].type, itemLibrary[0][3].color, itemLibrary[0][3].size, itemLibrary[0][3].speed,
         itemLibrary[0][3].damage, itemLibrary[0][3].range, itemLibrary[0][3].attackCd, itemLibrary[0][3].knockback));
@@ -51,7 +51,12 @@ function draw() {
     player.attack();
     player.draw();
     player.invul();
-    player.roar();
+    //roar
+    for (let i = 0; i < player.roars.length; i++) {
+        if (player.roars[i] != 0) {
+            player.roars[i].drawRoar(i);
+        }
+    }
     //enemy
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i] instanceof SwordDude) {

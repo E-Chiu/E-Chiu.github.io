@@ -35,7 +35,7 @@ class Enemy {
         if (this.blackHoled == false) {
             moveVector = p5.Vector.sub(player.pos, this.pos);
         } else if (this.blackHoled == true) {
-            moveVector = p5.Vector.sub(player.static, this.pos);
+            moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
