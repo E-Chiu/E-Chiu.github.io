@@ -1,3 +1,5 @@
+let enemies = [];
+
 //base guy
 class Enemy {
     constructor(color, x, y, size, speed, health) {

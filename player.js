@@ -1,3 +1,5 @@
+let player;
+
 //player values
 class Player {
     constructor() {

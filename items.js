@@ -1,4 +1,6 @@
-//all items
+let items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+//all weapons
 let weapons = [
     {
         name: "Stick",
@@ -57,6 +59,7 @@ let weapons = [
     }
 ];
 
+//all consumables
 let consumables = [
     {
         name: "Health Potion",
@@ -118,11 +121,13 @@ let consumables = [
     }
 ];
 
+//all charms
 let charms = [
 
 
 ];
 
+//all items
 let itemLibrary = [weapons, consumables, charms];
 
 //equipping a new weapon
