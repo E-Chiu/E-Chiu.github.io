@@ -37,6 +37,12 @@ class Enemy {
         } else if (this.blackHoled == true) {
             moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
+            if (this.timer > 0) {
+                this.timer--;
+            }
+            if (this.timer == 1) {
+                this.speed = this.speed * -2;
+            }
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
