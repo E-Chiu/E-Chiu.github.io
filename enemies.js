@@ -2,7 +2,7 @@ let enemies = [];
 
 //base guy
 class Enemy {
-    constructor(color, x, y, size, speed, health) {
+    constructor(color, x, y, size, speed, health, rarity) {
         this.dot = 0;
         this.color = color;
         this.pos = createVector(x, y);
@@ -10,6 +10,7 @@ class Enemy {
         this.speed = speed;
         this.maxHealth = health;
         this.actualHealth = health;
+        this.rarity = rarity;
         this.timer = 0;
         this.canHit = true;
         this.blackHoled = false;
@@ -39,12 +40,12 @@ class Enemy {
         } else if (this.blackHoled == true) {
             moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
-            if (this.timer > 0) {
-                this.timer--;
-            }
-            if (this.timer == 1) {
-                this.speed = this.speed * -2;
-            }
+        if (this.timer > 0) {
+            this.timer--;
+        }
+        if (this.timer == 1) {
+            this.speed = this.speed * -2;
+        }
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
@@ -61,9 +62,11 @@ class Enemy {
     }
 }
 
+//checking to see when an enemy should die
 function killOff() {
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].actualHealth <= 0) {
+            //dropItem(this.rarity, this.pos.x, this.pos.y);
             enemies.splice(i, 1);
         }
     }
@@ -71,7 +74,7 @@ function killOff() {
 
 //Swings a sword
 class SwordDude extends Enemy {
-    constructor(color, x, y, size, speed, health, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
+    constructor(color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
         super(color, x, y, size, speed, health);
         this.weaponColor = weaponColor;
         this.atkCd = attackCd;

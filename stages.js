@@ -1,4 +1,4 @@
-let stageNum = 1;
+let stageNum = 0;
 
 //all stages
 let stages = [
@@ -13,6 +13,7 @@ let stages = [
         },
         draw: function () {
             fill("white");
+            strokeWeight(0);
             textSize(30);
             text("Move with WASD, attack with arrow keys", 500, 40);
         }
@@ -24,6 +25,7 @@ let stages = [
         },
         draw: function () {
             fill("white");
+            strokeWeight(0);
             textSize(30);
             text("Switch weapons with Q or E", 500, 40);
             text("Killing all the enemies clears the stage", 500, 80);

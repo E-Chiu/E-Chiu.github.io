@@ -2,7 +2,8 @@ let items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 //all weapons
 let weapons = [
-    {
+    //rarity zero
+    [{
         name: "Stick",
         type: "melee",
         color: "brown",
@@ -11,42 +12,13 @@ let weapons = [
         damage: 10,
         range: 90,
         attackCd: 60,
-        knockback: 40
-    },
-    {
-        name: "Sword",
-        type: "melee",
-        color: 178,
-        size: 140,
-        speed: 5,
-        damage: 15,
-        range: 120,
-        attackCd: 80,
-        knockback: 50
-    },
-    {
-        name: "Katana",
-        type: "melee",
-        color: "white",
-        size: 120,
-        speed: 40,
-        damage: 5,
-        range: 180,
-        attackCd: 20,
-        knockback: 15
-    },
-    {
-        name: "Axe",
-        type: "melee",
-        color: "brown",
-        size: 70,
-        speed: 5,
-        damage: 50,
-        range: 80,
-        attackCd: 120,
-        knockback: 90
-    },
-    {
+        knockback: 40,
+        draw: function (x, y) {
+            strokeWeight(10);
+            stroke("brown");
+            line(x, y, x + 40, y + 40);
+        }
+    }, {
         name: "Dagger",
         type: "melee",
         color: "white",
@@ -56,7 +28,47 @@ let weapons = [
         range: 2,
         attackCd: 1,
         knockback: 20
+    }],
+
+    //rarity one
+    [{
+            name: "Sword",
+            type: "melee",
+            color: 178,
+            size: 140,
+            speed: 20,
+            damage: 15,
+            range: 120,
+            attackCd: 80,
+            knockback: 50
+    },
+        {
+            name: "Katana",
+            type: "melee",
+            color: "white",
+            size: 120,
+            speed: 40,
+            damage: 5,
+            range: 180,
+            attackCd: 20,
+            knockback: 15
+    }],
+
+    //rarity two
+    [
+        {
+            name: "Axe",
+            type: "melee",
+            color: "brown",
+            size: 70,
+            speed: 5,
+            damage: 50,
+            range: 80,
+            attackCd: 120,
+            knockback: 90
     }
+        ]
+
 ];
 
 //all consumables
@@ -159,13 +171,11 @@ class Roar {
             stroke("red");
             strokeWeight(5);
             noFill();
-        }
-        if (index == 1) {
+        } else if (index == 1) {
             stroke(0, 255, 255);
             strokeWeight(8);
             noFill();
-        }
-        if (index == 2) {
+        } else if (index == 2) {
             stroke("orange");
             strokeWeight(12);
             noFill();
@@ -180,13 +190,11 @@ class Roar {
                     enemies[i].speed = enemies[i].speed * -0.5;
                     enemies[i].timer = 120;
                     killOff();
-                }
-                if (index == 1) {
+                } else if (index == 1) {
                     enemies[i].color = [0, 255, 255, 200];
                     enemies[i].canHit = false;
                     enemies[i].speed = 0;
-                }
-                if (index == 2) {
+                } else if (index == 2) {
                     enemies[i].dot = 0.1;
                     enemies[i].canHit = false;
                 }
@@ -203,6 +211,7 @@ class Roar {
     }
 }
 
+//black hole
 class BlackHole {
     constructor(stroke, strokeWeight, roarSize, maxRoar, staticX, staticY) {
         this.stroke = stroke;
@@ -234,5 +243,22 @@ class BlackHole {
                 player.roars.splice(index, 1, 0);
             }
         }
+    }
+}
+
+//generate a random number
+function chance(min, max) {
+    return (Math.floor(random(min, max + 1)));
+}
+//check to see if you should drop an item
+function dropItem(rarity, x, y) {
+    let dropChance;
+    let dropType;
+    let dropIndex;
+    dropChance = chance(0, 2);
+    dropType = chance(0, 2);
+    dropIndex = chance(0, itemLibrary[dropType].length);
+    if (dropChance == 0) {
+        itemLibrary[dropType][rarity][dropIndex].draw(x, y);
     }
 }
