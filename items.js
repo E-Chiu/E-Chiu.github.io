@@ -1,5 +1,3 @@
-let items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
 //all weapons
 let weapons = [
     //rarity zero
@@ -13,10 +11,13 @@ let weapons = [
         range: 90,
         attackCd: 60,
         knockback: 40,
-        draw: function (x, y) {
+        canDraw: false,
+        x: 0,
+        y: 0,
+        draw: function () {
             strokeWeight(10);
             stroke("brown");
-            line(x, y, x + 40, y + 40);
+            line(this.x, this.y, this.x + 40, this.y - 40);
         }
     }, {
         name: "Dagger",
@@ -238,6 +239,10 @@ class BlackHole {
             this.holeNum++;
             if (this.holeNum == 6) {
                 for (let i = 0; i < enemies.length; i++) {
+                    if (enemies[i].speedChanged == true) {
+                        enemies[i].speed = 0;
+                        enemies[i].speedChanged = false;
+                    }
                     enemies[i].blackHoled = false;
                 }
                 player.roars.splice(index, 1, 0);
@@ -245,12 +250,13 @@ class BlackHole {
         }
     }
 }
-
 //generate a random number
 function chance(min, max) {
     return (Math.floor(random(min, max + 1)));
 }
 //check to see if you should drop an item
+let droppedItems = [];
+
 function dropItem(rarity, x, y) {
     let dropChance;
     let dropType;
@@ -259,6 +265,10 @@ function dropItem(rarity, x, y) {
     dropType = chance(0, 2);
     dropIndex = chance(0, itemLibrary[dropType].length);
     if (dropChance == 0) {
-        itemLibrary[dropType][rarity][dropIndex].draw(x, y);
+//        droppedItems.push(itemLibrary[dropType][rarity][dropIndex]);
+        droppedItems.push(itemLibrary[0][0][0]);
+        droppedItems[droppedItems.length - 1].canDraw = true;
+        droppedItems[droppedItems.length - 1].x = x;
+        droppedItems[droppedItems.length - 1].y = y;
     }
 }

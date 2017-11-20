@@ -1,4 +1,5 @@
 let player;
+let items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 //player values
 class Player {

@@ -14,6 +14,7 @@ class Enemy {
         this.timer = 0;
         this.canHit = true;
         this.blackHoled = false;
+        this.speedChanged = false;
     }
 
     draw() {
@@ -38,6 +39,10 @@ class Enemy {
         if (this.blackHoled == false) {
             moveVector = p5.Vector.sub(player.pos, this.pos);
         } else if (this.blackHoled == true) {
+            if (this.speed == 0) {
+                this.speed = 1;
+                this.speedChanged = true;
+            }
             moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
         if (this.timer > 0) {
@@ -66,7 +71,7 @@ class Enemy {
 function killOff() {
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].actualHealth <= 0) {
-            //dropItem(this.rarity, this.pos.x, this.pos.y);
+//            dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
             enemies.splice(i, 1);
         }
     }

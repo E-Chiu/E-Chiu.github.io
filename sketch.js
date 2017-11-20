@@ -10,17 +10,17 @@ function setup() {
 
     //    stages[stageNum].setup();
 
-        enemies.push(new Enemy("green", 100, 300, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 200, 300, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 300, 700, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 400, 500, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 500, 300, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 600, 200, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 700, 400, 50, 1, 30,0));
-        enemies.push(new Enemy("green", 800, 600, 50, 1, 30,0));
-        enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
-        enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
-        enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, 1, "white", 60, 180, 300, 10));
+    enemies.push(new Enemy("green", 100, 300, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 200, 300, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 300, 700, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 400, 500, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
+    enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
+    enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
+    enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
+    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, 1, "white", 60, 180, 300, 10));
 
     //type, color, size, speed, damage, range, attackCd, knockback
     items.splice(0, 1, new Weapon(itemLibrary[0][0][1].type, itemLibrary[0][0][1].color, itemLibrary[0][0][1].size, itemLibrary[0][0][1].speed,
@@ -44,7 +44,9 @@ function draw() {
     strokeWeight(1);
     background("black");
     //drops
-//    itemLibrary[0][0][0].draw(500, 355);
+    for (let i = 0; i < droppedItems.length; i++) {
+        droppedItems[i].draw();
+    }
     //player
     player.attack();
     player.draw();
@@ -65,7 +67,7 @@ function draw() {
         enemies[i].draw();
     }
     //stage
-//    stages[stageNum].draw();
+    //    stages[stageNum].draw();
     //display;
     drawHud();
     drawMap();
