@@ -71,7 +71,7 @@ class Enemy {
 function killOff() {
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i].actualHealth <= 0) {
-//            dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
+            dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
             enemies.splice(i, 1);
         }
     }

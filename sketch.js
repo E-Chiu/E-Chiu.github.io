@@ -23,12 +23,13 @@ function setup() {
     enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, 1, "white", 60, 180, 300, 10));
 
     //type, color, size, speed, damage, range, attackCd, knockback
-    items.splice(0, 1, new Weapon(itemLibrary[0][0][1].type, itemLibrary[0][0][1].color, itemLibrary[0][0][1].size, itemLibrary[0][0][1].speed,
-        itemLibrary[0][0][1].damage, itemLibrary[0][0][1].range, itemLibrary[0][0][1].attackCd, itemLibrary[0][0][1].knockback));
-    items.splice(1, 1, new Weapon(itemLibrary[0][1][0].type, itemLibrary[0][1][0].color, itemLibrary[0][1][0].size, itemLibrary[0][1][0].speed,
-        itemLibrary[0][1][0].damage, itemLibrary[0][1][0].range, itemLibrary[0][1][0].attackCd, itemLibrary[0][1][0].knockback));
-    items.splice(2, 1, new Weapon(itemLibrary[0][2][0].type, itemLibrary[0][2][0].color, itemLibrary[0][2][0].size, itemLibrary[0][2][0].speed,
-        itemLibrary[0][2][0].damage, itemLibrary[0][2][0].range, itemLibrary[0][2][0].attackCd, itemLibrary[0][2][0].knockback));
+    items.splice(0, 1, new itemLibrary[0][0][0].create);
+    //    items.splice(0, 1, new Weapon(itemLibrary[0][0][1].type, itemLibrary[0][0][1].color, itemLibrary[0][0][1].size, itemLibrary[0][0][1].speed,
+    //        itemLibrary[0][0][1].damage, itemLibrary[0][0][1].range, itemLibrary[0][0][1].attackCd, itemLibrary[0][0][1].knockback));
+    //    items.splice(1, 1, new Weapon(itemLibrary[0][1][0].type, itemLibrary[0][1][0].color, itemLibrary[0][1][0].size, itemLibrary[0][1][0].speed,
+    //        itemLibrary[0][1][0].damage, itemLibrary[0][1][0].range, itemLibrary[0][1][0].attackCd, itemLibrary[0][1][0].knockback));
+    //    items.splice(2, 1, new Weapon(itemLibrary[0][2][0].type, itemLibrary[0][2][0].color, itemLibrary[0][2][0].size, itemLibrary[0][2][0].speed,
+    //        itemLibrary[0][2][0].damage, itemLibrary[0][2][0].range, itemLibrary[0][2][0].attackCd, itemLibrary[0][2][0].knockback));
 
     //        items.splice(3,1, consumables[0]);
     //        items.splice(4,1, consumables[1]);
