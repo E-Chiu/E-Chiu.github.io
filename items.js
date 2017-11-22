@@ -16,7 +16,6 @@ class Weapon {
     }
 }
 
-
 //all weapons
 let weapons = [
     //rarity zero
@@ -28,7 +27,7 @@ let weapons = [
             draw() {
                 strokeWeight(10);
                 stroke("brown");
-                line(this.x, this.y, this.x + 40, this.y - 40);
+                line(this.pos.x - 20, this.pos.y + 20, this.pos.x + 20, this.pos.y - 20);
             }
         }
     }, {
@@ -39,9 +38,10 @@ let weapons = [
             draw() {
                 strokeWeight(7);
                 stroke("white");
-                line(this.x, this.y, this.x + 20, this.y - 20);
+                line(this.pos.x - 10, this.pos.y + 10, this.pos.x + 15, this.pos.y - 15);
                 stroke("brown");
-                line(this.x, this.y, this.x + 5, this.y - 5);
+                line(this.pos.x - 10, this.pos.y + 10, this.pos.x - 2.5, this.pos.y + 2.5);
+                line(this.pos.x - 8, this.pos.y - 3, this.pos.x + 3, this.pos.y + 8);
             }
         }
     }],
@@ -54,11 +54,11 @@ let weapons = [
                 }
                 draw() {
                     strokeWeight(10);
-                    stroke(200);
-                    line(this.pos.x, this.pos.y, this.pos.x + 50, this.pos.y - 50);
+                    stroke(255);
+                    line(this.pos.x - 27.5, this.pos.y + 27.5, this.pos.x + 27.5, this.pos.y - 27.5);
                     stroke(80);
-                    line(this.pos.x, this.pos.y, this.pos.x + 15, this.pos.y - 15);
-                    line(this.pos.pos.x + 5, this.pos.y - 30, this.pos.x + 30, this.pos.y - 5);
+                    line(this.pos.x - 27.5, this.pos.y + 27.5, this.pos.x - 7.5, this.pos.y + 7.5);
+                    line(this.pos.x - 21.5, this.pos.y - 4, this.pos.x + 6, this.pos.y + 19);
                 }
             }
     },
@@ -172,7 +172,7 @@ let consumables = [
         amount: 1,
         activate: function () {
             if (player.roars[3] == 0) {
-                player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 200, 0, player.pos.x, player.pos.y));
+                player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 300, 0, player.pos.x, player.pos.y));
                 this.amount--;
             }
         }
@@ -265,7 +265,7 @@ class BlackHole {
             }
         }
         if (this.roarSize <= this.maxRoar) {
-            this.roarSize = 200;
+            this.roarSize = 300
             this.holeNum++;
             if (this.holeNum == 6) {
                 for (let i = 0; i < enemies.length; i++) {
@@ -296,7 +296,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType].length);
     if (dropChance == 0) {
         //        droppedItems.push(itemLibrary[dropType][rarity][dropIndex]);
-        droppedItems.push(new itemLibrary[0][2][0].create);
+        droppedItems.push(new itemLibrary[0][1][1].create);
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }
