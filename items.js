@@ -68,17 +68,17 @@ let weapons = [
                     super("Katana", "melee", "white", 120, 40, 5, 180, 20, 15);
                 }
                 draw() {
-                    strokeWeight(6);
+                    strokeWeight(4);
                     stroke(200);
-                    line(this.pos.x, this.pos.y, this.pos.x + 55, this.pos.y - 55);
+                    line(this.pos.x - 22.5, this.pos.y + 22.5, this.pos.x + 25.5, this.pos.y - 25.5);
                     stroke("purple");
-                    line(this.pos.x, this.pos.y, this.pos.x + 20, this.pos.y - 20);
+                    line(this.pos.x - 22.50, this.pos.y + 22.5, this.pos.x - 4.5, this.pos.y + 4.5);
                     stroke("black");
-                    strokeWeight(3);
-                    line(this.pos.x + 1, this.pos.y - 2, this.pos.x + 19, this.pos.y - 20);
+                    strokeWeight(2);
+                    line(this.pos.x - 22.50, this.pos.y + 22.5, this.pos.x - 6, this.pos.y + 6);
                     stroke("yellow");
                     strokeWeight(2);
-                    line(this.pos.x + 18, this.pos.y - 25, this.pos.x + 25, this.pos.y - 18);
+                    line(this.pos.x - 6, this.pos.y, this.pos.x, this.pos.y + 6);
 
                 }
             }
@@ -95,10 +95,10 @@ let weapons = [
                     strokeWeight(10);
                     stroke("white");
                     fill("white");
-                    quad(this.pos.x + 40, this.pos.y - 50, this.pos.x + 65, this.pos.y - 40, this.pos.x + 60, this.pos.y - 33, this.pos.x + 52, this.pos.y - 30);
+                    quad(this.pos.x + 15, this.pos.y - 25, this.pos.x + 40, this.pos.y - 15, this.pos.x + 35, this.pos.y - 8, this.pos.x + 27, this.pos.y - 5);
                     stroke("brown");
                     strokeWeight(10);
-                    line(this.pos.x, this.pos.y, this.pos.x + 50, this.pos.y - 50);
+                    line(this.pos.x - 25, this.pos.y + 25, this.pos.x + 25, this.pos.y - 25);
                 }
             }
     }
@@ -107,76 +107,102 @@ let weapons = [
 
 //all consumables
 let consumables = [
-    {
-        create: class Potion {
-            constructor() {
-                this.name = "Health Potion";
-                this.amount = 1;
-                this.pos = createVector(0, 0);
-            }
-            draw() {
-                fill("red");
-                stroke("white");
-                strokeWeight(2);
-                ellipse
-            }
+    
+    //rarity zero
+    [{
+            create: class Potion {
+                constructor() {
+                    this.name = "Health Potion";
+                    this.amount = 1;
+                    this.pos = createVector(0, 0);
+                }
 
-            activate() {
-                if (player.lives < player.maxLives) {
-                    player.lives++;
+                draw() {
+                    fill("red");
+                    stroke("white");
+                    strokeWeight(2);
+                    ellipse(this.pos.x, this.pos.y, 30);
+                    fill(214, 138, 56);
+                    strokeWeight(3);
+                    quad(this.pos.x - 6, this.pos.y - 7, this.pos.x + 6, this.pos.y - 7, this.pos.x + 7.5, this.pos.y - 20,
+                        this.pos.x - 7.5, this.pos.y - 20);
+                }
+
+                activate() {
+                    if (player.lives < player.maxLives) {
+                        player.lives++;
+                        this.amount--;
+                    }
+                }
+            }
+    },
+        {
+            create: class Potion {
+                constructor() {
+                    this.name = "Energy Shield";
+                    this.amount = 1;
+                    this.pos = createVector(0, 0);
+                }
+
+                draw() {
+                    fill(0, 0, 255, 100);
+                    stroke("blue");
+                    ellipse(this.pos.x, this.pos.y, 50);
+                }
+
+                activate() {
+                    if (player.hasShield == false) {
+                        player.hasShield = true;
+                        this.amount--;
+                    }
+                }
+            }
+    }],
+    
+//rarity one 
+    [{
+            name: "Roar of Fear",
+            amount: 1,
+            activate: function () {
+                if (player.roars[0] == 0) {
+                    player.roars.splice(0, 1, new Roar("red", 5, 0, 300));
                     this.amount--;
                 }
             }
-        }
     },
-    {
-        name: "Energy Shield",
-        amount: 1,
-        activate: function () {
-            if (player.hasShield == false) {
-                player.hasShield = true;
-                this.amount--;
+        {
+            name: "Roar of Fire",
+            amount: 1,
+            activate: function () {
+                if (player.roars[2] == 0) {
+                    player.roars.splice(2, 1, new Roar('orange', 12, 0, 500));
+                    this.amount--;
+                }
             }
-        }
+    }],
+    
+    //rarity two
+    [{
+            name: "Roar of Ice",
+            amount: 1,
+            activate: function () {
+                if (player.roars[1] == 0) {
+                    player.roars.splice(1, 1, new Roar([0, 255, 255], 8, 0, 250));
+                    this.amount--;
+                }
+            }
     },
-    {
-        name: "Roar of Fear",
-        amount: 1,
-        activate: function () {
-            if (player.roars[0] == 0) {
-                player.roars.splice(0, 1, new Roar("red", 5, 0, 300));
-                this.amount--;
+        {
+            name: "Black Hole",
+            amount: 1,
+            activate: function () {
+                if (player.roars[3] == 0) {
+                    player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 300, 0, player.pos.x, player.pos.y));
+                    this.amount--;
+                }
             }
-        }
-    },
-    {
-        name: "Roar of Ice",
-        amount: 1,
-        activate: function () {
-            if (player.roars[1] == 0) {
-                player.roars.splice(1, 1, new Roar([0, 255, 255], 8, 0, 250));
-                this.amount--;
-            }
-        }
-    }, {
-        name: "Roar of Fire",
-        amount: 1,
-        activate: function () {
-            if (player.roars[2] == 0) {
-                player.roars.splice(2, 1, new Roar('orange', 12, 0, 500));
-                this.amount--;
-            }
-        }
-    }, {
-        name: "Black Hole",
-        amount: 1,
-        activate: function () {
-            if (player.roars[3] == 0) {
-                player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 300, 0, player.pos.x, player.pos.y));
-                this.amount--;
-            }
-        }
-    }
+    }]
+
 ];
 
 //all charms
@@ -291,12 +317,12 @@ function dropItem(rarity, x, y) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = chance(0, 2);
+    dropChance = 0
     dropType = chance(0, 2);
     dropIndex = chance(0, itemLibrary[dropType].length);
     if (dropChance == 0) {
         //        droppedItems.push(itemLibrary[dropType][rarity][dropIndex]);
-        droppedItems.push(new itemLibrary[0][1][1].create);
+        droppedItems.push(new itemLibrary[1][0][1].create);
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }
