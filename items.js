@@ -244,7 +244,7 @@ let consumables = [
             }
     },
         {
-            create: class BlackHole {
+            create: class BlackHoleItem {
                 constructor() {
                     this.name = "Black Hole";
                     this.type = "consumable";

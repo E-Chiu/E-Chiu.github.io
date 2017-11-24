@@ -214,7 +214,7 @@ function keyPressed() {
             if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
                 if (droppedItems[i].type == "consumable") {
                     for (j = 3; j < 7; j++) {
-                        if (items[j].name == droppedItems[i].name && items[j].amount < items[j].amountMax) {
+                        if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
                             items[j].amount++;
                             droppedItems.splice(i, 1);
                         }
