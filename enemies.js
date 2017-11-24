@@ -80,7 +80,7 @@ function killOff() {
 //Swings a sword
 class SwordDude extends Enemy {
     constructor(color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
-        super(color, x, y, size, speed, health);
+        super(color, x, y, size, speed, health, rarity);
         this.weaponColor = weaponColor;
         this.atkCd = attackCd;
         this.actualCd = attackCd;

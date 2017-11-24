@@ -107,13 +107,15 @@ let weapons = [
 
 //all consumables
 let consumables = [
-    
+
     //rarity zero
     [{
             create: class Potion {
                 constructor() {
                     this.name = "Health Potion";
+                    this.type = "consumable";
                     this.amount = 1;
+                    this.maxAmount = 3;
                     this.pos = createVector(0, 0);
                 }
 
@@ -137,16 +139,19 @@ let consumables = [
             }
     },
         {
-            create: class Potion {
+            create: class EnergyShield {
                 constructor() {
                     this.name = "Energy Shield";
+                    this.type = "consumable";
                     this.amount = 1;
+                    this.maxAmount = 3;
                     this.pos = createVector(0, 0);
                 }
 
                 draw() {
                     fill(0, 0, 255, 100);
                     stroke("blue");
+                    strokeWeight(2);
                     ellipse(this.pos.x, this.pos.y, 50);
                 }
 
@@ -158,47 +163,108 @@ let consumables = [
                 }
             }
     }],
-    
+
 //rarity one 
     [{
-            name: "Roar of Fear",
-            amount: 1,
-            activate: function () {
-                if (player.roars[0] == 0) {
-                    player.roars.splice(0, 1, new Roar("red", 5, 0, 300));
-                    this.amount--;
+            create: class RoarOfFear {
+                constructor() {
+                    this.name = "Roar of Fear";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 3;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    noFill();
+                    strokeWeight(4);
+                    stroke(255, 0, 0);
+                    ellipse(this.pos.x, this.pos.y, 50);
+                    ellipse(this.pos.x, this.pos.y, 30);
+                    ellipse(this.pos.x, this.pos.y, 12.5);
+                }
+                activate() {
+                    if (player.roars[0] == 0) {
+                        player.roars.splice(0, 1, new Roar("red", 5, 0, 300));
+                        this.amount--;
+                    }
+
                 }
             }
-    },
+                },
         {
-            name: "Roar of Fire",
-            amount: 1,
-            activate: function () {
-                if (player.roars[2] == 0) {
-                    player.roars.splice(2, 1, new Roar('orange', 12, 0, 500));
-                    this.amount--;
+            create: class RoarOfFire {
+                constructor() {
+                    this.name = "Roar of Fire";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 4;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    noFill();
+                    strokeWeight(4);
+                    stroke("orange");
+                    ellipse(this.pos.x, this.pos.y, 50);
+                    ellipse(this.pos.x, this.pos.y, 30);
+                    ellipse(this.pos.x, this.pos.y, 12.5);
+                }
+                activate() {
+                    if (player.roars[2] == 0) {
+                        player.roars.splice(2, 1, new Roar("orange", 12, 0, 500));
+                        this.amount--;
+                    }
                 }
             }
-    }],
-    
+                }],
+
     //rarity two
     [{
-            name: "Roar of Ice",
-            amount: 1,
-            activate: function () {
-                if (player.roars[1] == 0) {
-                    player.roars.splice(1, 1, new Roar([0, 255, 255], 8, 0, 250));
-                    this.amount--;
+            create: class RoarOfIce {
+                constructor() {
+                    this.name = "Roar of Ice";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 2;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    noFill();
+                    strokeWeight(4);
+                    stroke(0, 255, 255);
+                    ellipse(this.pos.x, this.pos.y, 50);
+                    ellipse(this.pos.x, this.pos.y, 30);
+                    ellipse(this.pos.x, this.pos.y, 12.5);
+                }
+                activate() {
+                    if (player.roars[1] == 0) {
+                        player.roars.splice(1, 1, new Roar([0, 255, 255], 8, 0, 250));
+                        this.amount--;
+                    }
                 }
             }
     },
         {
-            name: "Black Hole",
-            amount: 1,
-            activate: function () {
-                if (player.roars[3] == 0) {
-                    player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 300, 0, player.pos.x, player.pos.y));
-                    this.amount--;
+            create: class BlackHole {
+                constructor() {
+                    this.name = "Black Hole";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 3;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    noFill();
+                    strokeWeight(4);
+                    stroke(74, 0, 112);
+                    ellipse(this.pos.x, this.pos.y, 50);
+                    ellipse(this.pos.x, this.pos.y, 30);
+                    ellipse(this.pos.x, this.pos.y, 12.5);
+                }
+                activate() {
+                    if (player.roars[3] == 0) {
+                        player.roars.splice(3, 1, new BlackHole([74, 0, 112], 15, 300, 0, player.pos.x, player.pos.y));
+                        this.amount--;
+                    }
                 }
             }
     }]
@@ -317,12 +383,12 @@ function dropItem(rarity, x, y) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = 0
-    dropType = chance(0, 2);
-    dropIndex = chance(0, itemLibrary[dropType].length);
+    dropChance = chance(0, 3);
+    dropType = chance(0, 1);
+    dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
-        //        droppedItems.push(itemLibrary[dropType][rarity][dropIndex]);
-        droppedItems.push(new itemLibrary[1][0][1].create);
+        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
+        //        droppedItems.push(new itemLibrary[1][2][1].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

@@ -33,10 +33,10 @@ function setup() {
 
     //        items.splice(3,1, consumables[0]);
     //        items.splice(4,1, consumables[1]);
-    items.splice(3, 1, consumables[1][0]);
-    items.splice(4, 1, consumables[1][1]);
-    items.splice(5, 1, consumables[2][0]);
-    items.splice(6, 1, consumables[2][1]);
+    items.splice(3, 1, new consumables[1][0].create());
+    items.splice(4, 1, new consumables[1][1].create());
+    items.splice(5, 1, new consumables[2][0].create());
+    items.splice(6, 1, new consumables[2][1].create());
 }
 
 // DRAW FUNCTION - Loops @ 60FPS by default
