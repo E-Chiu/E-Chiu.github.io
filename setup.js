@@ -8,6 +8,22 @@ function drawMap() {
     line(0, 810, 1000, 810);
     strokeWeight(5);
     line(0, 710, 1000, 710);
+    
+    if(swap) {
+        noStroke();
+        fill("white");
+        textSize(32);
+        text("Press the slot number you wish to swap it with.", 500, 100)
+    }
+    for (let i = 0; i < droppedItems.length; i++) {
+        if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < player.size / 2) {
+            fill("white");
+            noStroke();
+            textSize(32);
+            text("Press space to pick up " + droppedItems[i].name + ".", 500, 50);
+            break;
+        }
+    }
 }
 
 //drawing the hud
@@ -42,6 +58,14 @@ function drawHud() {
         }
         if (i > 2) {
             ellipse((i - 3) * 50 + 40, 780, 36, 36);
+        }
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        if(items[i] != 0) {
+            items[i].pos.x = i * 81.5 + 217.5;
+            items[i].pos.y = 758.6;
+            items[i].draw();
         }
     }
 }

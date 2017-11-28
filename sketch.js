@@ -1,4 +1,6 @@
 // SETUP FUNCTION - Runs once at beginning of program
+let swap;
+
 function setup() {
     createCanvas(1000, 810);
     background("black");
@@ -24,13 +26,7 @@ function setup() {
 
     //type, color, size, speed, damage, range, attackCd, knockback
     items.splice(0, 1, new itemLibrary[0][0][0].create);
-    //    items.splice(0, 1, new Weapon(itemLibrary[0][0][1].type, itemLibrary[0][0][1].color, itemLibrary[0][0][1].size, itemLibrary[0][0][1].speed,
-    //        itemLibrary[0][0][1].damage, itemLibrary[0][0][1].range, itemLibrary[0][0][1].attackCd, itemLibrary[0][0][1].knockback));
-    //    items.splice(1, 1, new Weapon(itemLibrary[0][1][0].type, itemLibrary[0][1][0].color, itemLibrary[0][1][0].size, itemLibrary[0][1][0].speed,
-    //        itemLibrary[0][1][0].damage, itemLibrary[0][1][0].range, itemLibrary[0][1][0].attackCd, itemLibrary[0][1][0].knockback));
-    //    items.splice(2, 1, new Weapon(itemLibrary[0][2][0].type, itemLibrary[0][2][0].color, itemLibrary[0][2][0].size, itemLibrary[0][2][0].speed,
-    //        itemLibrary[0][2][0].damage, itemLibrary[0][2][0].range, itemLibrary[0][2][0].attackCd, itemLibrary[0][2][0].knockback));
-
+    items.splice(1, 1, new itemLibrary[0][2][0].create);
     //        items.splice(3,1, consumables[0]);
     //        items.splice(4,1, consumables[1]);
     items.splice(3, 1, new consumables[1][0].create());
