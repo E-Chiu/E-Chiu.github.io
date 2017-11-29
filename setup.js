@@ -8,12 +8,12 @@ function drawMap() {
     line(0, 810, 1000, 810);
     strokeWeight(5);
     line(0, 710, 1000, 710);
-    
-    if(swap) {
+
+    if (player.buttonState == "pickup") {
         noStroke();
         fill("white");
         textSize(32);
-        text("Press the slot number you wish to swap it with.", 500, 100)
+        text("Press the slot number you wish to swap it with.", 500, 100);
     }
     for (let i = 0; i < droppedItems.length; i++) {
         if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < player.size / 2) {
@@ -31,23 +31,27 @@ function drawHud() {
     fill("grey");
     strokeWeight(0);
     rect(-1, 710, 1001, 100);
-    fill("black");
     for (let i = 0; i < 10; i++) {
+        fill("black");
         if (player.activeWeapon == i) {
             strokeWeight(7);
         } else {
             strokeWeight(2.5);
         }
-        if (i == 0) {
+        if (i >= 0) {
             stroke("red");
         }
-        if (i == 3) {
+        if (i >= 3) {
             stroke("green");
         }
-        if (i == 7) {
+        if (i >= 7) {
             stroke("blue");
         }
         rect(i * 81.5 + 185, 726, 65, 65);
+        noStroke();
+        fill("white");
+        textSize(20);
+        text(i + 1, i * 81.5 + 193, 744);
     }
 
     fill("red");
@@ -60,12 +64,18 @@ function drawHud() {
             ellipse((i - 3) * 50 + 40, 780, 36, 36);
         }
     }
-
+    //drawing items
     for (let i = 0; i < items.length; i++) {
-        if(items[i] != 0) {
+        if (items[i] != 0) {
             items[i].pos.x = i * 81.5 + 217.5;
             items[i].pos.y = 758.6;
             items[i].draw();
+            if (items[i].type == "consumable") {
+                fill("white");
+                noStroke();
+                textSize(20);
+                text(items[i].amount, i * 81.5 + 245, 788);
+            }
         }
     }
 }

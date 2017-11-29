@@ -7,8 +7,9 @@ class Player {
         //items
         this.hasShield = false;
         this.roars = [0, 0, 0, 0];
+        this.buttonState = "notPickup";
+        this.swapIndex;
         //player stats
-        this.buttonState = "attack";
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -187,7 +188,7 @@ function keyPressed() {
         }
     }
     //switching weapons
-    if (player.buttonState == "attack") {
+    if (player.buttonState == "notPickup") {
         if (keyCode == 81) {
             if (player.activeWeapon == 0) {
                 player.activeWeapon = 2;
@@ -208,24 +209,26 @@ function keyPressed() {
         //using items
         if (keyCode > 51 && keyCode < 56) {
             items[keyCode - 49].activate();
+            if (items[keyCode - 49].amount == 0) {
+                items.splice(keyCode - 49, 1, 0);
+            }
         }
     }
     //picking up items
     if (player.buttonState == "pickup") {
-        for (let i = 0; i < droppedItems.length; i++) {
-            if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
-                if (droppedItems[i].type == "melee") {
-                    if (keyCode > 48 && keyCode < 52) {
-                        items.splice(keyCode - 49, 1, droppedItems[i]);
-                    }
-                } else if (droppedItems[i].type == "consumable") {
-                    if (keyCode > 51 && keyCode < 56) {
-                        items.splice(keyCode - 49, 1, droppedItems[i]);
-                    }
-                }
+        if (droppedItems[player.swapIndex].type == "melee") {
+            if (keyCode > 48 && keyCode < 52) {
+                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                droppedItems.splice(player.swapIndex, 1);
+                player.buttonState = "notPickup";
+            }
+        } else if (droppedItems[player.swapIndex].type == "consumable") {
+            if (keyCode > 51 && keyCode < 56) {
+                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                droppedItems.splice(player.swapIndex, 1);
+                player.buttonState = "notPickup";
             }
         }
-
     }
     if (keyCode == 32) {
         checkItem: for (let i = 0; i < droppedItems.length; i++) {
@@ -239,8 +242,9 @@ function keyPressed() {
                         }
                     }
                 }
-                swap = true;
                 player.buttonState = "pickup";
+                player.swapIndex = i;
+                break checkItem;
             }
         }
     }

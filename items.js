@@ -383,7 +383,7 @@ function dropItem(rarity, x, y) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = chance(0, 3);
+    dropChance = chance(0, 2);
     dropType = chance(0, 1);
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
