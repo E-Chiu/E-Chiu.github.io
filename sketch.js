@@ -48,6 +48,7 @@ function draw() {
     player.attack();
     player.draw();
     player.invul();
+    player.rangedAttack();
     //roar
     for (let i = 0; i < player.roars.length; i++) {
         if (player.roars[i] != 0) {

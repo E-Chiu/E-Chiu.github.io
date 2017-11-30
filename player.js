@@ -9,6 +9,7 @@ class Player {
         this.roars = [0, 0, 0, 0];
         this.buttonState = "notPickup";
         this.swapIndex;
+        this.bulletArray = [];
         //player stats
         this.alpha = 255;
         this.canHit = true;
@@ -36,6 +37,13 @@ class Player {
                     this.attackScope.start += 1;
                     this.meleeAttack();
                 }
+            } else if (items[this.activeWeapon].type == "ranged") {
+                for (let i = 0; i < items[this.activeWeapon].speed; i++) {
+                    if (items[this.activeWeapon].ammo < 0) {
+                        this.bulletArray.push(new bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed));
+                        this.isAttacking = false;
+                    }
+                }
             }
         }
         for (let i = 0; i < 3; i++) {
@@ -45,8 +53,7 @@ class Player {
             }
         }
     }
-
-
+    //attacking with a melee weapon
     meleeAttack() {
         if (this.isAttacking) {
             let length = items[this.activeWeapon].size;
@@ -64,6 +71,12 @@ class Player {
                     enemies[i].canHit = true;
                 }
             }
+        }
+    }
+    //attacking with a ranged weapon
+    rangedAttack() {
+        for (let i = 0; i < this.bulletArray.length; i++) {
+            this.bulletArray[i].move();
         }
     }
     //calculate if hit enemies
@@ -157,95 +170,96 @@ function keyPressed() {
             if (items[player.activeWeapon].type == "melee") {
                 player.attackScope.start = 270 - (items[player.activeWeapon].range / 2);
                 player.attackScope.end = 270 + (items[player.activeWeapon].range / 2);
+            } else if(items[player.activeWeapon].type == "melee") {
+                player.attackScope.start = 270;
             }
         }
-    }
-    if (keyCode == 40) {
-        if (items[player.activeWeapon].actualCd == 0) {
-            player.isAttacking = true;
-            if (items[player.activeWeapon].type == "melee") {
-                player.attackScope.start = 90 - (items[player.activeWeapon].range / 2);
-                player.attackScope.end = 90 + (items[player.activeWeapon].range / 2);
+        if (keyCode == 40) {
+            if (items[player.activeWeapon].actualCd == 0) {
+                player.isAttacking = true;
+                if (items[player.activeWeapon].type == "melee") {
+                    player.attackScope.start = 90 - (items[player.activeWeapon].range / 2);
+                    player.attackScope.end = 90 + (items[player.activeWeapon].range / 2);
+                }
             }
         }
-    }
-    if (keyCode == 37) {
-        if (items[player.activeWeapon].actualCd == 0) {
-            player.isAttacking = true;
-            if (items[player.activeWeapon].type == "melee") {
-                player.attackScope.start = 180 - (items[player.activeWeapon].range / 2);
-                player.attackScope.end = 180 + (items[player.activeWeapon].range / 2);
+        if (keyCode == 37) {
+            if (items[player.activeWeapon].actualCd == 0) {
+                player.isAttacking = true;
+                if (items[player.activeWeapon].type == "melee") {
+                    player.attackScope.start = 180 - (items[player.activeWeapon].range / 2);
+                    player.attackScope.end = 180 + (items[player.activeWeapon].range / 2);
+                }
             }
         }
-    }
-    if (keyCode == 39) {
-        if (items[player.activeWeapon].actualCd == 0) {
-            player.isAttacking = true;
-            if (items[player.activeWeapon].type == "melee") {
-                player.attackScope.start = 360 - (items[player.activeWeapon].range / 2);
-                player.attackScope.end = 360 + (items[player.activeWeapon].range / 2);
+        if (keyCode == 39) {
+            if (items[player.activeWeapon].actualCd == 0) {
+                player.isAttacking = true;
+                if (items[player.activeWeapon].type == "melee") {
+                    player.attackScope.start = 360 - (items[player.activeWeapon].range / 2);
+                    player.attackScope.end = 360 + (items[player.activeWeapon].range / 2);
+                }
             }
         }
-    }
-    //switching weapons
-    if (player.buttonState == "notPickup") {
-        if (keyCode == 81) {
-            if (player.activeWeapon == 0) {
-                player.activeWeapon = 2;
-            } else if (player.activeWeapon == 1) {
-                player.activeWeapon = 0;
-            } else if (player.activeWeapon == 2) {
-                player.activeWeapon = 1;
+        //switching weapons
+        if (player.buttonState == "notPickup") {
+            if (keyCode == 81) {
+                if (player.activeWeapon == 0) {
+                    player.activeWeapon = 2;
+                } else if (player.activeWeapon == 1) {
+                    player.activeWeapon = 0;
+                } else if (player.activeWeapon == 2) {
+                    player.activeWeapon = 1;
+                }
+            } else if (keyCode == 69) {
+                if (player.activeWeapon == 0) {
+                    player.activeWeapon = 1;
+                } else if (player.activeWeapon == 1) {
+                    player.activeWeapon = 2;
+                } else if (player.activeWeapon == 2) {
+                    player.activeWeapon = 0;
+                }
             }
-        } else if (keyCode == 69) {
-            if (player.activeWeapon == 0) {
-                player.activeWeapon = 1;
-            } else if (player.activeWeapon == 1) {
-                player.activeWeapon = 2;
-            } else if (player.activeWeapon == 2) {
-                player.activeWeapon = 0;
-            }
-        }
-        //using items
-        if (keyCode > 51 && keyCode < 56) {
-            items[keyCode - 49].activate();
-            if (items[keyCode - 49].amount == 0) {
-                items.splice(keyCode - 49, 1, 0);
-            }
-        }
-    }
-    //picking up items
-    if (player.buttonState == "pickup") {
-        if (droppedItems[player.swapIndex].type == "melee") {
-            if (keyCode > 48 && keyCode < 52) {
-                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
-                droppedItems.splice(player.swapIndex, 1);
-                player.buttonState = "notPickup";
-            }
-        } else if (droppedItems[player.swapIndex].type == "consumable") {
+            //using items
             if (keyCode > 51 && keyCode < 56) {
-                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
-                droppedItems.splice(player.swapIndex, 1);
-                player.buttonState = "notPickup";
+                items[keyCode - 49].activate();
+                if (items[keyCode - 49].amount == 0) {
+                    items.splice(keyCode - 49, 1, 0);
+                }
             }
         }
-    }
-    if (keyCode == 32) {
-        checkItem: for (let i = 0; i < droppedItems.length; i++) {
-            if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
-                if (droppedItems[i].type == "consumable") {
-                    for (j = 3; j < 7; j++) {
-                        if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
-                            items[j].amount++;
-                            droppedItems.splice(i, 1);
-                            break checkItem;
+        //picking up items
+        if (player.buttonState == "pickup") {
+            if (droppedItems[player.swapIndex].type == "melee" || droppedItems[player.swapIndex].type == "ranged") {
+                if (keyCode > 48 && keyCode < 52) {
+                    items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                    droppedItems.splice(player.swapIndex, 1);
+                    player.buttonState = "notPickup";
+                }
+            } else if (droppedItems[player.swapIndex].type == "consumable") {
+                if (keyCode > 51 && keyCode < 56) {
+                    items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                    droppedItems.splice(player.swapIndex, 1);
+                    player.buttonState = "notPickup";
+                }
+            }
+        }
+        if (keyCode == 32) {
+            checkItem: for (let i = 0; i < droppedItems.length; i++) {
+                if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
+                    if (droppedItems[i].type == "consumable") {
+                        for (j = 3; j < 7; j++) {
+                            if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
+                                items[j].amount++;
+                                droppedItems.splice(i, 1);
+                                break checkItem;
+                            }
                         }
                     }
+                    player.buttonState = "pickup";
+                    player.swapIndex = i;
+                    break checkItem;
                 }
-                player.buttonState = "pickup";
-                player.swapIndex = i;
-                break checkItem;
             }
         }
     }
-}

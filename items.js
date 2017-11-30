@@ -16,34 +16,63 @@ class Weapon {
     }
 }
 
+class Bullet {
+    constructor(x, y, direction, size, color, speed) {
+        this.pos = createVector(x,y);
+        this.size = size;
+        this.color = color;
+        this.speed = speed;
+        if(this.direction == )
+    }
+}
+
 //all weapons
 let weapons = [
     //rarity zero
     [{
-        create: class Stick extends Weapon {
-            constructor() {
-                super("Stick", "melee", "brown", 100, 10, 10, 90, 60, 40);
+            create: class Stick extends Weapon {
+                constructor() {
+                    super("Stick", "melee", "brown", 100, 10, 10, 90, 60, 40);
+                }
+                draw() {
+                    strokeWeight(10);
+                    stroke("brown");
+                    line(this.pos.x - 20, this.pos.y + 20, this.pos.x + 20, this.pos.y - 20);
+                }
             }
-            draw() {
-                strokeWeight(10);
-                stroke("brown");
-                line(this.pos.x - 20, this.pos.y + 20, this.pos.x + 20, this.pos.y - 20);
-            }
-        }
     }, {
-        create: class Dagger extends Weapon {
-            constructor() {
-                super("Dagger", "melee", "white", 70, 100, 5, 2, 1, 20);
+            create: class Dagger extends Weapon {
+                constructor() {
+                    super("Dagger", "melee", "white", 70, 100, 5, 2, 1, 20);
+                }
+                draw() {
+                    strokeWeight(7);
+                    stroke("white");
+                    line(this.pos.x - 10, this.pos.y + 10, this.pos.x + 15, this.pos.y - 15);
+                    stroke("brown");
+                    line(this.pos.x - 10, this.pos.y + 10, this.pos.x - 2.5, this.pos.y + 2.5);
+                    line(this.pos.x - 8, this.pos.y - 3, this.pos.x + 3, this.pos.y + 8);
+                }
             }
-            draw() {
-                strokeWeight(7);
-                stroke("white");
-                line(this.pos.x - 10, this.pos.y + 10, this.pos.x + 15, this.pos.y - 15);
-                stroke("brown");
-                line(this.pos.x - 10, this.pos.y + 10, this.pos.x - 2.5, this.pos.y + 2.5);
-                line(this.pos.x - 8, this.pos.y - 3, this.pos.x + 3, this.pos.y + 8);
+    },
+        {
+            create: class Sling extends Weapon {
+                constructor() {
+                    super("Sling", "ranged", "grey", 25, 10, 15, 60, 1);
+                    this.ammo = 5;
+                    this.actualAmmo = 5;
+                }
+                draw() {
+                    strokeWeight(7);
+                    stroke("brown");
+                    line(this.pos.x - 10, this.pos.y + 8, this.pos.x + 2.5, this.pos.y - 2.5);
+                    line(this.pos.x + 2.5, this.pos.y - 2.5, this.pos.x + 16, this.pos.y + 1);
+                    line(this.pos.x + 2.5, this.pos.y - 2.5, this.pos.x + 8, this.pos.y - 15);
+                    strokeWeight(4);
+                    stroke("red");
+                    line(this.pos.x + 18, this.pos.y + 3, this.pos.x + 7, this.pos.y - 17)
+                }
             }
-        }
     }],
 
     //rarity one
@@ -387,8 +416,8 @@ function dropItem(rarity, x, y) {
     dropType = chance(0, 1);
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
-        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        //        droppedItems.push(new itemLibrary[1][2][1].create());
+        //        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
+        droppedItems.push(new itemLibrary[0][0][2].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }
