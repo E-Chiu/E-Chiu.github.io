@@ -17,12 +17,39 @@ class Weapon {
 }
 
 class Bullet {
-    constructor(x, y, direction, size, color, speed) {
-        this.pos = createVector(x,y);
+    constructor(x, y, direction, size, color, speed, damage) {
+        this.pos = createVector(x, y);
         this.size = size;
         this.color = color;
         this.speed = speed;
-        if(this.direction == )
+        this.direction = direction;
+        this.damage = damage;
+    }
+
+    move() {
+        if (this.direction == 90) {
+            this.pos.y += this.speed;
+        } else if (this.direction == 180) {
+            this.pos.x -= this.speed;
+        } else if (this.direction == 270) {
+            this.pos.y -= this.speed;
+        } else if (this.direction == 360) {
+            this.pos.x += this.speed;
+        }
+        noStroke();
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        for (let i = 0; i < enemies.length; i++) {
+            if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size) {
+                enemies[i].actualHealth -= this.damage;
+                for (let j = 0; j < player.bulletArray.length; j++) {
+                    if (player.bulletArray[i].pos.x == this.pos.x && player.bulletArray[i].pos.y == this.pos.y) {
+                        player.bulletArray.splice(j, 1);
+                        killOff();
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -58,7 +85,7 @@ let weapons = [
         {
             create: class Sling extends Weapon {
                 constructor() {
-                    super("Sling", "ranged", "grey", 25, 10, 15, 60, 1);
+                    super("Sling", "ranged", "grey", 25, 5, 15, 60, 1);
                     this.ammo = 5;
                     this.actualAmmo = 5;
                 }

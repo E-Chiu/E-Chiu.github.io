@@ -76,6 +76,12 @@ function drawHud() {
                 textSize(20);
                 text(items[i].amount, i * 81.5 + 245, 788);
             }
+            if (items[i].type == "ranged") {
+                fill("white");
+                noStroke();
+                textSize(20);
+                text(items[i].ammo, i * 81.5 + 234, 787);
+            }
         }
     }
 }
