@@ -45,6 +45,18 @@ class Enemy {
             }
             moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
+        if (this.pos.x <= 32.5) {
+            this.pos.x = 32.5;
+        }
+        if (this.pos.x >= 967.5) {
+            this.pos.x = 967.5;
+        }
+        if (this.pos.y <= 32.5) {
+            this.pos.y = 32.5;
+        }
+        if (this.pos.y >= 679.5) {
+            this.pos.y = 679.5;
+        }
         if (this.timer > 0) {
             this.timer--;
         }
@@ -73,6 +85,11 @@ function killOff() {
         if (enemies[i].actualHealth <= 0) {
             dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
             enemies.splice(i, 1);
+        }
+        if (player.bulletArray[i] != undefined) {
+            if (player.bulletArray[i].used) {
+                player.bulletArray.splice(i, 1);
+            }
         }
     }
 }

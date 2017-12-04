@@ -89,7 +89,6 @@ class Player {
                         let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
                         moveVector.setMag(items[this.activeWeapon].knockback);
                         enemies[i].pos.sub(moveVector);
-                        killOff();
                         break;
                     }
                 }

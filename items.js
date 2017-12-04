@@ -24,6 +24,7 @@ class Bullet {
         this.speed = speed;
         this.direction = direction;
         this.damage = damage;
+        this.used = false;
     }
 
     move() {
@@ -36,18 +37,26 @@ class Bullet {
         } else if (this.direction == 360) {
             this.pos.x += this.speed;
         }
+        if (this.pos.x <= 32.5) {
+            this.used = true;
+        }
+        if (this.pos.x >= 967.5) {
+            this.used = true;
+        }
+        if (this.pos.y <= 32.5) {
+            this.used = true;
+        }
+        if (this.pos.y >= 679.5) {
+            this.used = true;
+        }
         noStroke();
         fill(this.color);
         ellipse(this.pos.x, this.pos.y, this.size);
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size) {
+            if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
                 enemies[i].actualHealth -= this.damage;
-                for (let j = 0; j < player.bulletArray.length; j++) {
-                    if (player.bulletArray[i].pos.x == this.pos.x && player.bulletArray[i].pos.y == this.pos.y) {
-                        player.bulletArray.splice(j, 1);
-                        killOff();
-                    }
-                }
+                this.used = true;
+                break;
             }
         }
     }
@@ -85,7 +94,7 @@ let weapons = [
         {
             create: class Sling extends Weapon {
                 constructor() {
-                    super("Sling", "ranged", "grey", 25, 5, 15, 60, 1);
+                    super("Sling", "ranged", "grey", 25, 5, 15, 0, 0, 0);
                     this.ammo = 5;
                     this.actualAmmo = 5;
                 }
@@ -138,7 +147,29 @@ let weapons = [
 
                 }
             }
-    }],
+    },
+        {
+            create: class HandGun extends Weapon {
+                constructor() {
+                    super("Hand Gun", "ranged", [229, 230, 232], 10, 10, 20, 0, 0, 0);
+                    this.ammo = 10;
+                    this.actualAmmo = 10;
+                }
+                draw() {
+                    noFill();
+                    strokeWeight(3);
+                    stroke("brown");
+                    ellipse(this.pos.x - 2, this.pos.y + 6, 15);
+                    stroke("white");
+                    strokeWeight(1);
+                    fill("grey");
+                    rect(this.pos.x - 5, this.pos.y - 6, 30, 12);
+                    fill("brown");
+                    quad(this.pos.x - 5, this.pos.y - 6, this.pos.x + 2, this.pos.y + 5, this.pos.x - 10, this.pos.y + 19, this.pos.x - 20, this.pos.y + 19);
+                }
+            }
+    }
+    ],
 
     //rarity two
     [
@@ -157,6 +188,11 @@ let weapons = [
                     line(this.pos.x - 25, this.pos.y + 25, this.pos.x + 25, this.pos.y - 25);
                 }
             }
+    }, 
+    {
+        create: class SniperRifle extends Weapon {
+            
+        }
     }
         ]
 ];
@@ -444,7 +480,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         //        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        droppedItems.push(new itemLibrary[0][0][2].create());
+        droppedItems.push(new itemLibrary[0][1][2].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

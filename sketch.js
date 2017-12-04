@@ -64,6 +64,8 @@ function draw() {
         enemies[i].track();
         enemies[i].draw();
     }
+    //splicing
+    killOff();
     //stage
     //    stages[stageNum].draw();
     //display;
