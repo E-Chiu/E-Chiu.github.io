@@ -152,8 +152,8 @@ let weapons = [
             create: class HandGun extends Weapon {
                 constructor() {
                     super("Hand Gun", "ranged", [229, 230, 232], 10, 10, 20, 0, 0, 0);
-                    this.ammo = 10;
-                    this.actualAmmo = 10;
+                    this.ammo = 6;
+                    this.actualAmmo = 6;
                 }
                 draw() {
                     noFill();
@@ -188,11 +188,35 @@ let weapons = [
                     line(this.pos.x - 25, this.pos.y + 25, this.pos.x + 25, this.pos.y - 25);
                 }
             }
-    }, 
-    {
-        create: class SniperRifle extends Weapon {
-            
-        }
+    },
+        {
+            create: class SniperRifle extends Weapon {
+                constructor() {
+                    super("Sniper Rifle", "ranged", 242, 6, 50, 80, 0, 0, 0);
+                    this.ammo = 2;
+                    this.actualAmmo = 2;
+                }
+                draw() {
+                    strokeWeight(1);
+                    stroke("white");
+                    noFill();
+                    ellipse(this.pos.x - 17, this.pos.y + 7, 12);
+                    strokeWeight(3);
+                    stroke(81);
+                    rect(this.pos.x - 10, this.pos.y - 5, 10, 10);
+                    quad(this.pos.x - 15, this.pos.y - 8, this.pos.x - 15, this.pos.y - 5, this.pos.x + 5, this.pos.y - 8, this.pos.x + 5, this.pos.y - 5);
+                    strokeWeight(4);
+                    stroke(81);
+                    line(this.pos.x - 10, this.pos.y, this.pos.x + 40, this.pos.y);
+                    noStroke();
+                    fill(47, 71, 48);
+                    quad(this.pos.x - 25, this.pos.y - 2, this.pos.x + 5, this.pos.y - 2, this.pos.x + 5, this.pos.y + 7, this.pos.x - 35, this.pos.y + 5);
+                    stroke(47, 71, 48);
+                    strokeWeight(4);
+                    noFill();
+                    rect(this.pos.x - 40, this.pos.y + 3, 18, 10);
+                }
+            }
     }
         ]
 ];
@@ -365,8 +389,36 @@ let consumables = [
 
 //all charms
 let charms = [
-
-
+    //rarity zero
+    [
+        {
+            create: class healthCharm {
+                constructor() {
+                    this.name = "Health Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill("red");
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    player.maxLives++;
+                    player.lives++;
+                }
+                takeOff() {
+                    player.maxLives--;
+                    if (player.lives > player.maxLives) {
+                        player.lives = player.maxLives;
+                    }
+                }
+            }
+}
+        ]
 ];
 
 //all items
@@ -480,7 +532,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         //        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        droppedItems.push(new itemLibrary[0][1][2].create());
+        droppedItems.push(new itemLibrary[2][0][0].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

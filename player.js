@@ -38,10 +38,10 @@ class Player {
                     this.meleeAttack();
                 }
             } else if (items[this.activeWeapon].type == "ranged") {
-                    if (items[this.activeWeapon].ammo > 0) {
-                        this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage));
-                        this.isAttacking = false;
-                        items[this.activeWeapon].ammo --;
+                if (items[this.activeWeapon].ammo > 0) {
+                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage));
+                    this.isAttacking = false;
+                    items[this.activeWeapon].ammo--;
                 }
             }
         }
@@ -246,6 +246,24 @@ function keyPressed() {
                 items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
                 droppedItems.splice(player.swapIndex, 1);
                 player.buttonState = "notPickup";
+            }
+        } else if (droppedItems[player.swapIndex].type == "charm") {
+            if (keyCode > 55 && keyCode < 58 || keyCode == 48) {
+                if (keyCode == 48) {
+                    if (items[9] != 0) {
+                        items[9].takeOff();
+                    }
+                    items.splice(9, 1, droppedItems[player.swapIndex]);
+                    items[9].putOn();
+                } else {
+                    if(items[keyCode - 49] != 0) {
+                        items[keyCode - 49].takeOff();
+                    }
+                    items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                    droppedItems.splice(player.swapIndex, 1);
+                    player.buttonState = "notPickup";
+                    items[keyCode - 49].putOn();
+                }
             }
         }
     }

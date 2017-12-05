@@ -22,7 +22,7 @@ function setup() {
     enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
     enemies.push(new SwordDude("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
     enemies.push(new SwordDude("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
-    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 10, 1, "white", 60, 180, 300, 10));
+    enemies.push(new SwordDude("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
 
     //type, color, size, speed, damage, range, attackCd, knockback
     items.splice(0, 1, new itemLibrary[0][0][0].create);
