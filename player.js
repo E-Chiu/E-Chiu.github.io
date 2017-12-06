@@ -5,11 +5,14 @@ let items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 class Player {
     constructor() {
         //items
+        this.shieldGetTimer = 0;
         this.hasShield = false;
         this.roars = [0, 0, 0, 0];
         this.buttonState = "notPickup";
         this.swapIndex;
         this.bulletArray = [];
+        this.cdMod = 0;
+        this.atkMod = 1;
         //player stats
         this.alpha = 255;
         this.canHit = true;
@@ -47,7 +50,7 @@ class Player {
         }
         for (let i = 0; i < 3; i++) {
             if (items[i].actualCd > 0) {
-                items[i].actualCd--;
+                items[i].actualCd -= 1 + this.cdMod;
 
             }
         }
@@ -85,7 +88,7 @@ class Player {
                 if (dist(enemies[i].pos.x, enemies[i].pos.y, x1 + (x2 - x1) * ((j + 1) / items[this.activeWeapon].size), y1 + (y2 - y1) * ((j + 1) / items[this.activeWeapon].size)) < enemies[i].size / 2) {
                     if (enemies[i].canHit) {
                         enemies[i].canHit = false;
-                        enemies[i].actualHealth -= items[this.activeWeapon].damage;
+                        enemies[i].actualHealth -= items[this.activeWeapon].damage * this.atkMod;
                         let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
                         moveVector.setMag(items[this.activeWeapon].knockback);
                         enemies[i].pos.sub(moveVector);
@@ -125,6 +128,16 @@ class Player {
         fill(125, 125, 125, this.alpha);
         strokeWeight(0);
         ellipse(this.pos.x, this.pos.y, this.size);
+        for (let i = 7; i < 10; i++) {
+            if (items[i].name == "Shield Charm") {
+                if (this.shieldGetTimer % 480 == 0 && this.shieldGetTimer > 0) {
+                    this.hasShield = true;
+                    this.shieldGetTimer = 0;
+                } else {
+                    this.shieldGetTimer++;
+                }
+            }
+        }
         if (this.hasShield) {
             stroke(61, 232, 255);
             strokeWeight(2);
@@ -256,14 +269,14 @@ function keyPressed() {
                     items.splice(9, 1, droppedItems[player.swapIndex]);
                     items[9].putOn();
                 } else {
-                    if(items[keyCode - 49] != 0) {
+                    if (items[keyCode - 49] != 0) {
                         items[keyCode - 49].takeOff();
                     }
-                    items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
-                    droppedItems.splice(player.swapIndex, 1);
-                    player.buttonState = "notPickup";
-                    items[keyCode - 49].putOn();
                 }
+                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                droppedItems.splice(player.swapIndex, 1);
+                player.buttonState = "notPickup";
+                items[keyCode - 49].putOn();
             }
         }
     }

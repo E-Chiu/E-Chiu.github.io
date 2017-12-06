@@ -54,7 +54,7 @@ class Bullet {
         ellipse(this.pos.x, this.pos.y, this.size);
         for (let i = 0; i < enemies.length; i++) {
             if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
-                enemies[i].actualHealth -= this.damage;
+                enemies[i].actualHealth -= this.damage * player.atkMod;
                 this.used = true;
                 break;
             }
@@ -392,7 +392,7 @@ let charms = [
     //rarity zero
     [
         {
-            create: class healthCharm {
+            create: class HealthCharm {
                 constructor() {
                     this.name = "Health Charm";
                     this.type = "charm";
@@ -412,13 +412,146 @@ let charms = [
                 }
                 takeOff() {
                     player.maxLives--;
-                    if (player.lives > player.maxLives) {
-                        player.lives = player.maxLives;
-                    }
+                    player.lives--;
+                }
+            }
+},
+        {
+            create: class SpeedCharm {
+                constructor() {
+                    this.name = "Speed Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill("blue");
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    player.speed += 2;
+                }
+                takeOff() {
+                    player.speed -= 2;
+                }
+            }
+},
+        {
+            create: class CooldownCharm {
+                constructor() {
+                    this.name = "Cooldown Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill(0, 255, 191);
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    player.cdMod += 1;
+                }
+                takeOff() {
+                    player.speed -= 1;
+                }
+            }
+},
+        {
+            create: class PowerCharm {
+                constructor() {
+                    this.name = "Power Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill(76, 0, 0);
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    player.atkMod += .2;
+                }
+                takeOff() {
+                    player.atkMod -= .2;
+                }
+            }
+},
+        {
+            create: class ShieldCharm {
+                constructor() {
+                    this.name = "Shield Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill("black");
+                    stroke("blue");
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                    noStroke();
+                    fill(0, 0, 255, 100);
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {}
+                takeOff() {}
+            }
+}
+        ],
+    //rarity one
+    [],
+    //rarity two
+    [
+        {
+            create: class DivineCharm {
+                constructor() {
+                    this.name = "Divine Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill("red");
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                    noStroke();
+                    fill("blue");
+                    ellipse(this.pos.x, this.pos.y + 20, 15);
+                    fill(0, 255, 191);
+                    ellipse(this.pos.x, this.pos.y + 20, 10);
+                    fill(255, 215, 0);
+                    ellipse(this.pos.x, this.pos.y + 20, 5);
+                }
+                putOn() {
+                    player.maxLives++;
+                    player.lives++;
+                    player.speed += 2;
+                    player.cdMod += 1;
+                    player.atkMod += .2;
+                }
+                takeOff() {
+                    player.maxLives--;
+                    player.lives--;
+                    player.speed -= 2;
+                    player.cdMod -= 1;
+                    player.atkMod -= .2;
                 }
             }
 }
-        ]
+    ],
 ];
 
 //all items
@@ -529,10 +662,14 @@ function dropItem(rarity, x, y) {
     let dropIndex;
     dropChance = chance(0, 2);
     dropType = chance(0, 1);
-    dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
+    if (dropType != 1) {
+        if (rarity != 2) {
+            rarity = 0;
+        }
+    }
     if (dropChance == 0) {
-        //        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        droppedItems.push(new itemLibrary[2][0][0].create());
+        droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
+        //        droppedItems.push(new itemLibrary[2][0][4].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }
