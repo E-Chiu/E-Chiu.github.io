@@ -1,5 +1,10 @@
 // SETUP FUNCTION - Runs once at beginning of program
 let swap;
+let star;
+
+function preload() {
+    star = loadImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA0klEQVRYR+2VURKAIAhE8Trd/yxdxyamnFKDBT6cZvA3ld3HSoUWr7K4PqWAJJAEogQqUewlRQTUuhOVjSeJ+x73QSJaKoCL3ytCwUtgqYBX8SgFjcCZ8mE98XcCZtvFGtLHqVPr31PLh0rgy20fQoGKm8BtdiBxutIEaM5b60CkQ+olAWhx6wSDMmEp/isBkHvPTNBewWcQpexY2oAIkCYf6/A+QTQDs7nfn+WJ6flBaQRa8QurJvolBGmFJoCNXf1G9rbMoGcsl4Izy7YtBSSBA+UZSiEjNeNaAAAAAElFTkSuQmCC");
+}
 
 function setup() {
     createCanvas(1000, 810);
@@ -7,6 +12,8 @@ function setup() {
     angleMode(DEGREES);
     textAlign(CENTER);
     player = new Player(20, 355);
+    imageMode(CENTER);
+    star.loadPixels();
     //normal dudes = color, x, y, size, speed, health, rarity
     //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
 

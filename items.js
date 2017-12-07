@@ -331,6 +331,27 @@ let consumables = [
                     }
                 }
             }
+                },
+        {
+            create: class ItalianPlumbingStar {
+                constructor() {
+                    this.name = "Italian Plumbing Star";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 1;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    image(star, this.pos.x, this.pos.y, 80, 80);
+                }
+                activate() {
+                    player.starred = true;
+                    player.gotHit = true;
+                    player.canHit = false;
+                    player.timer = -360;
+                    this.amount--;
+                }
+            }
                 }],
 
     //rarity two
@@ -661,15 +682,16 @@ function dropItem(rarity, x, y) {
     let dropType;
     let dropIndex;
     dropChance = chance(0, 2);
-    dropType = chance(0, 1);
-    if (dropType != 1) {
+    dropType = chance(0, 2);
+    if (dropType == 2) {
         if (rarity != 2) {
             rarity = 0;
         }
     }
+    dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        //        droppedItems.push(new itemLibrary[2][0][4].create());
+        //        droppedItems.push(new itemLibrary[1][1][2].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

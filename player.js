@@ -13,7 +13,13 @@ class Player {
         this.bulletArray = [];
         this.cdMod = 0;
         this.atkMod = 1;
+        this.starred = false;
         //player stats
+        this.color = {
+            r: 125,
+            g: 125,
+            b: 125
+        }
         this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
@@ -101,23 +107,35 @@ class Player {
 
     //invulnerability when hit
     invul() {
-        if (this.timer % 15 == 0) {
-            if (this.timer == 15) {
-                this.alpha = 0;
-            } else if (this.timer == 30) {
-                this.alpha = 255;
-            } else if (this.timer == 45) {
-                this.alpha = 0;
-            } else if (this.timer == 60) {
-                this.alpha = 255;
+        if (this.starred) {
+            this.color.r = chance(0, 255);
+            this.color.g = chance(0, 255);
+            this.color.b = chance(0, 255);
+            this.timer++;
+        } else if (this.starred == false) {
+            if (this.timer % 15 == 0) {
+                if (this.timer == 15) {
+                    this.alpha = 0;
+                } else if (this.timer == 30) {
+                    this.alpha = 255;
+                } else if (this.timer == 45) {
+                    this.alpha = 0;
+                } else if (this.timer == 60) {
+                    this.alpha = 255;
+                }
             }
         }
         if (this.gotHit) {
+            console.log(this.timer);
             this.timer++;
-            if (this.timer % 61 == 0) {
+            if (this.timer > 60) {
                 this.canHit = true;
                 this.gotHit = false;
                 this.timer = 0;
+                this.color.r = 125;
+                this.color.g = 125;
+                this.color.b = 125;
+                this.starred = false;
             }
         }
     }
@@ -125,7 +143,7 @@ class Player {
     //drawing and moving
     draw() {
         //moving
-        fill(125, 125, 125, this.alpha);
+        fill(this.color.r, this.color.g, this.color.b, this.alpha);
         strokeWeight(0);
         ellipse(this.pos.x, this.pos.y, this.size);
         for (let i = 7; i < 10; i++) {
