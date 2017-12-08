@@ -17,7 +17,7 @@ class Weapon {
 }
 
 class Bullet {
-    constructor(x, y, direction, size, color, speed, damage) {
+    constructor(x, y, direction, size, color, speed, damage, type, lockOnDestX, lockOnDestY) {
         this.pos = createVector(x, y);
         this.size = size;
         this.color = color;
@@ -25,39 +25,59 @@ class Bullet {
         this.direction = direction;
         this.damage = damage;
         this.used = false;
+        this.type = type;
+        this.lockOnDest = createVector(lockOnDestX, lockOnDestY).setMag(1000);
     }
 
     move() {
-        if (this.direction == 90) {
-            this.pos.y += this.speed;
-        } else if (this.direction == 180) {
-            this.pos.x -= this.speed;
-        } else if (this.direction == 270) {
-            this.pos.y -= this.speed;
-        } else if (this.direction == 360) {
-            this.pos.x += this.speed;
-        }
-        if (this.pos.x <= 32.5) {
-            this.used = true;
-        }
-        if (this.pos.x >= 967.5) {
-            this.used = true;
-        }
-        if (this.pos.y <= 32.5) {
-            this.used = true;
-        }
-        if (this.pos.y >= 679.5) {
-            this.used = true;
-        }
-        noStroke();
-        fill(this.color);
-        ellipse(this.pos.x, this.pos.y, this.size);
-        for (let i = 0; i < enemies.length; i++) {
-            if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
-                enemies[i].actualHealth -= this.damage * player.atkMod;
-                this.used = true;
-                break;
+        if (this.type == "player") {
+            if (this.direction == 90) {
+                this.pos.y += this.speed;
+            } else if (this.direction == 180) {
+                this.pos.x -= this.speed;
+            } else if (this.direction == 270) {
+                this.pos.y -= this.speed;
+            } else if (this.direction == 360) {
+                this.pos.x += this.speed;
             }
+            if (this.pos.x <= 32.5) {
+                this.used = true;
+            }
+            if (this.pos.x >= 967.5) {
+                this.used = true;
+            }
+            if (this.pos.y <= 32.5) {
+                this.used = true;
+            }
+            if (this.pos.y >= 679.5) {
+                this.used = true;
+            }
+            noStroke();
+            fill(this.color);
+            ellipse(this.pos.x, this.pos.y, this.size);
+            for (let i = 0; i < enemies.length; i++) {
+                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
+                    enemies[i].actualHealth -= this.damage * player.atkMod;
+                    this.used = true;
+                    break;
+                }
+            }
+        } else if (this.type == "enemy") {
+            let moveVector;
+            moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
+            moveVector.setMag(this.speed);
+            this.pos.add(moveVector);
+                    if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+            if (player.hasShield && player.canHit == true && player.gotHit == false) {
+                player.canHit = false;
+                player.gotHit = true;
+                player.hasShield = false;
+            } else {
+                player.canHit = false;
+                player.gotHit = true;
+                player.lives--;
+            }
+        }
         }
     }
 }
@@ -331,27 +351,6 @@ let consumables = [
                     }
                 }
             }
-                },
-        {
-            create: class ItalianPlumbingStar {
-                constructor() {
-                    this.name = "Italian Plumbing Star";
-                    this.type = "consumable";
-                    this.amount = 1;
-                    this.maxAmount = 1;
-                    this.pos = createVector(0, 0);
-                }
-                draw() {
-                    image(star, this.pos.x, this.pos.y, 80, 80);
-                }
-                activate() {
-                    player.starred = true;
-                    player.gotHit = true;
-                    player.canHit = false;
-                    player.timer = -360;
-                    this.amount--;
-                }
-            }
                 }],
 
     //rarity two
@@ -404,7 +403,28 @@ let consumables = [
                     }
                 }
             }
-    }]
+    },
+        {
+            create: class ItalianPlumbingStar {
+                constructor() {
+                    this.name = "Italian Plumbing Star";
+                    this.type = "consumable";
+                    this.amount = 1;
+                    this.maxAmount = 1;
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    image(star, this.pos.x, this.pos.y, 80, 80);
+                }
+                activate() {
+                    player.starred = true;
+                    player.gotHit = true;
+                    player.canHit = false;
+                    player.timer = -360;
+                    this.amount--;
+                }
+            }
+                }]
 
 ];
 

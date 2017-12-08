@@ -66,7 +66,7 @@ class Enemy {
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            if (player.hasShield) {
+            if (player.hasShield && player.canHit == true && player.gotHit == false) {
                 player.canHit = false;
                 player.gotHit = true;
                 player.hasShield = false;
@@ -151,7 +151,7 @@ class SwordDude extends Enemy {
             for (let j = 0; j < this.swordLength; j++) {
                 if (dist(player.pos.x, player.pos.y, x1 + (x2 - x1) * ((j + 1) / this.swordLength), y1 + (y2 - y1) * ((j + 1) / this.swordLength)) < player.size / 2) {
                     if (player.canHit) {
-                        if (player.hasShield) {
+                        if (player.hasShield && player.canHit == true && player.gotHit == false) {
                             player.canHit = false;
                             player.gotHit = true;
                             player.hasShield = false;
@@ -163,6 +163,29 @@ class SwordDude extends Enemy {
                     }
                 }
             }
+        }
+    }
+}
+
+class ShooterGuy extends Enemy {
+    constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd) {
+        super(color, x, y, size, speed, health, rarity);
+        this.bulletSpeed = bulletSpeed;
+        this.bulletColor = bulletColor;
+        this.bulletSize = bulletSize
+        this.shootCd = shootCd;
+        this.actualCd = shootCd;
+        this.lockOn = createVector(0,0);
+    }
+    canShoot() {
+        if (this.actualCd == 30) {
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        } if(this.actualCd == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize,this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualCd = this.shootCd;
+        } else {
+            this.actualCd --;
         }
     }
 }

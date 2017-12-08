@@ -20,7 +20,6 @@ class Player {
             g: 125,
             b: 125
         }
-        this.alpha = 255;
         this.canHit = true;
         this.gotHit = false;
         this.timer = 0;
@@ -48,7 +47,7 @@ class Player {
                 }
             } else if (items[this.activeWeapon].type == "ranged") {
                 if (items[this.activeWeapon].ammo > 0) {
-                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage));
+                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0));
                     this.isAttacking = false;
                     items[this.activeWeapon].ammo--;
                 }
@@ -57,6 +56,9 @@ class Player {
         for (let i = 0; i < 3; i++) {
             if (items[i].actualCd > 0) {
                 items[i].actualCd -= 1 + this.cdMod;
+                if(items[i].actualCd < 0) {
+                    items[i].actualCd = 0;
+                }
 
             }
         }
@@ -115,13 +117,21 @@ class Player {
         } else if (this.starred == false) {
             if (this.timer % 15 == 0) {
                 if (this.timer == 15) {
-                    this.alpha = 0;
+                    this.color.r = 0;
+                    this.color.g = 0;
+                    this.color.b = 0;
                 } else if (this.timer == 30) {
-                    this.alpha = 255;
+                    this.color.r = 125;
+                    this.color.g = 125;
+                    this.color.b = 125;
                 } else if (this.timer == 45) {
-                    this.alpha = 0;
+                    this.color.r = 0;
+                    this.color.g = 0;
+                    this.color.b = 0;
                 } else if (this.timer == 60) {
-                    this.alpha = 255;
+                    this.color.r = 125;
+                    this.color.g = 125;
+                    this.color.b = 125;
                 }
             }
         }
