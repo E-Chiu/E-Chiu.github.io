@@ -56,7 +56,7 @@ class Player {
         for (let i = 0; i < 3; i++) {
             if (items[i].actualCd > 0) {
                 items[i].actualCd -= 1 + this.cdMod;
-                if(items[i].actualCd < 0) {
+                if (items[i].actualCd < 0) {
                     items[i].actualCd = 0;
                 }
 
@@ -136,7 +136,6 @@ class Player {
             }
         }
         if (this.gotHit) {
-            console.log(this.timer);
             this.timer++;
             if (this.timer > 60) {
                 this.canHit = true;
@@ -145,7 +144,10 @@ class Player {
                 this.color.r = 125;
                 this.color.g = 125;
                 this.color.b = 125;
-                this.starred = false;
+                if (this.starred) {
+                    this.starred = false;
+                    this.speed -= 1;
+                }
             }
         }
     }
@@ -184,7 +186,6 @@ class Player {
         if (keyIsDown(68)) {
             this.pos.x += this.speed;
         }
-
         if (this.pos.x <= 32.5) {
             this.pos.x = 32.5;
         }

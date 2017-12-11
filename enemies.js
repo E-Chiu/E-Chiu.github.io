@@ -89,6 +89,7 @@ function killOff() {
         if (player.bulletArray[i] != undefined) {
             if (player.bulletArray[i].used) {
                 player.bulletArray.splice(i, 1);
+                break;
             }
         }
     }
@@ -174,18 +175,38 @@ class ShooterGuy extends Enemy {
         this.bulletColor = bulletColor;
         this.bulletSize = bulletSize
         this.shootCd = shootCd;
-        this.actualCd = shootCd;
-        this.lockOn = createVector(0,0);
+        this.actualSCd = shootCd;
+        this.lockOn = createVector(0, 0);
     }
     canShoot() {
-        if (this.actualCd == 30) {
+        if (this.actualSCd == 30) {
             this.lockOn.x = player.pos.x;
             this.lockOn.y = player.pos.y;
-        } if(this.actualCd == 0) {
-            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize,this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
-            this.actualCd = this.shootCd;
+        }
+        if (this.actualSCd == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualSCd = this.shootCd;
         } else {
-            this.actualCd --;
+            this.actualSCd--;
+        }
+    }
+    draw() {
+        strokeWeight(3);
+        stroke(255, 255 * (this.actualSCd / this.shootCd), 0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill(255, 255 * (this.actualSCd / this.shootCd), 0);
+        ellipse(this.pos.x + (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 10);
+        fill("green");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
         }
     }
 }

@@ -26,7 +26,9 @@ class Bullet {
         this.damage = damage;
         this.used = false;
         this.type = type;
-        this.lockOnDest = createVector(lockOnDestX, lockOnDestY).setMag(1000);
+        this.lockOnDest = createVector(lockOnDestX, lockOnDestY);
+        this.moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
+        this.moveVector.setMag(10000);
     }
 
     move() {
@@ -40,18 +42,6 @@ class Bullet {
             } else if (this.direction == 360) {
                 this.pos.x += this.speed;
             }
-            if (this.pos.x <= 32.5) {
-                this.used = true;
-            }
-            if (this.pos.x >= 967.5) {
-                this.used = true;
-            }
-            if (this.pos.y <= 32.5) {
-                this.used = true;
-            }
-            if (this.pos.y >= 679.5) {
-                this.used = true;
-            }
             noStroke();
             fill(this.color);
             ellipse(this.pos.x, this.pos.y, this.size);
@@ -63,21 +53,36 @@ class Bullet {
                 }
             }
         } else if (this.type == "enemy") {
-            let moveVector;
-            moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
-            moveVector.setMag(this.speed);
-            this.pos.add(moveVector);
-                    if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                player.canHit = false;
-                player.gotHit = true;
-                player.hasShield = false;
-            } else {
-                player.canHit = false;
-                player.gotHit = true;
-                player.lives--;
+            this.moveVector.setMag(this.speed);
+            this.pos.add(this.moveVector);
+            noStroke();
+            fill(this.color);
+            ellipse(this.pos.x, this.pos.y, this.size);
+            if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+                if (player.hasShield && player.canHit == true && player.gotHit == false) {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.hasShield = false;
+                    this.used = true;
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                    this.used = true;
+                }
             }
         }
+        if (this.pos.x <= 0) {
+            this.used = true;
+        }
+        if (this.pos.x >= 1000) {
+            this.used = true;
+        }
+        if (this.pos.y <= 0) {
+            this.used = true;
+        }
+        if (this.pos.y >= 710) {
+            this.used = true;
         }
     }
 }
@@ -418,6 +423,7 @@ let consumables = [
                 }
                 activate() {
                     player.starred = true;
+                    player.speed += 1;
                     player.gotHit = true;
                     player.canHit = false;
                     player.timer = -360;
