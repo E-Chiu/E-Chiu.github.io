@@ -422,12 +422,14 @@ let consumables = [
                     image(star, this.pos.x, this.pos.y, 80, 80);
                 }
                 activate() {
-                    player.starred = true;
-                    player.speed += 1;
-                    player.gotHit = true;
-                    player.canHit = false;
-                    player.timer = -360;
-                    this.amount--;
+                    if (player.starred == false) {
+                        player.starred = true;
+                        player.speed += 1;
+                        player.gotHit = true;
+                        player.canHit = false;
+                        player.timer = -360;
+                        this.amount--;
+                    }
                 }
             }
                 }]

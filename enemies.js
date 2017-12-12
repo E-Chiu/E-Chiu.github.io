@@ -96,7 +96,7 @@ function killOff() {
 }
 
 //Swings a sword
-class SwordDude extends Enemy {
+class SwordSwingSusan extends Enemy {
     constructor(color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
         super(color, x, y, size, speed, health, rarity);
         this.weaponColor = weaponColor;
@@ -166,9 +166,27 @@ class SwordDude extends Enemy {
             }
         }
     }
+    draw() {
+        strokeWeight(0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill(255, 255 * (this.actualCd / this.atkCd), 0);
+        ellipse(this.pos.x - (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 15);
+        fill("green");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
+    }
 }
 
-class ShooterGuy extends Enemy {
+class ShooterSam extends Enemy {
     constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd) {
         super(color, x, y, size, speed, health, rarity);
         this.bulletSpeed = bulletSpeed;
@@ -191,8 +209,7 @@ class ShooterGuy extends Enemy {
         }
     }
     draw() {
-        strokeWeight(3);
-        stroke(255, 255 * (this.actualSCd / this.shootCd), 0);
+        strokeWeight(0);
         fill(this.color);
         ellipse(this.pos.x, this.pos.y, this.size);
         strokeWeight(2);
@@ -201,7 +218,105 @@ class ShooterGuy extends Enemy {
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
         strokeWeight(0);
         fill(255, 255 * (this.actualSCd / this.shootCd), 0);
-        ellipse(this.pos.x + (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 10);
+        ellipse(this.pos.x + (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 15);
+        fill("green");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
+    }
+}
+
+class KiterKid extends ShooterSam {
+    constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd) {
+        super(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd);
+    }
+    track() {
+        let moveVector;
+        if (this.blackHoled == false) {
+            moveVector = p5.Vector.sub(player.pos, this.pos);
+        } else if (this.blackHoled == true) {
+            if (this.speed == 0) {
+                this.speed = 1;
+                this.speedChanged = true;
+            }
+            moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
+        }
+        if (this.pos.x <= 32.5) {
+            this.pos.x = 32.5;
+        }
+        if (this.pos.x >= 967.5) {
+            this.pos.x = 967.5;
+        }
+        if (this.pos.y <= 32.5) {
+            this.pos.y = 32.5;
+        }
+        if (this.pos.y >= 679.5) {
+            this.pos.y = 679.5;
+        }
+        if (this.timer > 0) {
+            this.timer--;
+        }
+        if (this.timer == 1) {
+            this.speed = this.speed * -2;
+        }
+        moveVector.setMag(this.speed);
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) > 200) {
+            this.pos.add(moveVector);
+        } else if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 200) {
+            this.pos.sub(moveVector);
+        }
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+            if (player.hasShield && player.canHit == true && player.gotHit == false) {
+                player.canHit = false;
+                player.gotHit = true;
+                player.hasShield = false;
+            } else {
+                player.canHit = false;
+                player.gotHit = true;
+                player.lives--;
+            }
+        }
+    }
+}
+
+class NinjaNanny extends SwordSwingSusan {
+    constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
+        super(color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed);
+        this.bulletSpeed = bulletSpeed;
+        this.bulletColor = bulletColor;
+        this.bulletSize = bulletSize
+        this.shootCd = shootCd;
+        this.actualSCd = shootCd;
+        this.lockOn = createVector(0, 0);
+    }
+    canShoot() {
+        if (this.actualSCd == 30) {
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        }
+        if (this.actualSCd == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualSCd = this.shootCd;
+        } else {
+            this.actualSCd--;
+        }
+    }
+
+    draw() {
+        strokeWeight(0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill(255, 255 * (this.actualSCd / this.shootCd), 0);
+        ellipse(this.pos.x + (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 15);
+        fill(255, 255 * (this.actualCd / this.atkCd), 0);
+        ellipse(this.pos.x - (this.size / 2 + 10), this.pos.y + (this.size / 2 + 5), 15);
         fill("green");
         rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
         if (this.dot > 0) {
