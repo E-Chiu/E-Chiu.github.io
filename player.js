@@ -38,7 +38,7 @@ class Player {
 
     //attacking
     attack() {
-        if (this.isAttacking && items[this.activeWeapon] != 0) {            
+        if (this.isAttacking && items[this.activeWeapon] != 0) {
             items[this.activeWeapon].actualCd = items[this.activeWeapon].atkCd;
             if (items[this.activeWeapon].type == "melee") {
                 for (let i = 0; i < items[this.activeWeapon].speed; i++) {

@@ -22,7 +22,7 @@ function setup() {
 
     //    stages[stageNum].setup();
 
-    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0,"white", 50, 360));
+    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0,"white", 50, 240));
     //        enemies.push(new Enemy("green", 100, 300, 50, 1, 30, 0));
     //        enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
     //        enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));

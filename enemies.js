@@ -134,7 +134,6 @@ class SwordSwingSusan extends Enemy {
             this.actualCd = this.atkCd;
             this.swing();
             this.isAttacking = true;
-
         }
     }
 
@@ -332,6 +331,8 @@ class ChargingChad extends SwordSwingSusan {
         this.chargeTimer = chargeTimer;
         this.actualTimer = chargeTimer;
         this.chargeDest = createVector(0, 0);
+        this.canCharge = false;
+        this.point = createVector(player.pos.x, player.pos.y);
     }
     draw() {
         strokeWeight(2);
@@ -355,7 +356,8 @@ class ChargingChad extends SwordSwingSusan {
         if (this.actualTimer == 15) {
             this.chargeDest.x = player.pos.x;
             this.chargeDest.y = player.pos.y;
-        } else if (this.actualTimer > -2) {
+        }
+        if (this.actualTimer > -1) {
             this.actualTimer--;
         }
         if (this.blackHoled == false) {
@@ -368,8 +370,10 @@ class ChargingChad extends SwordSwingSusan {
             moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
         }
         if (this.actualTimer == -1) {
+            this.canCharge = true;
             moveVector.setMag(this.speed);
-            this.pos.add(moveVector);
+            if (dist(this.pos.x, this.pos.y, this.chargeDest.x, this.chargeDest.y) > this.speed)
+                this.pos.add(moveVector);
         }
         if (this.pos.x <= 32.5) {
             this.pos.x = 32.5;
@@ -389,8 +393,9 @@ class ChargingChad extends SwordSwingSusan {
         if (this.timer == 1) {
             this.speed = this.speed * -2;
         }
-        if (this.pos.equals(this.chargeDest) || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) {
+        if ((p5.Vector.sub(this.chargeDest, this.pos).mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canCharge) {
             this.actualTimer = this.chargeTimer;
+            this.canCharge = false;
         }
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
             if (player.hasShield && player.canHit == true && player.gotHit == false) {
@@ -402,6 +407,15 @@ class ChargingChad extends SwordSwingSusan {
                 player.gotHit = true;
                 player.lives--;
             }
+        }
+    }
+    canAttack() {
+        if (this.actualCd == 0) {
+            this.attackScope.start = p5.Vector.sub(this.point.x, this.pos).heading() - this.range / 2;
+            this.attackScope.end = p5.Vector.sub(this.point.y, this.pos).heading() + this.range / 2;
+            this.actualCd = this.atkCd;
+            this.swing();
+            this.isAttacking = true;
         }
     }
 }
