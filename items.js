@@ -636,7 +636,11 @@ class Roar {
                 if (index == 0) {
                     enemies[i].canHit = false;
                     enemies[i].actualHealth -= 10;
+                    if(enemies[i] instanceof KiterKid) {
+                        enemies[i].speed = enemies[i].speed* 0.5;
+                    } else{
                     enemies[i].speed = enemies[i].speed * -0.5;
+                    }
                     enemies[i].timer = 120;
                     killOff();
                 } else if (index == 1) {

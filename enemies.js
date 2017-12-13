@@ -196,18 +196,6 @@ class ShooterSam extends Enemy {
         this.actualSCd = shootCd;
         this.lockOn = createVector(0, 0);
     }
-    canShoot() {
-        if (this.actualSCd == 30) {
-            this.lockOn.x = player.pos.x;
-            this.lockOn.y = player.pos.y;
-        }
-        if (this.actualSCd == 0) {
-            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
-            this.actualSCd = this.shootCd;
-        } else {
-            this.actualSCd--;
-        }
-    }
     draw() {
         strokeWeight(0);
         fill(this.color);
@@ -224,6 +212,18 @@ class ShooterSam extends Enemy {
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
             killOff();
+        }
+    }
+    canShoot() {
+        if (this.actualSCd == 30) {
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        }
+        if (this.actualSCd == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualSCd = this.shootCd;
+        } else {
+            this.actualSCd--;
         }
     }
 }
@@ -262,9 +262,9 @@ class KiterKid extends ShooterSam {
             this.speed = this.speed * -2;
         }
         moveVector.setMag(this.speed);
-        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) > 200) {
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) - moveVector.mag() > 200 || this.blackHoled == true) {
             this.pos.add(moveVector);
-        } else if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 200) {
+        } else if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) + moveVector.mag() < 200 && this.blackHoled == false) {
             this.pos.sub(moveVector);
         }
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
@@ -291,18 +291,6 @@ class NinjaNanny extends SwordSwingSusan {
         this.actualSCd = shootCd;
         this.lockOn = createVector(0, 0);
     }
-    canShoot() {
-        if (this.actualSCd == 30) {
-            this.lockOn.x = player.pos.x;
-            this.lockOn.y = player.pos.y;
-        }
-        if (this.actualSCd == 0) {
-            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
-            this.actualSCd = this.shootCd;
-        } else {
-            this.actualSCd--;
-        }
-    }
 
     draw() {
         strokeWeight(0);
@@ -322,6 +310,98 @@ class NinjaNanny extends SwordSwingSusan {
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
             killOff();
+        }
+    }
+    canShoot() {
+        if (this.actualSCd == 30) {
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        }
+        if (this.actualSCd == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualSCd = this.shootCd;
+        } else {
+            this.actualSCd--;
+        }
+    }
+}
+
+class ChargingChad extends SwordSwingSusan {
+    constructor(color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer) {
+        super(color, x, y, size, speed, health, rarity, weaponColor, 0, 1, swordLength, 1);
+        this.chargeTimer = chargeTimer;
+        this.actualTimer = chargeTimer;
+        this.chargeDest = createVector(0, 0);
+    }
+    draw() {
+        strokeWeight(2);
+        stroke(255, 255 * (this.actualTimer / this.chargeTimer), 0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill("green");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
+    }
+    track() {
+        let moveVector;
+        if (this.actualTimer == 15) {
+            this.chargeDest.x = player.pos.x;
+            this.chargeDest.y = player.pos.y;
+        } else if (this.actualTimer > -2) {
+            this.actualTimer--;
+        }
+        if (this.blackHoled == false) {
+            moveVector = p5.Vector.sub(this.chargeDest, this.pos);
+        } else if (this.blackHoled == true) {
+            if (this.speed == 0) {
+                this.speed = 1;
+                this.speedChanged = true;
+            }
+            moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
+        }
+        if (this.actualTimer == -1) {
+            moveVector.setMag(this.speed);
+            this.pos.add(moveVector);
+        }
+        if (this.pos.x <= 32.5) {
+            this.pos.x = 32.5;
+        }
+        if (this.pos.x >= 967.5) {
+            this.pos.x = 967.5;
+        }
+        if (this.pos.y <= 32.5) {
+            this.pos.y = 32.5;
+        }
+        if (this.pos.y >= 679.5) {
+            this.pos.y = 679.5;
+        }
+        if (this.timer > 0) {
+            this.timer--;
+        }
+        if (this.timer == 1) {
+            this.speed = this.speed * -2;
+        }
+        if (this.pos.equals(this.chargeDest) || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) {
+            this.actualTimer = this.chargeTimer;
+        }
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+            if (player.hasShield && player.canHit == true && player.gotHit == false) {
+                player.canHit = false;
+                player.gotHit = true;
+                player.hasShield = false;
+            } else {
+                player.canHit = false;
+                player.gotHit = true;
+                player.lives--;
+            }
         }
     }
 }
