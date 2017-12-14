@@ -330,9 +330,8 @@ class ChargingChad extends SwordSwingSusan {
         super(color, x, y, size, speed, health, rarity, weaponColor, 0, 1, swordLength, 1);
         this.chargeTimer = chargeTimer;
         this.actualTimer = chargeTimer;
-        this.chargeDest = createVector(0, 0);
+        this.chargeVector = createVector(0, 0);
         this.canCharge = false;
-        this.point = createVector(player.pos.x, player.pos.y);
     }
     draw() {
         strokeWeight(2);
@@ -352,27 +351,38 @@ class ChargingChad extends SwordSwingSusan {
         }
     }
     track() {
-        let moveVector;
-        if (this.actualTimer == 15) {
-            this.chargeDest.x = player.pos.x;
-            this.chargeDest.y = player.pos.y;
+        if (this.actualTimer == -1) {
+            console.log("charging");
+        }
+        let moveVector = this.chargeVector.copy();
+        if (this.actualTimer >= 15 && this.blackHoled == false) {
+            this.chargeVector.x = player.pos.x - this.pos.x;
+            this.chargeVector.y = player.pos.y - this.pos.y;
+            this.chargeVector.mult(1.8);
         }
         if (this.actualTimer > -1) {
             this.actualTimer--;
         }
-        if (this.blackHoled == false) {
-            moveVector = p5.Vector.sub(this.chargeDest, this.pos);
-        } else if (this.blackHoled == true) {
+        if (this.timer == 1) {
+            this.canCharge = false;
+            this.chargeVector.x = 0;
+            this.chargeVector.y = 0;
+
+        }
+        if (this.blackHoled == true) {
             if (this.speed == 0) {
                 this.speed = 1;
                 this.speedChanged = true;
             }
-            moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
+            this.chargeVector.x = player.roars[3].static.x - this.pos.x;
+            this.chargeVector.y = player.roars[3].static.y - this.pos.y;
+            this.chargeVector.mult(1.8);
         }
         if (this.actualTimer == -1) {
             this.canCharge = true;
             moveVector.setMag(this.speed);
-            if (dist(this.pos.x, this.pos.y, this.chargeDest.x, this.chargeDest.y) > this.speed)
+            this.chargeVector.sub(moveVector);
+            if (this.chargeVector.mag() > this.speed)
                 this.pos.add(moveVector);
         }
         if (this.pos.x <= 32.5) {
@@ -393,7 +403,7 @@ class ChargingChad extends SwordSwingSusan {
         if (this.timer == 1) {
             this.speed = this.speed * -2;
         }
-        if ((p5.Vector.sub(this.chargeDest, this.pos).mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canCharge) {
+        if ((this.chargeVector.mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canCharge) {
             this.actualTimer = this.chargeTimer;
             this.canCharge = false;
         }
@@ -411,8 +421,13 @@ class ChargingChad extends SwordSwingSusan {
     }
     canAttack() {
         if (this.actualCd == 0) {
-            this.attackScope.start = p5.Vector.sub(this.point.x, this.pos).heading() - this.range / 2;
-            this.attackScope.end = p5.Vector.sub(this.point.y, this.pos).heading() + this.range / 2;
+            if (this.timer > 0) {
+                this.attackScope.start = this.chargeVector.heading() - this.range / 2 + 180;
+                this.attackScope.end = this.chargeVector.heading() + this.range / 2 + 180;
+            } else {
+                this.attackScope.start = this.chargeVector.heading() - this.range / 2;
+                this.attackScope.end = this.chargeVector.heading() + this.range / 2;
+            }
             this.actualCd = this.atkCd;
             this.swing();
             this.isAttacking = true;

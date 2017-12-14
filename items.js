@@ -28,7 +28,6 @@ class Bullet {
         this.type = type;
         this.lockOnDest = createVector(lockOnDestX, lockOnDestY);
         this.moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
-        this.moveVector.setMag(10000);
     }
 
     move() {
@@ -422,6 +421,9 @@ let consumables = [
                     image(star, this.pos.x, this.pos.y, 80, 80);
                 }
                 activate() {
+                    if (player.alpha == 0) {
+                        player.alpha == 255;
+                    }
                     if (player.starred == false) {
                         player.starred = true;
                         player.speed += 1;
@@ -636,10 +638,10 @@ class Roar {
                 if (index == 0) {
                     enemies[i].canHit = false;
                     enemies[i].actualHealth -= 10;
-                    if(enemies[i] instanceof KiterKid) {
-                        enemies[i].speed = enemies[i].speed* 0.5;
-                    } else{
-                    enemies[i].speed = enemies[i].speed * -0.5;
+                    if (enemies[i] instanceof KiterKid) {
+                        enemies[i].speed = enemies[i].speed * 0.5;
+                    } else {
+                        enemies[i].speed = enemies[i].speed * -0.5;
                     }
                     enemies[i].timer = 120;
                     killOff();

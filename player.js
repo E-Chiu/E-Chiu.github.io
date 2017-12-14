@@ -15,6 +15,7 @@ class Player {
         this.atkMod = 1;
         this.starred = false;
         //player stats
+        this.alpha = 255;
         this.color = {
             r: 125,
             g: 125,
@@ -117,21 +118,13 @@ class Player {
         } else if (this.starred == false) {
             if (this.timer % 15 == 0) {
                 if (this.timer == 15) {
-                    this.color.r = 0;
-                    this.color.g = 0;
-                    this.color.b = 0;
+                    this.alpha = 0;
                 } else if (this.timer == 30) {
-                    this.color.r = 125;
-                    this.color.g = 125;
-                    this.color.b = 125;
+                    this.alpha = 255;
                 } else if (this.timer == 45) {
-                    this.color.r = 0;
-                    this.color.g = 0;
-                    this.color.b = 0;
+                    this.alpha = 0;
                 } else if (this.timer == 60) {
-                    this.color.r = 125;
-                    this.color.g = 125;
-                    this.color.b = 125;
+                    this.alpha = 255;
                 }
             }
         }
@@ -198,8 +191,10 @@ class Player {
         if (this.pos.y >= 679.5) {
             this.pos.y = 679.5;
         }
+        if(this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0) {
+            stageNum ++;
+        }
     }
-
 }
 //attacking
 function keyPressed() {
