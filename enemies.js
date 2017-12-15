@@ -185,6 +185,7 @@ class SwordSwingSusan extends Enemy {
     }
 }
 
+//shoots a gun
 class ShooterSam extends Enemy {
     constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd) {
         super(color, x, y, size, speed, health, rarity);
@@ -227,6 +228,7 @@ class ShooterSam extends Enemy {
     }
 }
 
+//stays a safe distance away
 class KiterKid extends ShooterSam {
     constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd) {
         super(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd);
@@ -280,6 +282,7 @@ class KiterKid extends ShooterSam {
     }
 }
 
+//shoots and swings
 class NinjaNanny extends SwordSwingSusan {
     constructor(color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd, weaponColor, attackCd, attackAngle, swordLength, swordSpeed) {
         super(color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed);
@@ -325,6 +328,7 @@ class NinjaNanny extends SwordSwingSusan {
     }
 }
 
+//charges after charging
 class ChargingChad extends SwordSwingSusan {
     constructor(color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer) {
         super(color, x, y, size, speed, health, rarity, weaponColor, 0, 1, swordLength, 1);

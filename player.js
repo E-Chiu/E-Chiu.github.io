@@ -191,8 +191,14 @@ class Player {
         if (this.pos.y >= 679.5) {
             this.pos.y = 679.5;
         }
-        if(this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0) {
+        if(this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
             stageNum ++;
+            canAdvance = false;
+            stages[stageNum].setup();
+            for(let i = 0; i < droppedItems.length; i ++) {
+                droppedItems.splice(i, 1);
+                i--;
+            }
         }
     }
 }
