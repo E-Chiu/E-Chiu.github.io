@@ -192,6 +192,18 @@ let weapons = [
                     quad(this.pos.x - 5, this.pos.y - 6, this.pos.x + 2, this.pos.y + 5, this.pos.x - 10, this.pos.y + 19, this.pos.x - 20, this.pos.y + 19);
                 }
             }
+    },
+        {
+            create: class SilverBolts extends Weapon {
+                constructor() {
+                    super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
+                    this.ammo = 3;
+                    this.actualAmmo = 3;
+                }
+                draw() {
+                    image(silverBolts, this.pos.x, this.pos.y, 80, 80);
+                }
+            }
     }
     ],
 
@@ -725,7 +737,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        //        droppedItems.push(new itemLibrary[1][1][2].create());
+        droppedItems.push(new itemLibrary[0][1][3].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

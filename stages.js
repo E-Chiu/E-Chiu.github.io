@@ -25,6 +25,7 @@ let stages = [
             textSize(30);
             text("Move with WASD, attack with arrow keys", 500, 40);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -51,6 +52,7 @@ let stages = [
             text("Switch weapons with Q or E", 500, 40);
             text("Killing all the enemies clears the stage", 500, 80);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -76,6 +78,7 @@ let stages = [
             textSize(30);
             text("Press the slot number to use consumables", 500, 40);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -101,6 +104,7 @@ let stages = [
             textSize(30);
             text("Ranged weapons have have ammo that reset after every stage", 500, 40);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -120,10 +124,8 @@ let stages = [
             enemies.push(new Enemy("green", 500, 355, 50, 1, 30, 0));
         },
         draw: function () {
-            fill("white");
-            strokeWeight(0);
-            textSize(30);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -149,6 +151,7 @@ let stages = [
             strokeWeight(0);
             textSize(30);
             if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;
@@ -167,10 +170,30 @@ let stages = [
             }
         },
         draw: function () {
-            fill("white");
-            strokeWeight(0);
-            textSize(30);
             if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+},
+// stage 6
+    {
+        setup: function () {
+            player.pos.x = 20;
+            player.pos.y = 355;
+            enemies.push(new SwordSwingSusan("blue", 800, height * 0.33, 20, 3, 10, 1, "white", 30, 45, 40, 12));
+            enemies.push(new SwordSwingSusan("blue", 800, height * 0.66, 20, 3, 10, 1, "white", 30, 45, 40, 12));
+            for (let i = 0; i < 2; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
                 canAdvance = true;

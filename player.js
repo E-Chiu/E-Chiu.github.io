@@ -47,10 +47,12 @@ class Player {
                     this.meleeAttack();
                 }
             } else if (items[this.activeWeapon].type == "ranged") {
-                if (items[this.activeWeapon].ammo > 0) {
-                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0));
+                if (items[this.activeWeapon].ammo > 0 && !(items[this.activeWeapon] instanceof SilverBolts)) {
+                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "normal"));
                     this.isAttacking = false;
                     items[this.activeWeapon].ammo--;
+                } else if (items[this.activeWeapon] instanceof SilverBolts) {
+                    this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "vayne"));
                 }
             }
         }
@@ -191,11 +193,11 @@ class Player {
         if (this.pos.y >= 679.5) {
             this.pos.y = 679.5;
         }
-        if(this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
-            stageNum ++;
+        if (this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
+            stageNum++;
             canAdvance = false;
             stages[stageNum].setup();
-            for(let i = 0; i < droppedItems.length; i ++) {
+            for (let i = 0; i < droppedItems.length; i++) {
                 droppedItems.splice(i, 1);
                 i--;
             }
