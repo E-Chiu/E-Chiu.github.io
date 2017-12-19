@@ -80,7 +80,7 @@ function drawHud() {
                 fill("white");
                 noStroke();
                 textSize(20);
-                text(items[i].ammo, i * 81.5 + 234, 787);
+                text(items[i].actualAmmo, i * 81.5 + 234, 787);
             }
         }
     }

@@ -140,7 +140,7 @@ let stages = [
             enemies.push(new Enemy("red", width * 0.66, height * 0.66, 50, 1, 30, 0));
             enemies.push(new Enemy("blue", width * 0.33, height * 0.66, 50, 1, 30, 0));
             enemies.push(new Enemy("yellow", width / 2, height * 0.33, 50, 1, 30, 0));
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
                 }
@@ -163,7 +163,7 @@ let stages = [
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("red", 200, height / 2, 80, 1, 60, 1, "white", 120, 45, 120, 10));
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
                 }
@@ -185,7 +185,7 @@ let stages = [
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("blue", 800, height * 0.33, 20, 3, 10, 1, "white", 30, 45, 40, 12));
             enemies.push(new SwordSwingSusan("blue", 800, height * 0.66, 20, 3, 10, 1, "white", 30, 45, 40, 12));
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
                 }

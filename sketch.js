@@ -2,11 +2,6 @@
 let swap;
 let star;
 
-function preload() {
-    star = loadImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA0klEQVRYR+2VURKAIAhE8Trd/yxdxyamnFKDBT6cZvA3ld3HSoUWr7K4PqWAJJAEogQqUewlRQTUuhOVjSeJ+x73QSJaKoCL3ytCwUtgqYBX8SgFjcCZ8mE98XcCZtvFGtLHqVPr31PLh0rgy20fQoGKm8BtdiBxutIEaM5b60CkQ+olAWhx6wSDMmEp/isBkHvPTNBewWcQpexY2oAIkCYf6/A+QTQDs7nfn+WJ6flBaQRa8QurJvolBGmFJoCNXf1G9rbMoGcsl4Izy7YtBSSBA+UZSiEjNeNaAAAAAElFTkSuQmCC");
-    silverBolts = loadImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABE0lEQVRYR+2WSw7FIAhFn6vp+nQhuj5XY6MJCSEgHwe+QTtpagr3CFdi+l1+0ol+733M+Od5wnnCgSAOG4hChACo+AlECAAEa62rBaWUcJ5Q4BhjCbfWFkvOeb1TSu587gAQn2K4AnjdY2wXABWhLYhAmAG45JwHvBAmACmpZEIPhAqwS7Y7BVYIFmAGT5PhJLCGDbargCV+nRzJsdwOKITkAXwctUqYWkATwjd3CqR/pY2qADOQ7hy+6Rzwim9bQIk5CDwJI+IuAK4SFg9oU9HUApwEV0LzgCburgAktHjAIh4GgHZIHrCKHwHM4Gv3gesXkr8AgBELMJHbUNgDdL5r835nSvcc8Djc8u8H8FXgq8ALpbn9IQv71E0AAAAASUVORK5CYII=");
-}
-
 function setup() {
     createCanvas(1000, 810);
     background("black");
@@ -30,15 +25,15 @@ function setup() {
 
     //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));
-    enemies.push(new ChargingChad(125, 400, 600, 50, 10, 30, 0, "white", 50, 240));
-    enemies.push(new Enemy("green", 100, 300, 50, 1, 30, 0));
-    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
-    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
-    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
-    enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
-    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
+    //    enemies.push(new ChargingChad(125, 400, 600, 50, 10, 30, 0, "white", 50, 240));
+    //    enemies.push(new Enemy("green", 100, 300, 50, 1, 30, 0));
+    //    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
+    //    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
+    //    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
+    //    enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
+    //    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
-    //    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
+    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
     //    enemies.push(new ShooterSam("blue", 600, 600, 50, 0, 30, 2, 5, "grey", 20, 120));
     //    enemies.push(new KiterKid("blue", 600, 600, 50, 2, 30, 2, 5, "grey", 20, 120));
     //    enemies.push(new KiterKid("blue", 300, 300, 50, 1, 30, 2, 5, "grey", 20, 120));
@@ -46,7 +41,9 @@ function setup() {
     //    enemies.push(new NinjaNanny("white", 800, 100, 50, 1, 30, 2, 5, "white", 20, 60, "white", 30, 180, 120, 40));
 
     //type, color, size, speed, damage, range, attackCd, knockback
-    //    items.splice(0, 1, new itemLibrary[0][0][0].create);
+    items.splice(0, 1, new itemLibrary[0][2][0].create);
+    items.splice(1, 1, new itemLibrary[0][2][0].create);
+    items.splice(2, 1, new itemLibrary[0][2][0].create);
     //    items.splice(1, 1, new itemLibrary[0][2][0].create);
     //
     //

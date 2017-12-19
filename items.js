@@ -46,6 +46,13 @@ class Bullet {
             ellipse(this.pos.x, this.pos.y, this.size);
             for (let i = 0; i < enemies.length; i++) {
                 if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
+                    if (items[player.activeWeapon].name == "Silver Bolts") {
+                        enemies[i].marked++;
+                        if (enemies[i].marked == 3) {
+                            enemies[i].actualHealth -= enemies[i].maxHealth * 0.12;
+                            enemies[i].marked = 0;
+                        }
+                    }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
                     this.used = true;
                     break;
@@ -194,25 +201,9 @@ let weapons = [
             }
     },
         {
-            create: class SilverBolts extends Weapon {
-                constructor() {
-                    super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
-                    this.ammo = 3;
-                    this.actualAmmo = 3;
-                }
-                draw() {
-                    image(silverBolts, this.pos.x, this.pos.y, 80, 80);
-                }
-            }
-    }
-    ],
-
-    //rarity two
-    [
-        {
             create: class Axe extends Weapon {
                 constructor() {
-                    super("Axe", "melee", "brown", 70, 5, 50, 80, 120, 90);
+                    super("Axe", "melee", "brown", 70, 5, 30, 80, 120, 90);
                 }
                 draw() {
                     strokeWeight(10);
@@ -254,6 +245,22 @@ let weapons = [
                 }
             }
     }
+    ],
+
+    //rarity two
+    [
+        {
+            create: class SilverBolts extends Weapon {
+                constructor() {
+                    super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
+                    this.ammo = 3;
+                    this.actualAmmo = 3;
+                }
+                draw() {
+                    image(silverBolts, this.pos.x, this.pos.y, 40, 40);
+                }
+            }
+    },
         ]
 ];
 
@@ -570,6 +577,37 @@ let charms = [
                 putOn() {}
                 takeOff() {}
             }
+},
+        {
+            create: class AmmoCharm {
+                constructor() {
+                    this.name = "Ammo Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(255, 215, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill(181, 166, 66);
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    for (let i = 0; i < 3; i++) {
+                        if (items[i].type == "ranged") {
+                            items[i].ammo = items[i].ammo * 2;
+                        }
+                    }
+                }
+                takeOff() {
+                    for (let i = 0; i < 3; i++) {
+                        if (items[i].type == "ranged") {
+                            items[i].ammo = items[i].ammo / 2;
+                        }
+                    }
+                }
+            }
 }
         ],
     //rarity one
@@ -737,7 +775,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        droppedItems.push(new itemLibrary[0][1][3].create());
+        droppedItems.push(new itemLibrary[2][0][5].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }
