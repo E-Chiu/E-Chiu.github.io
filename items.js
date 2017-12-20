@@ -775,7 +775,7 @@ function dropItem(rarity, x, y) {
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
     if (dropChance == 0) {
         droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
-        droppedItems.push(new itemLibrary[2][0][5].create());
+//        droppedItems.push(new itemLibrary[2][0][5].create());
         droppedItems[droppedItems.length - 1].pos.x = x;
         droppedItems[droppedItems.length - 1].pos.y = y;
     }

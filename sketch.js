@@ -18,11 +18,8 @@ function setup() {
     //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
-    } else {
-        localStorage.setItem("played", "yes");
     }
     stages[stageNum].setup();
-
     //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 400, 600, 50, 10, 30, 0, "white", 50, 240));
@@ -33,7 +30,7 @@ function setup() {
     //    enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
     //    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
-    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
+    //    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
     //    enemies.push(new ShooterSam("blue", 600, 600, 50, 0, 30, 2, 5, "grey", 20, 120));
     //    enemies.push(new KiterKid("blue", 600, 600, 50, 2, 30, 2, 5, "grey", 20, 120));
     //    enemies.push(new KiterKid("blue", 300, 300, 50, 1, 30, 2, 5, "grey", 20, 120));

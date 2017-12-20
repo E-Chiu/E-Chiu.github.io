@@ -470,3 +470,16 @@ class ChargingChad extends SwordSwingSusan {
         }
     }
 }
+
+//spawner boss
+class TheMachine {
+    constructor() {
+        this.x = width / 2;
+        this.y = 355;
+        this.health = 1500;
+        this.spawnRate = 240;
+        this.actualSpawnRate = 240;
+        this.blowUp = 720;
+        this.actualBlowUp = 720;
+    }
+}

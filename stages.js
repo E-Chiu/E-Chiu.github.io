@@ -114,6 +114,7 @@ let stages = [
     //level 4
     {
         setup: function () {
+            localStorage.setItem("played", "yes");
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
