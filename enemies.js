@@ -474,12 +474,74 @@ class ChargingChad extends SwordSwingSusan {
 //spawner boss
 class TheMachine {
     constructor() {
-        this.x = width / 2;
-        this.y = 355;
+        this.pos = createVector(width / 2, 355);
+        this.size = 100;
         this.health = 1500;
+        this.actualHealth = 1500;
         this.spawnRate = 240;
         this.actualSpawnRate = 240;
         this.blowUp = 720;
         this.actualBlowUp = 720;
+        this.shootCD = 120;
+        this.actualShootCD = 120;
+        this.lockOn = createVector(0, 0);
+
+        this.dot = 0;
+        this.rarity = 2;
+        this.timer = 0;
+        this.canHit = true;
+        this.marked = 0;
+    }
+    draw() {
+        fill(210);
+        rect(this.pos.x - 100, this.pos.y - 100, 100, 100);
+        noStroke();
+        if (this.actualHealth > 0) {
+            fill("red");
+            stroke("grey");
+            strokeWeight(2);
+            if (this.actualHealth > 500) {
+                rect(10, 10, 900, 50);
+            } else {
+                rect(10, 10, 900 * (this.actualHealth / 500), 50);
+            }
+        }
+        if (this.actualHealth > 500) {
+            fill("green");
+            stroke("grey");
+            strokeWeight(2);
+            if (this.actualHealth > 1000) {
+                rect(30, 30, 900, 50);
+            } else {
+                rect(30, 30, 900 * ((this.actualHealth - 500) / 500), 50);
+            }
+        }
+        if (this.actualHealth > 1000) {
+            fill("blue");
+            stroke("grey");
+            strokeWeight(2);
+        }
+        if (this.actualHealth > 1499) {
+            rect(50, 50, 900, 50);
+        } else {
+            rect(50, 50, 900 * ((this.actualHealth - 1000) / 500), 50);
+        }
+        fill("white");
+        strokeWeight(0);
+        textSize(30);
+        text("THE MACHINE", 500, 130);
+    }
+
+    canShoot() {
+        if (this.actualShootCD == 30) {
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        }
+        if (this.actualShootCD == 0) {
+            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+            this.actualShootCD = this.shootCD;
+        } else {
+            this.actualShootCD--;
+        }
     }
 }

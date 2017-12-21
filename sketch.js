@@ -27,7 +27,7 @@ function setup() {
     //    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
     //    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
     //    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
-    //    enemies.push(new Enemy("green", 800, 600, 50, 1, 30, 0));
+    enemies.push(new TheMachine());
     //    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
@@ -80,7 +80,9 @@ function draw() {
         if (enemies[i] instanceof ShooterSam || enemies[i] instanceof NinjaNanny) {
             enemies[i].canShoot();
         }
-        enemies[i].track();
+        if (enemies[i] instanceof Enemy) {
+            enemies[i].track();
+        }
         enemies[i].draw();
     }
     //splicing
