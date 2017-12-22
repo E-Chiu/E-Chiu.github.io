@@ -159,6 +159,7 @@ let stages = [
             }
         }
 },
+    // stage 6
     {
         setup: function () {
             player.pos.x = 20;
@@ -179,7 +180,7 @@ let stages = [
             }
         }
 },
-// stage 6
+// stage 7
     {
         setup: function () {
             player.pos.x = 20;
@@ -201,4 +202,37 @@ let stages = [
             }
         }
 },
+// stage 8
+    {},
+// stage 9
+    {},
+//stage 10: THE MACHINE
+    {
+        setup: function () {
+            player.pos.x = 20;
+            player.pos.y = 355;
+            enemies.push(new TheMachine());
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            for (let i = 0; i < enemies.length; i++){
+                if(enemies[i] instanceof TheMachine) {
+                    if(enemies[i].actualBlowUp <= 100);
+                    background("red");
+                } else {
+                    background("black");
+                }
+            }
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    }
             ]

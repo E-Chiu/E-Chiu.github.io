@@ -102,10 +102,12 @@ class Player {
                     if (enemies[i].canHit) {
                         enemies[i].canHit = false;
                         enemies[i].actualHealth -= items[this.activeWeapon].damage * this.atkMod;
-                        let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
-                        moveVector.setMag(items[this.activeWeapon].knockback);
-                        enemies[i].pos.sub(moveVector);
-                        break;
+                        if (enemies[i] instanceof Enemy) {
+                            let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
+                            moveVector.setMag(items[this.activeWeapon].knockback);
+                            enemies[i].pos.sub(moveVector);
+                            break;
+                        }
                     }
                 }
             }

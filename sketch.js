@@ -19,6 +19,7 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
+    stageNum = 10;
     stages[stageNum].setup();
     //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));
@@ -27,7 +28,6 @@ function setup() {
     //    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
     //    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
     //    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
-    enemies.push(new TheMachine());
     //    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
     //    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
@@ -40,8 +40,7 @@ function setup() {
     //type, color, size, speed, damage, range, attackCd, knockback
     items.splice(0, 1, new itemLibrary[0][2][0].create);
     items.splice(1, 1, new itemLibrary[0][2][0].create);
-    items.splice(2, 1, new itemLibrary[0][2][0].create);
-    //    items.splice(1, 1, new itemLibrary[0][2][0].create);
+    items.splice(2, 1, new itemLibrary[0][1][1].create);
     //
     //
     //    items.splice(3, 1, new consumables[1][0].create());
@@ -55,6 +54,8 @@ function draw() {
     stroke("black");
     strokeWeight(1);
     background("black");
+    //stage
+    stages[stageNum].draw();
 
     //drops
     for (let i = 0; i < droppedItems.length; i++) {
@@ -77,11 +78,15 @@ function draw() {
             enemies[i].attack();
             enemies[i].canAttack();
         }
-        if (enemies[i] instanceof ShooterSam || enemies[i] instanceof NinjaNanny) {
+        if (enemies[i] instanceof ShooterSam || enemies[i] instanceof NinjaNanny || enemies[i] instanceof TheMachine) {
             enemies[i].canShoot();
         }
         if (enemies[i] instanceof Enemy) {
             enemies[i].track();
+        }
+        if (enemies[i] instanceof TheMachine) {
+            enemies[i].canSpawn();
+            enemies[i].canExplode();
         }
         enemies[i].draw();
     }
@@ -91,6 +96,4 @@ function draw() {
     drawHud();
     drawMap();
     drawCds();
-    //stage
-    stages[stageNum].draw();
 }

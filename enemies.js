@@ -475,7 +475,7 @@ class ChargingChad extends SwordSwingSusan {
 class TheMachine {
     constructor() {
         this.pos = createVector(width / 2, 355);
-        this.size = 100;
+        this.size = 280;
         this.health = 1500;
         this.actualHealth = 1500;
         this.spawnRate = 240;
@@ -485,16 +485,18 @@ class TheMachine {
         this.shootCD = 120;
         this.actualShootCD = 120;
         this.lockOn = createVector(0, 0);
-
         this.dot = 0;
         this.rarity = 2;
         this.timer = 0;
         this.canHit = true;
         this.marked = 0;
+        this.bulletSize = 30;
+        this.bulletColor = 50;
+        this.bulletSpeed = 5;
     }
     draw() {
         fill(210);
-        rect(this.pos.x - 100, this.pos.y - 100, 100, 100);
+        rect(this.pos.x - 150, this.pos.y - 150, 300, 300);
         noStroke();
         if (this.actualHealth > 0) {
             fill("red");
@@ -517,31 +519,57 @@ class TheMachine {
             }
         }
         if (this.actualHealth > 1000) {
-            fill("blue");
-            stroke("grey");
-            strokeWeight(2);
-        }
-        if (this.actualHealth > 1499) {
-            rect(50, 50, 900, 50);
-        } else {
+            fill("blue")
             rect(50, 50, 900 * ((this.actualHealth - 1000) / 500), 50);
         }
         fill("white");
         strokeWeight(0);
         textSize(30);
         text("THE MACHINE", 500, 130);
+        for (let i = 0; i < this.marked; i++) {
+            noFill();
+            strokeWeight(3);
+            stroke(192);
+            ellipse(this.pos.x, this.pos.y, 450 + i * 30);
+        }
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
     }
 
     canShoot() {
-        if (this.actualShootCD == 30) {
-            this.lockOn.x = player.pos.x;
-            this.lockOn.y = player.pos.y;
+        if (this.actualHealth > 1000) {
+            if (this.actualShootCD == 30) {
+                this.lockOn.x = player.pos.x;
+                this.lockOn.y = player.pos.y;
+            }
+            if (this.actualShootCD == 0) {
+                player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
+                this.actualShootCD = this.shootCD;
+            } else {
+                this.actualShootCD--;
+            }
         }
-        if (this.actualShootCD == 0) {
-            player.bulletArray.push(new Bullet(this.pos.x, this.pos.y, 0, this.bulletSize, this.bulletColor, this.bulletSpeed, 0, "enemy", this.lockOn.x, this.lockOn.y));
-            this.actualShootCD = this.shootCD;
+    }
+    canSpawn() {
+        if (this.actualSpawnRate == 0) {
+            enemies.push(new Enemy(210, this.pos.x, this.pos.y, 100, 1, 20, 0));
+            this.actualSpawnRate = this.spawnRate;
         } else {
-            this.actualShootCD--;
+            this.actualSpawnRate --;
+        }
+    }
+    canExplode() {
+        if(this.actualBlowUp <= 100) {
+            fill("black");
+            ellipse(chance(0, width), chance(0, length), chance(100,200));
+        }
+        if(this.actualBlowUp == 0){
+            this.actualBlowUp = this.blowUp;
+        }
+        else {
+            this.actualBlowUp --;
         }
     }
 }
