@@ -219,10 +219,11 @@ let stages = [
             }
         },
         draw: function () {
-            for (let i = 0; i < enemies.length; i++){
-                if(enemies[i] instanceof TheMachine) {
-                    if(enemies[i].actualBlowUp <= 100);
-                    background("red");
+            for (let i = 0; i < enemies.length; i++) {
+                if (enemies[i] instanceof TheMachine) {
+                    if (enemies[i].actualBlowUp <= 100) {
+                        background("red");
+                    }
                 } else {
                     background("black");
                 }
