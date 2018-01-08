@@ -476,8 +476,8 @@ class TheMachine {
     constructor() {
         this.pos = createVector(width / 2, 355);
         this.size = 280;
-        this.health = 1500;
-        this.actualHealth = 1500;
+        this.health = 999;
+        this.actualHealth = 999;
         this.spawnRate = 240;
         this.actualSpawnRate = 240;
         this.blowUp = 720;
@@ -496,31 +496,31 @@ class TheMachine {
     }
     draw() {
         fill(210);
-        rect(this.pos.x - 150, this.pos.y - 150, 300, 300);
         noStroke();
+        rect(this.pos.x - 150, this.pos.y - 150, 250, 250);
         if (this.actualHealth > 0) {
             fill("red");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 500) {
+            if (this.actualHealth > 333) {
                 rect(10, 10, 900, 50);
             } else {
-                rect(10, 10, 900 * (this.actualHealth / 500), 50);
+                rect(10, 10, 900 * (this.actualHealth / 333), 50);
             }
         }
-        if (this.actualHealth > 500) {
+        if (this.actualHealth > 333) {
             fill("green");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 1000) {
+            if (this.actualHealth > 666) {
                 rect(30, 30, 900, 50);
             } else {
-                rect(30, 30, 900 * ((this.actualHealth - 500) / 500), 50);
+                rect(30, 30, 900 * ((this.actualHealth - 333) / 333), 50);
             }
         }
-        if (this.actualHealth > 1000) {
+        if (this.actualHealth > 666) {
             fill("blue")
-            rect(50, 50, 900 * ((this.actualHealth - 1000) / 500), 50);
+            rect(50, 50, 900 * ((this.actualHealth - 666) / 333), 50);
         }
         fill("white");
         strokeWeight(0);
@@ -539,7 +539,7 @@ class TheMachine {
     }
 
     canShoot() {
-        if (this.actualHealth > 1000) {
+        if (this.actualHealth > 666) {
             if (this.actualShootCD == 30) {
                 this.lockOn.x = player.pos.x;
                 this.lockOn.y = player.pos.y;
@@ -557,19 +557,31 @@ class TheMachine {
             enemies.push(new Enemy(210, this.pos.x, this.pos.y, 100, 1, 20, 0));
             this.actualSpawnRate = this.spawnRate;
         } else {
-            this.actualSpawnRate --;
+            this.actualSpawnRate--;
         }
     }
     canExplode() {
-        if(this.actualBlowUp <= 100) {
-            fill("black");
-            ellipse(chance(0, width), chance(0, length), chance(100,200));
+        if (this.actualBlowUp <= 100) {
+            enemies.push(new DangerSpot(player.pos.x, player.pos.y));
         }
-        if(this.actualBlowUp == 0){
+        if (this.actualBlowUp == 0) {
             this.actualBlowUp = this.blowUp;
+        } else {
+            this.actualBlowUp--;
         }
-        else {
-            this.actualBlowUp --;
-        }
+    }
+}
+
+class DangerSpot {
+    constructor(x, y) {
+        this.pos = createVector(x, y);
+    }
+
+    draw() {
+        noFill();
+        stroke("red");
+        ellipse(this.pos.x, this.pos.y, 200, 200);
+        fill("red");
+        ellipse(this.pos.x, this.pos.y, 200 * (enemies[0].actualBlowUp / enemies[0].blowUp), 200);
     }
 }

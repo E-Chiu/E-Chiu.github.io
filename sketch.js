@@ -40,7 +40,7 @@ function setup() {
     //type, color, size, speed, damage, range, attackCd, knockback
     items.splice(0, 1, new itemLibrary[0][2][0].create);
     items.splice(1, 1, new itemLibrary[0][2][0].create);
-    items.splice(2, 1, new itemLibrary[0][1][1].create);
+    items.splice(2, 1, new itemLibrary[0][1][3].create);
     //
     //
     //    items.splice(3, 1, new consumables[1][0].create());
@@ -61,6 +61,12 @@ function draw() {
     for (let i = 0; i < droppedItems.length; i++) {
         droppedItems[i].draw();
     }
+    // blow up spots
+//    for(let i = 0; i < enemies.length; i ++) {
+//        if (enemies[i] instanceof DangerSpot) {
+//            enemies[i].draw();
+//        }
+//    }
     //player
     player.attack();
     player.draw();
