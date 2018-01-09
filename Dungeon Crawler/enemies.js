@@ -35,12 +35,6 @@ class Enemy {
             stroke(192);
             ellipse(this.pos.x, this.pos.y, this.size + i * 10);
         }
-        for (let i = 0; i < this.marked; i++) {
-            noFill();
-            strokeWeight(3);
-            stroke(192);
-            ellipse(this.pos.x, this.pos.y, this.size + i * 10);
-        }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
             killOff();
@@ -483,11 +477,11 @@ class TheMachine {
         this.pos = createVector(width / 2, 355);
         this.size = 280;
         this.health = 999;
-        this.actualHealth = 999;
+        this.actualHealth = 339;
         this.spawnRate = 240;
         this.actualSpawnRate = 240;
-        this.blowUp = 720;
-        this.actualBlowUp = 720;
+        this.blowUp = 600;
+        this.actualBlowUp = 600;
         this.shootCD = 120;
         this.actualShootCD = 120;
         this.lockOn = createVector(0, 0);
@@ -497,7 +491,7 @@ class TheMachine {
         this.canHit = true;
         this.marked = 0;
         this.bulletSize = 30;
-        this.bulletColor = 50;
+        this.bulletColor = 90;
         this.bulletSpeed = 5;
     }
     draw() {
@@ -542,10 +536,15 @@ class TheMachine {
             this.actualHealth -= this.dot;
             killOff();
         }
+        
+        if(this.actualHealth <= 333) {
+            this.blowUp = 150;
+            this.shootCD = 30;
+        }
     }
 
     canShoot() {
-        if (this.actualHealth > 666) {
+        if (this.actualHealth <= 666) {
             if (this.actualShootCD == 30) {
                 this.lockOn.x = player.pos.x;
                 this.lockOn.y = player.pos.y;
@@ -560,20 +559,22 @@ class TheMachine {
     }
     canSpawn() {
         if (this.actualSpawnRate == 0) {
-            enemies.push(new Enemy(210, this.pos.x, this.pos.y, 100, 1, 20, 0));
+            enemies.push(new Enemy(210, this.pos.x, this.pos.y, 45, 1, 20, 0));
             this.actualSpawnRate = this.spawnRate;
         } else {
             this.actualSpawnRate--;
         }
     }
     canExplode() {
-        if (this.actualBlowUp == 100) {
-            enemies.push(new DangerSpot(player.pos.x, player.pos.y));
-        }
-        if (this.actualBlowUp == 0) {
-            this.actualBlowUp = this.blowUp;
-        } else {
-            this.actualBlowUp--;
+        if (this.actualHealth <= 666) {
+            if (this.actualBlowUp == 100) {
+                enemies.push(new DangerSpot(player.pos.x, player.pos.y));
+            }
+            if (this.actualBlowUp == 0) {
+                this.actualBlowUp = this.blowUp;
+            } else {
+                this.actualBlowUp--;
+            }
         }
     }
 }
@@ -592,8 +593,16 @@ class DangerSpot {
         noStroke();
         ellipse(this.pos.x, this.pos.y, 200 * (enemies[0].actualBlowUp / 100));
         if (enemies[0].actualBlowUp == 0) {
-            if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 200) {
-                player.lives--;
+            if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100 && player.canHit == true) {
+                if (player.hasShield && player.canHit == true && player.gotHit == false) {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.hasShield = false;
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
         }
     }
