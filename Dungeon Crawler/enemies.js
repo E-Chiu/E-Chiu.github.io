@@ -95,6 +95,12 @@ class Enemy {
 //checking to see when an enemy should die
 function killOff() {
     for (let i = 0; i < enemies.length; i++) {
+        if (enemies[i] instanceof DangerSpot) {
+            if (enemies[0].actualBlowUp == 0) {
+                enemies.splice(i, 1);
+                break;
+            }
+        }
         if (enemies[i].actualHealth <= 0) {
             dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
             enemies.splice(i, 1);
@@ -561,7 +567,7 @@ class TheMachine {
         }
     }
     canExplode() {
-        if (this.actualBlowUp <= 100) {
+        if (this.actualBlowUp == 100) {
             enemies.push(new DangerSpot(player.pos.x, player.pos.y));
         }
         if (this.actualBlowUp == 0) {
@@ -580,8 +586,15 @@ class DangerSpot {
     draw() {
         noFill();
         stroke("red");
-        ellipse(this.pos.x, this.pos.y, 200, 200);
+        strokeWeight(5);
+        ellipse(this.pos.x, this.pos.y, 200);
         fill("red");
-        ellipse(this.pos.x, this.pos.y, 200 * (enemies[0].actualBlowUp / enemies[0].blowUp), 200);
+        noStroke();
+        ellipse(this.pos.x, this.pos.y, 200 * (enemies[0].actualBlowUp / 100));
+        if (enemies[0].actualBlowUp == 0) {
+            if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 200) {
+                player.lives--;
+            }
+        }
     }
 }
