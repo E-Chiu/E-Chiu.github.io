@@ -582,6 +582,7 @@ class TheMachine {
 class DangerSpot {
     constructor(x, y) {
         this.pos = createVector(x, y);
+        this.size == 200;
     }
 
     draw() {
@@ -591,7 +592,8 @@ class DangerSpot {
         ellipse(this.pos.x, this.pos.y, 200);
         fill("red");
         noStroke();
-        ellipse(this.pos.x, this.pos.y, 200 * (enemies[0].actualBlowUp / 100));
+        this.size = 200 * (enemies[0].actualBlowUp / 100);
+        ellipse(this.pos.x, this.pos.y, this.size);
         if (enemies[0].actualBlowUp == 0) {
             if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100 && player.canHit == true) {
                 if (player.hasShield && player.canHit == true && player.gotHit == false) {
