@@ -46,7 +46,7 @@ function setup() {
     //    items.splice(3, 1, new consumables[1][0].create());
     //    items.splice(4, 1, new consumables[2][2].create());
     //    items.splice(5, 1, new consumables[2][0].create());
-    //    items.splice(6, 1, new consumables[2][1].create());
+    items.splice(6, 1, new consumables[2][1].create());
 }
 
 // DRAW FUNCTION - Loops @ 60FPS by default
@@ -62,11 +62,11 @@ function draw() {
         droppedItems[i].draw();
     }
     // blow up spots
-//    for(let i = 0; i < enemies.length; i ++) {
-//        if (enemies[i] instanceof DangerSpot) {
-//            enemies[i].draw();
-//        }
-//    }
+    //    for(let i = 0; i < enemies.length; i ++) {
+    //        if (enemies[i] instanceof DangerSpot) {
+    //            enemies[i].draw();
+    //        }
+    //    }
     //player
     player.attack();
     player.draw();

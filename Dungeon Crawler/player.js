@@ -197,6 +197,20 @@ class Player {
         if (this.pos.y >= 679.5) {
             this.pos.y = 679.5;
         }
+        if (stageNum == 10) {
+            if (this.pos.x < 600 && this.pos.x > 595 && this.pos.y > 205 && this.pos.y < 405) {
+                this.pos.x = 600;
+            }
+            if (this.pos.x > 350 && this.pos.x < 3550 && this.pos.y > 205 && this.pos.y < 405) {
+                this.pos.x = 350;
+            }
+            if (this.pos.y < 455 && this.pos.y > 450 && this.pos.x > 350 && this.pos.x < 600) {
+                this.pos.y = 455;
+            }
+            if (this.pos.y > 205 && this.pos.y < 210 && this.pos.x > 350 && this.pos.x < 600) {
+                this.pos.y = 205;
+            }
+        }
         if (this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
             stageNum++;
             canAdvance = false;

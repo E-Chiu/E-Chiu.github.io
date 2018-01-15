@@ -90,7 +90,7 @@ class Enemy {
 function killOff() {
     for (let i = 0; i < enemies.length; i++) {
         if (enemies[i] instanceof DangerSpot) {
-            if (enemies[0].actualBlowUp == 0) {
+            if (enemies[i].timer == 0) {
                 enemies.splice(i, 1);
                 break;
             }
@@ -536,16 +536,19 @@ class TheMachine {
             this.actualHealth -= this.dot;
             killOff();
         }
-        
-        if(this.actualHealth <= 333) {
+
+        if (this.actualHealth <= 333) {
             this.blowUp = 150;
-            this.shootCD = 30;
+            this.shootCD = 15;
         }
     }
 
     canShoot() {
         if (this.actualHealth <= 666) {
-            if (this.actualShootCD == 30) {
+            if (this.actualHealth <= 333 && this.actualShootCD == 15) {
+                this.lockOn.x = chance(0,width);
+                this.lockOn.y = chance(0,height);
+            } else if (this.actualShootCD == 30) {
                 this.lockOn.x = player.pos.x;
                 this.lockOn.y = player.pos.y;
             }
@@ -559,7 +562,11 @@ class TheMachine {
     }
     canSpawn() {
         if (this.actualSpawnRate == 0) {
-            enemies.push(new Enemy(210, this.pos.x, this.pos.y, 45, 1, 20, 0));
+            if (this.actualHealth <= 333) {
+                enemies.push(new Enemy(210, chance(0, width), chance(0, height), 45, 1, 20, 0));
+            } else {
+                enemies.push(new Enemy(210, this.pos.x, this.pos.y, 45, 1, 20, 0));
+            }
             this.actualSpawnRate = this.spawnRate;
         } else {
             this.actualSpawnRate--;
@@ -582,7 +589,8 @@ class TheMachine {
 class DangerSpot {
     constructor(x, y) {
         this.pos = createVector(x, y);
-        this.size == 200;
+        this.size = 200;
+        this.timer = 200;
     }
 
     draw() {
@@ -592,9 +600,10 @@ class DangerSpot {
         ellipse(this.pos.x, this.pos.y, 200);
         fill("red");
         noStroke();
-        this.size = 200 * (enemies[0].actualBlowUp / 100);
+        this.timer--;
+        this.size = 200 * (this.timer / 200);
         ellipse(this.pos.x, this.pos.y, this.size);
-        if (enemies[0].actualBlowUp == 0) {
+        if (this.timer == 0) {
             if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100 && player.canHit == true) {
                 if (player.hasShield && player.canHit == true && player.gotHit == false) {
                     player.canHit = false;
@@ -606,6 +615,7 @@ class DangerSpot {
                     player.lives--;
                 }
             }
+            killOff();
         }
     }
 }

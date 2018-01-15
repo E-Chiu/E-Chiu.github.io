@@ -48,9 +48,13 @@ class Bullet {
                 if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
                     if (items[player.activeWeapon].name == "Silver Bolts") {
                         enemies[i].marked++;
+                        this.used = true;
+                        killOff();
                         if (enemies[i].marked == 3) {
                             if (enemies[i] instanceof Enemy) {
                                 enemies[i].actualHealth -= enemies[i].maxHealth * 0.12;
+                                this.used = true;
+                                killOff();
                             } else if (enemies[i] instanceof TheMachine) {
                                 enemies[i].actualHealth -= enemies[i].health * 0.12;
                             }
@@ -59,6 +63,7 @@ class Bullet {
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
                     this.used = true;
+                    killOff();
                     break;
                 }
             }
@@ -74,11 +79,13 @@ class Bullet {
                     player.gotHit = true;
                     player.hasShield = false;
                     this.used = true;
+                    killOff();
                 } else {
                     player.canHit = false;
                     player.gotHit = true;
                     player.lives--;
                     this.used = true;
+                    killOff();
                 }
             }
         }
@@ -738,7 +745,7 @@ class BlackHole {
         ellipse(this.static.x, this.static.y, this.roarSize);
         this.roarSize -= 5;
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(this.static.x, this.static.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2) {
+            if (dist(this.static.x, this.static.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && !(enemies[i] instanceof TheMachine)) {
                 enemies[i].blackHoled = true;
             }
         }
