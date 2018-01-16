@@ -19,7 +19,7 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    stageNum = 10;
+    stageNum = 9;
     stages[stageNum].setup();
     //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));
@@ -38,7 +38,7 @@ function setup() {
     //    enemies.push(new NinjaNanny("white", 800, 100, 50, 1, 30, 2, 5, "white", 20, 60, "white", 30, 180, 120, 40));
 
     //type, color, size, speed, damage, range, attackCd, knockback
-    items.splice(0, 1, new itemLibrary[0][2][0].create);
+    items.splice(0, 1, new itemLibrary[0][0][1].create);
     items.splice(1, 1, new itemLibrary[0][2][0].create);
     items.splice(2, 1, new itemLibrary[0][1][3].create);
     //

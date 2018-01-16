@@ -99,6 +99,8 @@ function killOff() {
             dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
             enemies.splice(i, 1);
         }
+    }
+    for (let i = 0; i < player.bulletArray.length; i++) {
         if (player.bulletArray[i] != undefined) {
             if (player.bulletArray[i].used) {
                 player.bulletArray.splice(i, 1);
@@ -477,7 +479,7 @@ class TheMachine {
         this.pos = createVector(width / 2, 355);
         this.size = 280;
         this.health = 999;
-        this.actualHealth = 339;
+        this.actualHealth = 999;
         this.spawnRate = 240;
         this.actualSpawnRate = 240;
         this.blowUp = 600;
@@ -546,8 +548,8 @@ class TheMachine {
     canShoot() {
         if (this.actualHealth <= 666) {
             if (this.actualHealth <= 333 && this.actualShootCD == 15) {
-                this.lockOn.x = chance(0,width);
-                this.lockOn.y = chance(0,height);
+                this.lockOn.x = chance(0, width);
+                this.lockOn.y = chance(0, height);
             } else if (this.actualShootCD == 30) {
                 this.lockOn.x = player.pos.x;
                 this.lockOn.y = player.pos.y;

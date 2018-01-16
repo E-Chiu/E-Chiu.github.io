@@ -11,7 +11,7 @@ let canAdvance = false;
 //all stages
 let stages = [
     //tutorial
-    //level 0
+//level a
     {
         setup: function () {
             player.pos.x = 20;
@@ -32,7 +32,7 @@ let stages = [
             }
         }
     },
-    // level 1
+// level b
     {
         setup: function () {
             player.pos.x = 20;
@@ -59,7 +59,7 @@ let stages = [
             }
         }
 },
-            // level 2
+// level c
     {
         setup: function () {
             player.pos.x = 20;
@@ -85,7 +85,7 @@ let stages = [
             }
         }
 },
-    // level 3
+// level d
     {
         setup: function () {
             player.pos.x = 20;
@@ -111,7 +111,7 @@ let stages = [
             }
         }
 },
-    //level 4
+//level 1
     {
         setup: function () {
             localStorage.setItem("played", "yes");
@@ -133,14 +133,14 @@ let stages = [
             }
         }
 },
-// stage 5
+//level 2
     {
         setup: function () {
             player.pos.x = width / 2;
-            player.pos.y = height / 2;
-            enemies.push(new Enemy("red", width * 0.66, height * 0.66, 50, 1, 30, 0));
-            enemies.push(new Enemy("blue", width * 0.33, height * 0.66, 50, 1, 30, 0));
-            enemies.push(new Enemy("yellow", width / 2, height * 0.33, 50, 1, 30, 0));
+            player.pos.y = 700 / 2;
+            enemies.push(new Enemy("red", width * 0.66, 700 * 0.66, 50, 1, 30, 0));
+            enemies.push(new Enemy("blue", width * 0.33, 700 * 0.66, 50, 1, 30, 0));
+            enemies.push(new Enemy("yellow", width / 2, 700 * 0.33, 50, 1, 30, 0));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -159,12 +159,12 @@ let stages = [
             }
         }
 },
-    // stage 6
+// level 3
     {
         setup: function () {
             player.pos.x = 20;
             player.pos.y = 355;
-            enemies.push(new SwordSwingSusan("red", 200, height / 2, 80, 1, 60, 1, "white", 120, 45, 120, 10));
+            enemies.push(new SwordSwingSusan("red", 200, 700 / 2, 80, 1, 60, 1, "white", 120, 45, 120, 10));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -180,13 +180,13 @@ let stages = [
             }
         }
 },
-// stage 7
+// level 4
     {
         setup: function () {
             player.pos.x = 20;
             player.pos.y = 355;
-            enemies.push(new SwordSwingSusan("blue", 800, height * 0.33, 20, 3, 10, 1, "white", 30, 45, 40, 12));
-            enemies.push(new SwordSwingSusan("blue", 800, height * 0.66, 20, 3, 10, 1, "white", 30, 45, 40, 12));
+            enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
+            enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.66, 20, 3, 10, 0, "white", 30, 45, 40, 12));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -202,11 +202,68 @@ let stages = [
             }
         }
 },
-// stage 8
-    {},
-// stage 9
-    {},
-//stage 10: THE MACHINE
+// level 5
+    {
+        setup: function () {
+            player.pos.x = 20;
+            player.pos.y = 355;
+            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
+            enemies.push(new ShooterSam("red", 960, 355, 40, 0, 20, 0, 5, "blue", 10, 60));
+            enemies.push(new Enemy("red", width * 0.66, 700 * 0.66, 50, 1, 30, 0));
+            enemies.push(new Enemy("blue", width * 0.33, 700 / 2, 50, 1, 30, 0));
+            enemies.push(new Enemy("yellow", width * 0.66, 700 * 0.33, 50, 1, 30, 0));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+// level 6
+    {
+        setup: function () {
+            player.pos.x = width / 2;
+            player.pos.y = 700 / 2;
+            //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
+            enemies.push(new Enemy("brown", width / 2, 50, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 600, 150, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 700, 250, 30, 1, 10, 0));
+
+            enemies.push(new Enemy("brown", 800, 355, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 700, 700 * 0.55, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", width * 0.44, 700 * 0.66, 30, 1, 10, 0));
+
+            enemies.push(new Enemy("brown", width / 2, 650, 30, 1, 10, 0));
+            //            enemies.push(new Enemy("brown", width * 0.66, 700 * 0.44, 30, 1, 10, 0));
+            //            enemies.push(new Enemy("brown", width * 0.77, 700 * 0.33, 30, 1, 10, 0));
+
+            enemies.push(new Enemy("brown", 200, 355, 30, 1, 10, 0));
+            //            enemies.push(new Enemy("brown", width * 0.55, 700 * 0.11, 30, 1, 10, 0));
+            //            enemies.push(new Enemy("brown", width * 0.44, 700 * 0.11, 30, 1, 10, 0));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+//level 7: THE MACHINE
     {
         setup: function () {
             player.pos.x = 20;
