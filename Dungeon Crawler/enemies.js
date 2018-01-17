@@ -483,8 +483,8 @@ class TheMachine {
     constructor() {
         this.pos = createVector(width / 2, 355);
         this.size = 280;
-        this.health = 999;
-        this.actualHealth = 999;
+        this.health = 666;
+        this.actualHealth = 666;
         this.spawnRate = 240;
         this.actualSpawnRate = 240;
         this.blowUp = 600;
@@ -518,17 +518,17 @@ class TheMachine {
                 rect(10, 10, 900 * (this.actualHealth / 333), 50);
             }
         }
-        if (this.actualHealth > 333) {
+        if (this.actualHealth > 222) {
             fill("green");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 666) {
+            if (this.actualHealth > 444) {
                 rect(30, 30, 900, 50);
             } else {
                 rect(30, 30, 900 * ((this.actualHealth - 333) / 333), 50);
             }
         }
-        if (this.actualHealth > 666) {
+        if (this.actualHealth > 444) {
             fill("blue")
             rect(50, 50, 900 * ((this.actualHealth - 666) / 333), 50);
         }
@@ -547,7 +547,7 @@ class TheMachine {
             killOff();
         }
 
-        if (this.actualHealth <= 333) {
+        if (this.actualHealth <= 222) {
             this.blowUp = 150;
             this.shootCD = 15;
             this.bulletSpeed = 1;
@@ -555,8 +555,8 @@ class TheMachine {
     }
 
     canShoot() {
-        if (this.actualHealth <= 666) {
-            if (this.actualHealth <= 333 && this.actualShootCD == 15) {
+        if (this.actualHealth <= 444) {
+            if (this.actualHealth <= 222 && this.actualShootCD == 15) {
                 this.lockOn.x = chance(0, width);
                 this.lockOn.y = chance(0, height);
             } else if (this.actualShootCD == 30) {
@@ -573,7 +573,7 @@ class TheMachine {
     }
     canSpawn() {
         if (this.actualSpawnRate == 0) {
-            if (this.actualHealth <= 333) {
+            if (this.actualHealth <= 222) {
                 enemies.push(new Enemy(210, chance(0, width), chance(0, height), 45, 1, 20, 0));
             } else {
                 enemies.push(new Enemy(210, this.pos.x, this.pos.y, 45, 1, 20, 0));
@@ -584,7 +584,7 @@ class TheMachine {
         }
     }
     canExplode() {
-        if (this.actualHealth <= 666) {
+        if (this.actualHealth <= 444) {
             if (this.actualBlowUp == 100) {
                 enemies.push(new DangerSpot(player.pos.x, player.pos.y));
             }
