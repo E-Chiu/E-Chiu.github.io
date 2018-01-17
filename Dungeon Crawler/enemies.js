@@ -98,6 +98,7 @@ function killOff() {
         if (enemies[i].actualHealth <= 0) {
             if (enemies[i] instanceof TheMachine) {
                 dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y, "boss");
+                enemies.splice(i, 1);
             } else {
                 dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
                 enemies.splice(i, 1);
@@ -504,6 +505,9 @@ class TheMachine {
         fill(210);
         noStroke();
         rect(this.pos.x - 150, this.pos.y - 150, 250, 250);
+        if (this.actualHealth == 0) {
+            killOff();
+        }
         if (this.actualHealth > 0) {
             fill("red");
             stroke("grey");
@@ -546,6 +550,7 @@ class TheMachine {
         if (this.actualHealth <= 333) {
             this.blowUp = 150;
             this.shootCD = 15;
+            this.bulletSpeed = 1;
         }
     }
 
