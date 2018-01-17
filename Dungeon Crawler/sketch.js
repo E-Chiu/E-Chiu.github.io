@@ -19,7 +19,7 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    stageNum = 9;
+//    stageNum = 9;
     stages[stageNum].setup();
     //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
     //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));

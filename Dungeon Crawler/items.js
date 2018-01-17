@@ -772,11 +772,14 @@ function chance(min, max) {
 //check to see if you should drop an item
 let droppedItems = [];
 
-function dropItem(rarity, x, y) {
+function dropItem(rarity, x, y, type) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = chance(0, 2);
+    dropChance = chance(0, 3);
+    if(type == "boss") {
+        dropChance = 0;
+    }
     dropType = chance(0, 2);
     if (dropType == 2) {
         if (rarity != 2) {

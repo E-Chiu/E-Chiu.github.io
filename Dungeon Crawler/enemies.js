@@ -96,8 +96,12 @@ function killOff() {
             }
         }
         if (enemies[i].actualHealth <= 0) {
-            dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
-            enemies.splice(i, 1);
+            if (enemies[i] instanceof TheMachine) {
+                dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y, "boss");
+            } else {
+                dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y);
+                enemies.splice(i, 1);
+            }
         }
     }
     for (let i = 0; i < player.bulletArray.length; i++) {

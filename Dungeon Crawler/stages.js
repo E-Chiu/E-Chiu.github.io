@@ -238,16 +238,16 @@ let stages = [
             enemies.push(new Enemy("brown", 700, 250, 30, 1, 10, 0));
 
             enemies.push(new Enemy("brown", 800, 355, 30, 1, 10, 0));
-            enemies.push(new Enemy("brown", 700, 700 * 0.55, 30, 1, 10, 0));
-            enemies.push(new Enemy("brown", width * 0.44, 700 * 0.66, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 700, 450, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 600, 550, 30, 1, 10, 0));
 
             enemies.push(new Enemy("brown", width / 2, 650, 30, 1, 10, 0));
-            //            enemies.push(new Enemy("brown", width * 0.66, 700 * 0.44, 30, 1, 10, 0));
-            //            enemies.push(new Enemy("brown", width * 0.77, 700 * 0.33, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 400, 550, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 300, 450, 30, 1, 10, 0));
 
             enemies.push(new Enemy("brown", 200, 355, 30, 1, 10, 0));
-            //            enemies.push(new Enemy("brown", width * 0.55, 700 * 0.11, 30, 1, 10, 0));
-            //            enemies.push(new Enemy("brown", width * 0.44, 700 * 0.11, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 300, 250, 30, 1, 10, 0));
+            enemies.push(new Enemy("brown", 400, 150, 30, 1, 10, 0));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -263,7 +263,81 @@ let stages = [
             }
         }
     },
-//level 7: THE MACHINE
+// level 7    
+    {
+        setup: function () {
+            player.pos.x = width / 2;
+            player.pos.y = 700 / 2;
+            //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
+            enemies.push(new ChargingChad("blue", 20, 20, 50, 10, 50, 1, "red", 40, 120));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+// level 8
+    {
+        setup: function () {
+            player.pos.x = 300;
+            player.pos.y = 700 / 2;
+            enemies.push(new ChargingChad("black", 900, 100, 30, 5, 20, 0, "blue", 10, 30));
+            enemies.push(new ChargingChad("black", 900, 350, 30, 5, 20, 0, "blue", 10, 30));
+            enemies.push(new ChargingChad("black", 900, 600, 30, 5, 20, 0, "blue", 10, 30));
+            //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
+            enemies.push(new SwordSwingSusan("black", 100, 355, 40, 1, 40, 1, "white", 60, 180, 60, 3));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+// level 9
+    {
+        setup: function () {
+            player.pos.x = chance(0, 1000);
+            player.pos.y = chance(0, 700);
+            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+                10, 180));
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+                10, 180));
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+                10, 180));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+//level 10: THE MACHINE
     {
         setup: function () {
             player.pos.x = 20;
