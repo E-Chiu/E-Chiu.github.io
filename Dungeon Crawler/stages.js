@@ -316,11 +316,11 @@ let stages = [
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
                 10, 180));
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
                 10, 180));
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow"
+            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
                 10, 180));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
