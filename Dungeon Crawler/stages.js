@@ -118,6 +118,7 @@ let stages = [
 //level 1
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             localStorage.setItem("played", "yes");
             player.pos.x = 20;
@@ -132,7 +133,6 @@ let stages = [
         draw: function () {
             if (enemies.length == 0) {
                 dropItem(0, 500, 355, "boss");
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -143,6 +143,7 @@ let stages = [
 //level 2
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -160,7 +161,6 @@ let stages = [
             strokeWeight(0);
             textSize(30);
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -171,6 +171,7 @@ let stages = [
 // level 3
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
@@ -183,7 +184,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -194,6 +194,7 @@ let stages = [
 // level 4
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
@@ -207,7 +208,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -218,6 +218,7 @@ let stages = [
 // level 5
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
@@ -234,7 +235,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -245,6 +245,7 @@ let stages = [
 // level 6
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -272,7 +273,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -283,6 +283,7 @@ let stages = [
 // level 7    
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -296,7 +297,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -307,6 +307,7 @@ let stages = [
 // level 8
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = 300;
             player.pos.y = 700 / 2;
@@ -323,7 +324,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -334,6 +334,7 @@ let stages = [
 // level 9
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
@@ -352,7 +353,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -363,6 +363,7 @@ let stages = [
 //level 10: THE MACHINE
     {
         setup: function () {
+            dropItem(0, 500, 355, "boss");
             player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
@@ -375,7 +376,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
