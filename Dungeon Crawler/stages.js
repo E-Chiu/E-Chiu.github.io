@@ -131,6 +131,8 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -154,11 +156,11 @@ let stages = [
             }
         },
         draw: function () {
-            player.buttonState = "notPickup";
             fill("white");
             strokeWeight(0);
             textSize(30);
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -181,6 +183,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -204,6 +207,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -230,6 +234,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -267,6 +272,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -290,6 +296,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -316,6 +323,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -344,6 +352,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
@@ -366,6 +375,7 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
+                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
