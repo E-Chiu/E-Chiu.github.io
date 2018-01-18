@@ -185,6 +185,7 @@ class Player {
         if (keyIsDown(68)) {
             this.pos.x += this.speed;
         }
+        //barriers
         if (this.pos.x <= 32.5) {
             this.pos.x = 32.5;
         }
@@ -219,6 +220,17 @@ class Player {
                 droppedItems.splice(i, 1);
                 i--;
             }
+        }
+        //losing
+        if (player.lives == 0) {
+            for (let i = 0; i < enemies.length; i++) {
+                enemies.splice(i, 1);
+            }
+            for (let i = 0; i < droppedItems.length; i++) {
+                droppedItems.splice(i, 1);
+            }
+            player.pos.x = 2000;
+            player.pos.y = 1600;
         }
     }
 }
@@ -330,20 +342,25 @@ function keyPressed() {
             }
         }
     }
-    if (keyCode == 32) {
+    //picking up / deleting items
+    if (keyCode == 32 || keyCode == 16) {
         checkItem: for (let i = 0; i < droppedItems.length; i++) {
             if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
-                if (droppedItems[i].type == "consumable") {
-                    for (j = 3; j < 7; j++) {
-                        if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
-                            items[j].amount++;
-                            droppedItems.splice(i, 1);
-                            break checkItem;
+                if (keyCode == 32) {
+                    if (droppedItems[i].type == "consumable") {
+                        for (j = 3; j < 7; j++) {
+                            if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
+                                items[j].amount++;
+                                droppedItems.splice(i, 1);
+                                break checkItem;
+                            }
                         }
                     }
+                    player.buttonState = "pickup";
+                    player.swapIndex = i;
+                } else if (keyCode == 16) {
+                    droppedItems.splice(i, 1);
                 }
-                player.buttonState = "pickup";
-                player.swapIndex = i;
                 break checkItem;
             }
         }

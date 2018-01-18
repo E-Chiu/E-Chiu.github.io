@@ -10,10 +10,11 @@ let canAdvance = false;
 
 //all stages
 let stages = [
-    //tutorial
+//tutorial
 //level a
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new Enemy("blue", 500, 355, 50, 0, 1, 0));
@@ -35,6 +36,7 @@ let stages = [
 // level b
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             player.lives = 3;
@@ -62,6 +64,7 @@ let stages = [
 // level c
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -88,6 +91,7 @@ let stages = [
 // level d
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -114,6 +118,7 @@ let stages = [
 //level 1
     {
         setup: function () {
+            player.buttonState = "notPickup";
             localStorage.setItem("played", "yes");
             player.pos.x = 20;
             player.pos.y = 355;
@@ -136,6 +141,7 @@ let stages = [
 //level 2
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             enemies.push(new Enemy("red", width * 0.66, 700 * 0.66, 50, 1, 30, 0));
@@ -148,6 +154,7 @@ let stages = [
             }
         },
         draw: function () {
+            player.buttonState = "notPickup";
             fill("white");
             strokeWeight(0);
             textSize(30);
@@ -162,9 +169,10 @@ let stages = [
 // level 3
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
-            enemies.push(new SwordSwingSusan("red", 200, 700 / 2, 80, 1, 60, 1, "white", 120, 45, 120, 10));
+            enemies.push(new SwordSwingSusan("red", 200, 700 / 2, 80, 0.8, 60, 1, "white", 120, 45, 120, 10));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -183,6 +191,7 @@ let stages = [
 // level 4
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
@@ -205,6 +214,7 @@ let stages = [
 // level 5
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
@@ -230,6 +240,7 @@ let stages = [
 // level 6
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -266,6 +277,7 @@ let stages = [
 // level 7    
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -288,6 +300,7 @@ let stages = [
 // level 8
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 300;
             player.pos.y = 700 / 2;
             enemies.push(new ChargingChad("black", 900, 100, 30, 5, 20, 0, "blue", 10, 30));
@@ -313,6 +326,7 @@ let stages = [
 // level 9
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
@@ -340,6 +354,7 @@ let stages = [
 //level 10: THE MACHINE
     {
         setup: function () {
+            player.buttonState = "notPickup";
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new TheMachine());

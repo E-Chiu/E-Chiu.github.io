@@ -512,10 +512,10 @@ class TheMachine {
             fill("red");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 333) {
+            if (this.actualHealth > 222) {
                 rect(10, 10, 900, 50);
             } else {
-                rect(10, 10, 900 * (this.actualHealth / 333), 50);
+                rect(10, 10, 900 * (this.actualHealth / 222), 50);
             }
         }
         if (this.actualHealth > 222) {
@@ -525,12 +525,12 @@ class TheMachine {
             if (this.actualHealth > 444) {
                 rect(30, 30, 900, 50);
             } else {
-                rect(30, 30, 900 * ((this.actualHealth - 333) / 333), 50);
+                rect(30, 30, 900 * ((this.actualHealth - 222) / 222), 50);
             }
         }
         if (this.actualHealth > 444) {
             fill("blue")
-            rect(50, 50, 900 * ((this.actualHealth - 666) / 333), 50);
+            rect(50, 50, 900 * ((this.actualHealth - 444) / 222), 50);
         }
         fill("white");
         strokeWeight(0);

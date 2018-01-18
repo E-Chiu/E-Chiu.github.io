@@ -769,6 +769,7 @@ class BlackHole {
 function chance(min, max) {
     return (Math.floor(random(min, max + 1)));
 }
+
 //check to see if you should drop an item
 let droppedItems = [];
 
