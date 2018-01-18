@@ -132,7 +132,6 @@ let stages = [
         },
         draw: function () {
             if (enemies.length == 0) {
-                dropItem(0, 500, 355, "boss");
                 noStroke();
                 fill("yellow");
                 rect(990, 305, 10, 100);
