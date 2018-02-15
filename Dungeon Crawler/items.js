@@ -139,6 +139,7 @@ let weapons = [
                     super("Sling", "ranged", "grey", 25, 5, 15, 0, 0, 0);
                     this.ammo = 5;
                     this.actualAmmo = 5;
+                    this.ammochanged = false;
                 }
                 draw() {
                     strokeWeight(7);
@@ -196,6 +197,7 @@ let weapons = [
                     super("Hand Gun", "ranged", [229, 230, 232], 10, 10, 20, 0, 0, 0);
                     this.ammo = 6;
                     this.actualAmmo = 6;
+                    this.ammochanged = false;
                 }
                 draw() {
                     noFill();
@@ -233,6 +235,7 @@ let weapons = [
                     super("Sniper Rifle", "ranged", 242, 6, 50, 80, 0, 0, 0);
                     this.ammo = 2;
                     this.actualAmmo = 2;
+                    this.ammochanged = false;
                 }
                 draw() {
                     strokeWeight(1);
@@ -266,6 +269,7 @@ let weapons = [
                     super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
                     this.ammo = 3;
                     this.actualAmmo = 3;
+                    this.ammochanged = false;
                 }
                 draw() {
                     image(silverBolts, this.pos.x, this.pos.y, 40, 40);
@@ -559,10 +563,10 @@ let charms = [
                     ellipse(this.pos.x, this.pos.y + 20, 20);
                 }
                 putOn() {
-                    player.atkMod += .2;
+                    player.atkMod += .5;
                 }
                 takeOff() {
-                    player.atkMod -= .2;
+                    player.atkMod -= .5;
                 }
             }
 },
@@ -606,15 +610,17 @@ let charms = [
                 }
                 putOn() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged") {
-                            items[i].ammo = items[i].ammo * 2;
+                        if (items[i].type == "ranged" && items[i].ammochanged == false) {
+                            items[i].ammo = items[i].ammo * 3;
+                            items[i].ammochanged = true;
                         }
                     }
                 }
                 takeOff() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged") {
-                            items[i].ammo = items[i].ammo / 2;
+                        if (items[i].type == "ranged" && items[i].ammochanged == true) {
+                            items[i].ammo = items[i].ammo / 3;
+                            items[i].ammochanged = false;
                         }
                     }
                 }
