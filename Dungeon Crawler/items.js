@@ -139,7 +139,7 @@ let weapons = [
                     super("Sling", "ranged", "grey", 25, 5, 15, 0, 0, 0);
                     this.ammo = 5;
                     this.actualAmmo = 5;
-                    this.ammochanged = false;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     strokeWeight(7);
@@ -197,7 +197,7 @@ let weapons = [
                     super("Hand Gun", "ranged", [229, 230, 232], 10, 10, 20, 0, 0, 0);
                     this.ammo = 6;
                     this.actualAmmo = 6;
-                    this.ammochanged = false;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     noFill();
@@ -235,7 +235,7 @@ let weapons = [
                     super("Sniper Rifle", "ranged", 242, 6, 50, 80, 0, 0, 0);
                     this.ammo = 2;
                     this.actualAmmo = 2;
-                    this.ammochanged = false;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     strokeWeight(1);
@@ -269,7 +269,7 @@ let weapons = [
                     super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
                     this.ammo = 3;
                     this.actualAmmo = 3;
-                    this.ammochanged = false;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     image(silverBolts, this.pos.x, this.pos.y, 40, 40);
@@ -563,10 +563,10 @@ let charms = [
                     ellipse(this.pos.x, this.pos.y + 20, 20);
                 }
                 putOn() {
-                    player.atkMod += .5;
+                    player.atkMod += 1;
                 }
                 takeOff() {
-                    player.atkMod -= .5;
+                    player.atkMod -= 1;
                 }
             }
 },
@@ -610,17 +610,19 @@ let charms = [
                 }
                 putOn() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged" && items[i].ammochanged == false) {
+                        if (items[i].type == "ranged" && items[i].ammoChanged == false) {
                             items[i].ammo = items[i].ammo * 3;
-                            items[i].ammochanged = true;
+                            items[i].actualAmmo = items[i].actualAmmo * 3;
+                            items[i].ammoChanged = true;
                         }
                     }
                 }
                 takeOff() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged" && items[i].ammochanged == true) {
+                        if (items[i].type == "ranged" && items[i].ammoChanged == true) {
                             items[i].ammo = items[i].ammo / 3;
-                            items[i].ammochanged = false;
+                            items[i].actualAmmo = items[i].actualAmmo / 3;
+                            items[i].ammoChanged = false;
                         }
                     }
                 }
@@ -658,14 +660,14 @@ let charms = [
                     player.lives++;
                     player.speed += 2;
                     player.cdMod += 1;
-                    player.atkMod += .2;
+                    player.atkMod += 1;
                 }
                 takeOff() {
                     player.maxLives--;
                     player.lives--;
                     player.speed -= 2;
                     player.cdMod -= 1;
-                    player.atkMod -= .2;
+                    player.atkMod -= 1;
                 }
             }
 }
@@ -783,11 +785,14 @@ function dropItem(rarity, x, y, type) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = chance(0, 3);
-    if(type == "boss") {
+    dropChance = chance(0, 2);
+    if (type == "boss") {
         dropChance = 0;
     }
-    dropType = chance(0, 2);
+    dropType = chance(0, 3);
+    if (dropType == 3) {
+        dropType = 1;
+    }
     if (dropType == 2) {
         if (rarity != 2) {
             rarity = 0;

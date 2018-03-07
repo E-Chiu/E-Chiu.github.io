@@ -21,6 +21,17 @@ function setup() {
     }
     //    stageNum = 9;
     stages[stageNum].setup();
+//    droppedItems.push(new itemLibrary[2][0][3].create());
+//    droppedItems.push(new itemLibrary[2][0][3].create());
+//    droppedItems.push(new itemLibrary[2][0][3].create());
+//    droppedItems[1].pos.x = 200;
+//    droppedItems[1].pos.y = 200;
+//    
+//    droppedItems[3].pos.x = 200;
+//    droppedItems[3].pos.y = 200;
+//
+//    droppedItems[2].pos.x = 300;
+//    droppedItems[2].pos.y = 300;
 
 }
 
