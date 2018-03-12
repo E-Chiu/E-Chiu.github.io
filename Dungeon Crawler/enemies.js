@@ -482,7 +482,7 @@ class ChargingChad extends SwordSwingSusan {
 class TheMachine {
     constructor() {
         this.pos = createVector(width / 2, 355);
-        this.size = 280;
+        this.size = 270;
         this.health = 666;
         this.actualHealth = 666;
         this.spawnRate = 240;

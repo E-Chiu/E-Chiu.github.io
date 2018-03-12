@@ -276,6 +276,13 @@ let weapons = [
                 }
             }
     },
+//        {
+//            create: class ThirstBlade extends Weapon {
+//                constructor() {
+//                    super("ThirstBlade")
+//                }
+//            }
+//        },
         ]
 ];
 
