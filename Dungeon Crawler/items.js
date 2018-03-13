@@ -48,9 +48,13 @@ class Bullet {
                 if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < enemies[i].size / 2 && enemies[i].canHit) {
                     if (items[player.activeWeapon].name == "Silver Bolts") {
                         enemies[i].marked++;
+                        this.used = true;
+                        killOff();
                         if (enemies[i].marked == 3) {
                             if (enemies[i] instanceof Enemy) {
                                 enemies[i].actualHealth -= enemies[i].maxHealth * 0.12;
+                                this.used = true;
+                                killOff();
                             } else if (enemies[i] instanceof TheMachine) {
                                 enemies[i].actualHealth -= enemies[i].health * 0.12;
                             }
@@ -59,6 +63,7 @@ class Bullet {
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
                     this.used = true;
+                    killOff();
                     break;
                 }
             }
@@ -74,11 +79,13 @@ class Bullet {
                     player.gotHit = true;
                     player.hasShield = false;
                     this.used = true;
+                    killOff();
                 } else {
                     player.canHit = false;
                     player.gotHit = true;
                     player.lives--;
                     this.used = true;
+                    killOff();
                 }
             }
         }
@@ -132,6 +139,7 @@ let weapons = [
                     super("Sling", "ranged", "grey", 25, 5, 15, 0, 0, 0);
                     this.ammo = 5;
                     this.actualAmmo = 5;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     strokeWeight(7);
@@ -189,6 +197,7 @@ let weapons = [
                     super("Hand Gun", "ranged", [229, 230, 232], 10, 10, 20, 0, 0, 0);
                     this.ammo = 6;
                     this.actualAmmo = 6;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     noFill();
@@ -226,6 +235,7 @@ let weapons = [
                     super("Sniper Rifle", "ranged", 242, 6, 50, 80, 0, 0, 0);
                     this.ammo = 2;
                     this.actualAmmo = 2;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     strokeWeight(1);
@@ -259,12 +269,24 @@ let weapons = [
                     super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
                     this.ammo = 3;
                     this.actualAmmo = 3;
+                    this.ammoChanged = false;
                 }
                 draw() {
                     image(silverBolts, this.pos.x, this.pos.y, 40, 40);
                 }
             }
     },
+        {
+            create: class ThirstBlade extends Weapon {
+                constructor() {
+                    super("Thirst Blade", "melee", [173, 0, 0], 120, 15, 30, 90, 50, 25);
+                    this.thirst = 0;
+                }
+                draw() {
+                    image(thirstBlade, this.pos.x, this.pos.y, 40, 40);
+                }
+            }
+        },
         ]
 ];
 
@@ -552,10 +574,10 @@ let charms = [
                     ellipse(this.pos.x, this.pos.y + 20, 20);
                 }
                 putOn() {
-                    player.atkMod += .2;
+                    player.atkMod += 1;
                 }
                 takeOff() {
-                    player.atkMod -= .2;
+                    player.atkMod -= 1;
                 }
             }
 },
@@ -599,15 +621,19 @@ let charms = [
                 }
                 putOn() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged") {
-                            items[i].ammo = items[i].ammo * 2;
+                        if (items[i].type == "ranged" && items[i].ammoChanged == false) {
+                            items[i].ammo = items[i].ammo * 3;
+                            items[i].actualAmmo = items[i].actualAmmo * 3;
+                            items[i].ammoChanged = true;
                         }
                     }
                 }
                 takeOff() {
                     for (let i = 0; i < 3; i++) {
-                        if (items[i].type == "ranged") {
-                            items[i].ammo = items[i].ammo / 2;
+                        if (items[i].type == "ranged" && items[i].ammoChanged == true) {
+                            items[i].ammo = items[i].ammo / 3;
+                            items[i].actualAmmo = items[i].actualAmmo / 3;
+                            items[i].ammoChanged = false;
                         }
                     }
                 }
@@ -645,14 +671,14 @@ let charms = [
                     player.lives++;
                     player.speed += 2;
                     player.cdMod += 1;
-                    player.atkMod += .2;
+                    player.atkMod += 1;
                 }
                 takeOff() {
                     player.maxLives--;
                     player.lives--;
                     player.speed -= 2;
                     player.cdMod -= 1;
-                    player.atkMod -= .2;
+                    player.atkMod -= 1;
                 }
             }
 }
@@ -738,7 +764,7 @@ class BlackHole {
         ellipse(this.static.x, this.static.y, this.roarSize);
         this.roarSize -= 5;
         for (let i = 0; i < enemies.length; i++) {
-            if (dist(this.static.x, this.static.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2) {
+            if (dist(this.static.x, this.static.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && !(enemies[i] instanceof TheMachine)) {
                 enemies[i].blackHoled = true;
             }
         }
@@ -762,22 +788,29 @@ class BlackHole {
 function chance(min, max) {
     return (Math.floor(random(min, max + 1)));
 }
+
 //check to see if you should drop an item
 let droppedItems = [];
 
-function dropItem(rarity, x, y) {
+function dropItem(rarity, x, y, type) {
     let dropChance;
     let dropType;
     let dropIndex;
-    dropChance = chance(0, 2);
-    dropType = chance(0, 2);
+    dropChance = chance(0, 5);
+    if (type == "boss") {
+        dropChance = 0;
+    }
+    dropType = chance(0, 3);
+    if (dropType == 3) {
+        dropType = 1;
+    }
     if (dropType == 2) {
         if (rarity != 2) {
             rarity = 0;
         }
     }
     dropIndex = chance(0, itemLibrary[dropType][rarity].length - 1);
-    if (dropChance == 0) {
+    if (dropChance == 0 || dropChance == 1) {
         droppedItems.push(new itemLibrary[dropType][rarity][dropIndex].create());
         //        droppedItems.push(new itemLibrary[2][0][5].create());
         droppedItems[droppedItems.length - 1].pos.x = x;

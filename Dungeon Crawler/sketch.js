@@ -19,34 +19,20 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    stageNum = 10;
+    //    stageNum = 9;
     stages[stageNum].setup();
-    //    enemies.push(new ChargingChad(125, 100, 300, 50, 10, 30, 0, "white", 50, 240));
-    //    enemies.push(new ChargingChad(125, 200, 400, 50, 10, 30, 0, "white", 50, 240));
-    //    enemies.push(new ChargingChad(125, 400, 600, 50, 10, 30, 0, "white", 50, 240));
-    //    enemies.push(new Enemy("green", 100, 300, 50, 1, 30, 0));
-    //    enemies.push(new Enemy("green", 500, 300, 50, 1, 30, 0));
-    //    enemies.push(new Enemy("green", 600, 200, 50, 1, 30, 0));
-    //    enemies.push(new Enemy("green", 700, 400, 50, 1, 30, 0));
-    //    enemies.push(new SwordSwingSusan("green", 900, 600, 50, 1, 30, 1, "brown", 60, 100, 50, 5));
-    //    enemies.push(new SwordSwingSusan("red", 900, 100, 50, 1, 50, 2, "grey", 60, 100, 50, 5));
-    //    enemies.push(new SwordSwingSusan("blue", 300, 600, 200, 0, 100, 1, "white", 60, 180, 300, 10));
-    //    enemies.push(new ShooterSam("blue", 600, 600, 50, 0, 30, 2, 5, "grey", 20, 120));
-    //    enemies.push(new KiterKid("blue", 600, 600, 50, 2, 30, 2, 5, "grey", 20, 120));
-    //    enemies.push(new KiterKid("blue", 300, 300, 50, 1, 30, 2, 5, "grey", 20, 120));
-    //    enemies.push(new KiterKid("blue", 800, 100, 50, 1, 30, 2, 5, "grey", 20, 120));
-    //    enemies.push(new NinjaNanny("white", 800, 100, 50, 1, 30, 2, 5, "white", 20, 60, "white", 30, 180, 120, 40));
+    droppedItems.push(new itemLibrary[0][2][1].create());
+//    droppedItems.push(new itemLibrary[2][0][3].create());
+//    droppedItems.push(new itemLibrary[2][0][3].create());
+    droppedItems[1].pos.x = 200;
+    droppedItems[1].pos.y = 200;
+//    
+//    droppedItems[3].pos.x = 200;
+//    droppedItems[3].pos.y = 200;
+//
+//    droppedItems[2].pos.x = 300;
+//    droppedItems[2].pos.y = 300;
 
-    //type, color, size, speed, damage, range, attackCd, knockback
-    items.splice(0, 1, new itemLibrary[0][2][0].create);
-    items.splice(1, 1, new itemLibrary[0][2][0].create);
-    items.splice(2, 1, new itemLibrary[0][1][1].create);
-    //
-    //
-    //    items.splice(3, 1, new consumables[1][0].create());
-    //    items.splice(4, 1, new consumables[2][2].create());
-    //    items.splice(5, 1, new consumables[2][0].create());
-    //    items.splice(6, 1, new consumables[2][1].create());
 }
 
 // DRAW FUNCTION - Loops @ 60FPS by default
