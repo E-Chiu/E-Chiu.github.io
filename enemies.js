@@ -557,19 +557,21 @@ class TheMachine {
             enemies.push(new Enemy(210, this.pos.x, this.pos.y, 100, 1, 20, 0));
             this.actualSpawnRate = this.spawnRate;
         } else {
-            this.actualSpawnRate --;
+            this.actualSpawnRate--;
         }
     }
     canExplode() {
-        if(this.actualBlowUp <= 100) {
-            fill("black");
-            ellipse(chance(0, width), chance(0, length), chance(100,200));
+        if (this.actualBlowUp <= 100) {
+            this.blowUpArea();
         }
-        if(this.actualBlowUp == 0){
+        if (this.actualBlowUp == 0) {
             this.actualBlowUp = this.blowUp;
+        } else {
+            this.actualBlowUp--;
         }
-        else {
-            this.actualBlowUp --;
-        }
+    }
+    blowUpArea() {
+        fill("black");
+        ellipse(chance(0, width), chance(0, length), chance(100, 200));
     }
 }
