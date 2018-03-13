@@ -7,6 +7,7 @@ class Player {
         //items
         this.shieldGetTimer = 0;
         this.hasShield = false;
+        this.bloodShield = false;
         this.roars = [0, 0, 0, 0];
         this.buttonState = "notPickup";
         this.swapIndex;
@@ -102,6 +103,21 @@ class Player {
                     if (enemies[i].canHit) {
                         enemies[i].canHit = false;
                         enemies[i].actualHealth -= items[this.activeWeapon].damage * this.atkMod;
+                        if (enemies[i].actualHealth <= 0) {
+                            if (items[this.activeWeapon].name == "Thirst Blade") {
+                                items[this.activeWeapon].thirst++;
+                                if (items[this.activeWeapon].thirst == 3) {
+                                    if (player.lives < player.maxLives) {
+                                        player.lives++;
+                                    } else {
+                                        if (player.bloodShield != true){
+                                            player.bloodShield = true;
+                                            }
+                                    }
+                                    thirst = 0;
+                                }
+                            }
+                        }
                         if (enemies[i] instanceof Enemy) {
                             let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
                             moveVector.setMag(items[this.activeWeapon].knockback);
@@ -171,7 +187,13 @@ class Player {
             stroke(61, 232, 255);
             strokeWeight(2);
             noFill();
-            ellipse(this.pos.x, this.pos.y, this.size + 20)
+            ellipse(this.pos.x, this.pos.y, this.size + 20);
+        }
+        if (this.bloodShield) {
+            stroke(173, 34, 34, 100);
+            strokeWeight(2);
+            noFill();
+            ellipse(this.pos.x, this.pos.y, this.size + 15);
         }
         if (keyIsDown(87)) {
             this.pos.y -= this.speed;
@@ -185,6 +207,7 @@ class Player {
         if (keyIsDown(68)) {
             this.pos.x += this.speed;
         }
+        //barriers
         if (this.pos.x <= 32.5) {
             this.pos.x = 32.5;
         }
@@ -197,6 +220,20 @@ class Player {
         if (this.pos.y >= 679.5) {
             this.pos.y = 679.5;
         }
+        if (stageNum == 10 && enemies[0] instanceof TheMachine) {
+            if (this.pos.x < 600 && this.pos.x > 595 && this.pos.y > 205 && this.pos.y < 455) {
+                this.pos.x = 600;
+            }
+            if (this.pos.x > 350 && this.pos.x < 355 && this.pos.y > 205 && this.pos.y < 455) {
+                this.pos.x = 350;
+            }
+            if (this.pos.y < 455 && this.pos.y > 450 && this.pos.x > 350 && this.pos.x < 600) {
+                this.pos.y = 455;
+            }
+            if (this.pos.y > 205 && this.pos.y < 210 && this.pos.x > 350 && this.pos.x < 600) {
+                this.pos.y = 205;
+            }
+        }
         if (this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
             stageNum++;
             canAdvance = false;
@@ -205,6 +242,17 @@ class Player {
                 droppedItems.splice(i, 1);
                 i--;
             }
+        }
+        //losing
+        if (player.lives == 0) {
+            for (let i = 0; i < enemies.length; i++) {
+                enemies.splice(i, 1);
+            }
+            for (let i = 0; i < droppedItems.length; i++) {
+                droppedItems.splice(i, 1);
+            }
+            player.pos.x = 2000;
+            player.pos.y = 1600;
         }
     }
 }
@@ -287,6 +335,13 @@ function keyPressed() {
         if (droppedItems[player.swapIndex].type == "melee" || droppedItems[player.swapIndex].type == "ranged") {
             if (keyCode > 48 && keyCode < 52) {
                 items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                if (droppedItems[player.swapIndex].type == "ranged") {
+                    if (items[7].name == "Ammo Charm" || items[8].name == "Ammo Charm" || items[9].name == "Ammo Charm") {
+                        items[keyCode - 49].ammo = items[player.swapIndex].ammo * 3;
+                        items[keyCode - 49].actualAmmo = items[player.swapIndex].actualAmmo * 3;
+                        items[keyCode - 49].ammoChanged = true;
+                    }
+                }
                 droppedItems.splice(player.swapIndex, 1);
                 player.buttonState = "notPickup";
             }
@@ -316,20 +371,25 @@ function keyPressed() {
             }
         }
     }
-    if (keyCode == 32) {
+    //picking up / deleting items
+    if (keyCode == 32 || keyCode == 16) {
         checkItem: for (let i = 0; i < droppedItems.length; i++) {
             if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < 30) {
-                if (droppedItems[i].type == "consumable") {
-                    for (j = 3; j < 7; j++) {
-                        if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
-                            items[j].amount++;
-                            droppedItems.splice(i, 1);
-                            break checkItem;
+                if (keyCode == 32) {
+                    if (droppedItems[i].type == "consumable") {
+                        for (j = 3; j < 7; j++) {
+                            if (items[j].name == droppedItems[i].name && items[j].amount < items[j].maxAmount) {
+                                items[j].amount++;
+                                droppedItems.splice(i, 1);
+                                break checkItem;
+                            }
                         }
                     }
+                    player.buttonState = "pickup";
+                    player.swapIndex = i;
+                } else if (keyCode == 16) {
+                    droppedItems.splice(i, 1);
                 }
-                player.buttonState = "pickup";
-                player.swapIndex = i;
                 break checkItem;
             }
         }
