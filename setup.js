@@ -9,13 +9,6 @@ function drawMap() {
     strokeWeight(5);
     line(0, 710, 1000, 710);
 
-    //text for game over
-    if (player.lives == 0) {
-        fill("red");
-        textSize(80);
-        text("GAME OVER", 500, 355);
-    }
-    //text for picking up/swapping weapons
     if (player.buttonState == "pickup") {
         noStroke();
         fill("white");
@@ -23,12 +16,11 @@ function drawMap() {
         text("Press the slot number you wish to swap it with.", 500, 100);
     }
     for (let i = 0; i < droppedItems.length; i++) {
-        if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.buttonState == "notPickup") {
+        if (dist(droppedItems[i].pos.x, droppedItems[i].pos.y, player.pos.x, player.pos.y) < player.size / 2) {
             fill("white");
             noStroke();
             textSize(32);
             text("Press space to pick up " + droppedItems[i].name + ".", 500, 50);
-            text("Press shift to ignore " + droppedItems[i].name + ".", 500, 100);
             break;
         }
     }
