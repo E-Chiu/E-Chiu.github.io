@@ -7,6 +7,7 @@ class Player {
         //items
         this.shieldGetTimer = 0;
         this.hasShield = false;
+        this.bloodShield = false;
         this.roars = [0, 0, 0, 0];
         this.buttonState = "notPickup";
         this.swapIndex;
@@ -102,6 +103,21 @@ class Player {
                     if (enemies[i].canHit) {
                         enemies[i].canHit = false;
                         enemies[i].actualHealth -= items[this.activeWeapon].damage * this.atkMod;
+                        if (enemies[i].actualHealth <= 0) {
+                            if (items[this.activeWeapon].name == "Thirst Blade") {
+                                items[this.activeWeapon].thirst++;
+                                if (items[this.activeWeapon].thirst == 3) {
+                                    if (player.lives < player.maxLives) {
+                                        player.lives++;
+                                    } else {
+                                        if (player.bloodShield != true){
+                                            player.bloodShield = true;
+                                            }
+                                    }
+                                    thirst = 0;
+                                }
+                            }
+                        }
                         if (enemies[i] instanceof Enemy) {
                             let moveVector = p5.Vector.sub(this.pos, enemies[i].pos);
                             moveVector.setMag(items[this.activeWeapon].knockback);
@@ -171,7 +187,13 @@ class Player {
             stroke(61, 232, 255);
             strokeWeight(2);
             noFill();
-            ellipse(this.pos.x, this.pos.y, this.size + 20)
+            ellipse(this.pos.x, this.pos.y, this.size + 20);
+        }
+        if (this.bloodShield) {
+            stroke(173, 34, 34, 100);
+            strokeWeight(2);
+            noFill();
+            ellipse(this.pos.x, this.pos.y, this.size + 15);
         }
         if (keyIsDown(87)) {
             this.pos.y -= this.speed;

@@ -276,13 +276,17 @@ let weapons = [
                 }
             }
     },
-//        {
-//            create: class ThirstBlade extends Weapon {
-//                constructor() {
-//                    super("ThirstBlade")
-//                }
-//            }
-//        },
+        {
+            create: class ThirstBlade extends Weapon {
+                constructor() {
+                    super("Thirst Blade", "melee", [173, 0, 0], 120, 15, 30, 90, 50, 25);
+                    this.thirst = 0;
+                }
+                draw() {
+                    image(thirstBlade, this.pos.x, this.pos.y, 40, 40);
+                }
+            }
+        },
         ]
 ];
 

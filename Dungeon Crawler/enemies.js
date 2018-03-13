@@ -73,10 +73,16 @@ class Enemy {
         moveVector.setMag(this.speed);
         this.pos.add(moveVector);
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                player.canHit = false;
-                player.gotHit = true;
-                player.hasShield = false;
+            if (player.hasShield || player.bloodShield) {
+                if (player.canHit == true && player.gotHit == false) {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    if (player.bloodShield) {
+                        player.bloodShield = false;
+                    } else if (player.hasShield) {
+                        player.hasShield = false;
+                    }
+                }
             } else {
                 player.canHit = false;
                 player.gotHit = true;
@@ -171,10 +177,16 @@ class SwordSwingSusan extends Enemy {
             for (let j = 0; j < this.swordLength; j++) {
                 if (dist(player.pos.x, player.pos.y, x1 + (x2 - x1) * ((j + 1) / this.swordLength), y1 + (y2 - y1) * ((j + 1) / this.swordLength)) < player.size / 2) {
                     if (player.canHit) {
-                        if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                            player.canHit = false;
-                            player.gotHit = true;
-                            player.hasShield = false;
+                        if (player.hasShield || player.bloodShield) {
+                            if (player.canHit == true && player.gotHit == false) {
+                                player.canHit = false;
+                                player.gotHit = true;
+                                if (player.bloodShield) {
+                                    player.bloodShield = false;
+                                } else if (player.hasShield) {
+                                    player.hasShield = false;
+                                }
+                            }
                         } else {
                             player.canHit = false;
                             player.gotHit = true;
@@ -301,10 +313,16 @@ class KiterKid extends ShooterSam {
             this.pos.sub(moveVector);
         }
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                player.canHit = false;
-                player.gotHit = true;
-                player.hasShield = false;
+            if (player.hasShield || player.bloodShield) {
+                if (player.canHit == true && player.gotHit == false) {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    if (player.bloodShield) {
+                        player.bloodShield = false;
+                    } else if (player.hasShield) {
+                        player.hasShield = false;
+                    }
+                }
             } else {
                 player.canHit = false;
                 player.gotHit = true;
@@ -451,10 +469,16 @@ class ChargingChad extends SwordSwingSusan {
             this.canCharge = false;
         }
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-            if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                player.canHit = false;
-                player.gotHit = true;
-                player.hasShield = false;
+            if (player.hasShield || player.bloodShield) {
+                if (player.canHit == true && player.gotHit == false) {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    if (player.bloodShield) {
+                        player.bloodShield = false;
+                    } else if (player.hasShield) {
+                        player.hasShield = false;
+                    }
+                }
             } else {
                 player.canHit = false;
                 player.gotHit = true;
@@ -616,10 +640,16 @@ class DangerSpot {
         ellipse(this.pos.x, this.pos.y, this.size);
         if (this.timer == 0) {
             if (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100 && player.canHit == true) {
-                if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                    player.canHit = false;
-                    player.gotHit = true;
-                    player.hasShield = false;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
                 } else {
                     player.canHit = false;
                     player.gotHit = true;
