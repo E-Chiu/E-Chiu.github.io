@@ -380,10 +380,10 @@ let stages = [
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
-            enemies.push(new ChargingChad("white", 200, 300, 30, 15, 100, 1, "grey", 40, 60));
-            enemies.push(new ChargingChad("grey", 800, 500, 60, 8, 100, 1, "white", 70, 120));
-            enemies.push(new ChargingChad("white", 800, 300, 30, 15, 100, 1, "grey", 40, 60));
-            enemies.push(new ChargingChad("grey", 200, 500, 60, 8, 100, 1, "white", 70, 120));
+            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 50, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 80, 1, "white", 65, 120));
+            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 50, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 80, 1, "white", 65, 120));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
