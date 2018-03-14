@@ -608,7 +608,6 @@ class TheMachine {
         }
     }
     canExplode() {
-<<<<<<< HEAD:enemies.js
         if (this.actualBlowUp <= 100) {
             this.blowUpArea();
         }
@@ -621,7 +620,6 @@ class TheMachine {
     blowUpArea() {
         fill("black");
         ellipse(chance(0, width), chance(0, length), chance(100, 200));
-=======
         if (this.actualHealth <= 444) {
             if (this.actualBlowUp == 100) {
                 enemies.push(new DangerSpot(player.pos.x, player.pos.y));
@@ -672,6 +670,5 @@ class DangerSpot {
             }
             killOff();
         }
->>>>>>> 073b072d31ea27b8932a7485bb5aa4fbaadaf06b:Dungeon Crawler/enemies.js
     }
 }

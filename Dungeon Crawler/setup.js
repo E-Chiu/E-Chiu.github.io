@@ -90,6 +90,12 @@ function drawHud() {
                 textSize(20);
                 text(items[i].actualAmmo, i * 81.5 + 234, 787);
             }
+            if(items[i].name == "Thirst Blade") {
+                fill("white");
+                noStroke();
+                textSize(20);
+                text(items[i].thirst, i * 81.5 + 234, 787);
+            }
         }
     }
 }

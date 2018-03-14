@@ -11,6 +11,7 @@ function setup() {
     imageMode(CENTER);
     star.loadPixels();
     silverBolts.loadPixels();
+    thirstBlade.loadPixels();
     //normal dudes = color, x, y, size, speed, health, rarity
     //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
     //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd

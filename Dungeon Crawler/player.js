@@ -114,7 +114,7 @@ class Player {
                                             player.bloodShield = true;
                                             }
                                     }
-                                    thirst = 0;
+                                    items[this.activeWeapon].thirst = 0;
                                 }
                             }
                         }
@@ -191,9 +191,9 @@ class Player {
         }
         if (this.bloodShield) {
             stroke(173, 34, 34, 100);
-            strokeWeight(2);
+            strokeWeight(3);
             noFill();
-            ellipse(this.pos.x, this.pos.y, this.size + 15);
+            ellipse(this.pos.x, this.pos.y, this.size + 10);
         }
         if (keyIsDown(87)) {
             this.pos.y -= this.speed;
