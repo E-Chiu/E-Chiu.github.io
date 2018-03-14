@@ -74,12 +74,16 @@ class Bullet {
             fill(this.color);
             ellipse(this.pos.x, this.pos.y, this.size);
             if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-                if (player.hasShield && player.canHit == true && player.gotHit == false) {
-                    player.canHit = false;
-                    player.gotHit = true;
-                    player.hasShield = false;
-                    this.used = true;
-                    killOff();
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
                 } else {
                     player.canHit = false;
                     player.gotHit = true;
@@ -173,7 +177,7 @@ let weapons = [
         {
             create: class Katana extends Weapon {
                 constructor() {
-                    super("Katana", "melee", "white", 120, 40, 5, 180, 20, 15);
+                    super("Katana", "melee", "white", 120, 40, 10, 180, 20, 15);
                 }
                 draw() {
                     strokeWeight(4);
@@ -216,7 +220,7 @@ let weapons = [
         {
             create: class Axe extends Weapon {
                 constructor() {
-                    super("Axe", "melee", "brown", 70, 5, 30, 80, 120, 90);
+                    super("Axe", "melee", "brown", 70, 5, 65, 90, 120, 90);
                 }
                 draw() {
                     strokeWeight(10);

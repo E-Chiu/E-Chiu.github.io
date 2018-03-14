@@ -379,13 +379,11 @@ let stages = [
             player.buttonState = "notPickup";
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
-            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
-                10, 180));
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
-                10, 180));
-            enemies.push(new KiterKid("yellow", chance(0, 1000), chance(0, 700), 40, 0.8, 30, 1, 5, "yellow",
-                10, 180));
+            //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
+            enemies.push(new ChargingChad("white", 200, 300, 30, 15, 100, 1, "grey", 40, 60));
+            enemies.push(new ChargingChad("grey", 800, 500, 60, 8, 100, 1, "white", 70, 120));
+            enemies.push(new ChargingChad("white", 800, 300, 30, 15, 100, 1, "grey", 40, 60));
+            enemies.push(new ChargingChad("grey", 200, 500, 60, 8, 100, 1, "white", 70, 120));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
