@@ -20,13 +20,14 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    //    stageNum = 9;
+        stageNum = 15;
     stages[stageNum].setup();
-    droppedItems.push(new itemLibrary[0][2][1].create());
+    items.splice(0,1,new itemLibrary[0][2][1].create());
+//    droppedItems.push(new itemLibrary[0][2][1].create());
 //    droppedItems.push(new itemLibrary[2][0][3].create());
 //    droppedItems.push(new itemLibrary[2][0][3].create());
-    droppedItems[1].pos.x = 200;
-    droppedItems[1].pos.y = 200;
+//    droppedItems[1].pos.x = 200;
+//    droppedItems[1].pos.y = 200;
 //    
 //    droppedItems[3].pos.x = 200;
 //    droppedItems[3].pos.y = 200;
@@ -75,6 +76,9 @@ function draw() {
         if (enemies[i] instanceof TheMachine) {
             enemies[i].canSpawn();
             enemies[i].canExplode();
+        }
+        if (enemies[i] instanceof TheNinja) {
+            enemies[i].timers();
         }
         enemies[i].draw();
     }

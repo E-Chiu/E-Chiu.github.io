@@ -412,9 +412,6 @@ class ChargingChad extends SwordSwingSusan {
         }
     }
     track() {
-        if (this.actualTimer == -1) {
-            console.log("charging");
-        }
         let moveVector = this.chargeVector.copy();
         if (this.actualTimer >= 15 && this.blackHoled == false) {
             this.chargeVector.x = player.pos.x - this.pos.x;
@@ -619,7 +616,6 @@ class TheMachine {
     }
     blowUpArea() {
         fill("black");
-        ellipse(chance(0, width), chance(0, length), chance(100, 200));
         if (this.actualHealth <= 444) {
             if (this.actualBlowUp == 100) {
                 enemies.push(new DangerSpot(player.pos.x, player.pos.y));
@@ -670,5 +666,171 @@ class DangerSpot {
             }
             killOff();
         }
+    }
+}
+
+//ninja boss
+class TheNinja extends NinjaNanny {
+    constructor() {
+        super(20, 100, 120, 70, 1.5, 666, 2, 8, 173, 12, 180, "white", 80, 180, 100, 40);
+        this.clone = 1800;
+        this.actualClone = 1800;
+        this.dash = 600;
+        this.actualDash = 600;
+        this.rengarQ = 0;
+        this.dashVector = createVector(100, 120);
+        this.canDash = false;
+    }
+    track() {
+        if (this.canDash != true) {
+            let moveVector;
+            if (this.blackHoled == false) {
+                moveVector = p5.Vector.sub(player.pos, this.pos);
+            } else if (this.blackHoled == true) {
+                if (this.speed == 0) {
+                    this.speed = 1;
+                    this.speedChanged = true;
+                }
+                moveVector = p5.Vector.sub(player.roars[3].static, this.pos);
+            }
+            if (this.pos.x <= 32.5) {
+                this.pos.x = 32.5;
+            }
+            if (this.pos.x >= 967.5) {
+                this.pos.x = 967.5;
+            }
+            if (this.pos.y <= 32.5) {
+                this.pos.y = 32.5;
+            }
+            if (this.pos.y >= 679.5) {
+                this.pos.y = 679.5;
+            }
+            if (this.timer > 0) {
+                this.timer--;
+            }
+            if (this.timer == 1) {
+                this.speed = this.speed * -2;
+            }
+            moveVector.setMag(this.speed);
+            this.pos.add(moveVector);
+        }
+            if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
+            }
+    }
+    draw() {
+        strokeWeight(0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        strokeWeight(0);
+        text("THE NINJA", 500, 130);
+        if (this.actualHealth > 0) {
+            fill("red");
+            stroke("grey");
+            strokeWeight(2);
+            if (this.actualHealth > 222) {
+                rect(10, 10, 900, 50);
+            } else {
+                rect(10, 10, 900 * (this.actualHealth / 222), 50);
+            }
+        }
+        if (this.actualHealth > 222) {
+            fill("green");
+            stroke("grey");
+            strokeWeight(2);
+            if (this.actualHealth > 444) {
+                rect(30, 30, 900, 50);
+            } else {
+                rect(30, 30, 900 * ((this.actualHealth - 222) / 222), 50);
+            }
+        }
+        if (this.actualHealth > 444) {
+            fill("blue")
+            rect(50, 50, 900 * ((this.actualHealth - 444) / 222), 50);
+        }
+        for (let i = 0; i < this.marked; i++) {
+            noFill();
+            strokeWeight(3);
+            stroke(192);
+            ellipse(this.pos.x, this.pos.y, this.size + i * 10);
+        }
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
+    }
+    //for timers local to the boss
+    timers() {
+        this.actualClone--;
+        this.actualDash--;
+        if (this.actualSCd <= 0) {
+            this.rengarQ++;
+        }
+        if (this.actualClone <= 0 && this.actualHealth < 444) {
+            this.cloneJutsu();
+        }
+        if (this.actualDash == 15 && this.blackHoled == false) {
+            console.log("no");
+            this.dashVector.x = player.pos.x - this.pos.x;
+            this.dashVector.y = player.pos.y - this.pos.y;
+            this.dashVector.mult(1.8);
+        }
+        if (this.actualDash <= 0) {
+            this.dashAtk();
+        }
+        if (this.rengarQ == 3) {
+            this.rengarQAtk();
+            this.rengarQ = 0;
+        }
+    }
+    //create 3 ninjas and tp to corners
+    cloneJutsu() {
+        if (enemies.length == 1) {
+            this.pos.x = 100;
+            this.pos.y = 120;
+            enemies.push(new NinjaNanny("40", 900, 580, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
+            enemies.push(new NinjaNanny("40", 900, 120, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
+            enemies.push(new NinjaNanny("40", 100, 580, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
+            
+        }
+        this.actualClone = this.clone;
+    }
+    //just a charge
+    dashAtk() {
+//        let moveVector = this.dashVector.copy();
+//        this.actualDash = -1;
+//        this.speed = 5;
+//        if (this.actualDash == -1) {
+//            this.canDash = true;
+//            moveVector.setMag(this.speed);
+//            this.dashVector.sub(moveVector);
+//            if (this.dashVector.mag() > this.speed)
+//                this.pos.add(moveVector);
+//        }
+//        if ((this.dashVector.mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canDash) {
+//            this.actualDash = this.dash;
+//            this.canDash = false;
+//            this.speed = 2;
+//        }
+    }
+    //attack normally then jab
+    rengarQAtk() {
+
     }
 }

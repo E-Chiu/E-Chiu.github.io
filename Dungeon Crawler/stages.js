@@ -398,5 +398,27 @@ let stages = [
                 canAdvance = true;
             }
         }
-    }
+    },
+//level 20: THE NINJA
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            player.pos.x = 20;
+            player.pos.y = 355;
+            enemies.push(new TheNinja());
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
             ]
