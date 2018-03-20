@@ -672,7 +672,7 @@ class DangerSpot {
 //ninja boss
 class TheNinja extends NinjaNanny {
     constructor() {
-        super(20, 100, 120, 70, 1.5, 666, 2, 8, 173, 12, 180, "white", 80, 180, 100, 40);
+        super(20, 100, 120, 70, 1.5, 666, 2, 8, 173, 12, 180, "white", 80, 180, 90, 40);
         this.clone = 1800;
         this.actualClone = 1800;
         this.dash = 600;
@@ -680,6 +680,8 @@ class TheNinja extends NinjaNanny {
         this.rengarQ = 0;
         this.dashVector = createVector(100, 120);
         this.canDash = false;
+        this.cloud = false;
+        this.ellipseSize = 0;
     }
     track() {
         if (this.canDash != true) {
@@ -779,6 +781,9 @@ class TheNinja extends NinjaNanny {
     timers() {
         this.actualClone--;
         this.actualDash--;
+        if(this.cloud = true) {
+            this.ellipseSize++;
+        }
         if (this.actualSCd <= 0) {
             this.rengarQ++;
         }
@@ -799,9 +804,14 @@ class TheNinja extends NinjaNanny {
             this.rengarQ = 0;
         }
     }
+    //crappy smoke bomb animation
+    cloudShow(){
+        
+    }
     //create 3 ninjas and tp to corners
     cloneJutsu() {
         if (enemies.length == 1) {
+            this.cloud = true;
             this.pos.x = 100;
             this.pos.y = 120;
             enemies.push(new NinjaNanny("40", 900, 580, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
@@ -813,21 +823,21 @@ class TheNinja extends NinjaNanny {
     }
     //just a charge
     dashAtk() {
-//        let moveVector = this.dashVector.copy();
-//        this.actualDash = -1;
-//        this.speed = 5;
-//        if (this.actualDash == -1) {
-//            this.canDash = true;
-//            moveVector.setMag(this.speed);
-//            this.dashVector.sub(moveVector);
-//            if (this.dashVector.mag() > this.speed)
-//                this.pos.add(moveVector);
-//        }
-//        if ((this.dashVector.mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canDash) {
-//            this.actualDash = this.dash;
-//            this.canDash = false;
-//            this.speed = 2;
-//        }
+        let moveVector = this.dashVector.copy();
+        this.actualDash = -1;
+        this.speed = 5;
+        if (this.actualDash == -1) {
+            this.canDash = true;
+            moveVector.setMag(this.speed);
+            this.dashVector.sub(moveVector);
+            if (this.dashVector.mag() > this.speed)
+                this.pos.add(moveVector);
+        }
+        if ((this.dashVector.mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canDash) {
+            this.actualDash = this.dash;
+            this.canDash = false;
+            this.speed = 2;
+        }
     }
     //attack normally then jab
     rengarQAtk() {
