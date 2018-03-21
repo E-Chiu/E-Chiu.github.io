@@ -148,7 +148,7 @@ class SwordSwingSusan extends Enemy {
         stroke(this.weaponColor);
         strokeWeight(10);
         line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
-        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite)
+        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
         if (this.attackScope.start >= this.attackScope.end) {
             this.isAttacking = false;
         }
@@ -673,15 +673,17 @@ class DangerSpot {
 class TheNinja extends NinjaNanny {
     constructor() {
         super(20, 100, 120, 70, 1.5, 666, 2, 8, 173, 12, 180, "white", 80, 180, 90, 40);
-        this.clone = 1800;
-        this.actualClone = 1800;
+        this.clone = 1400;
+        this.actualClone = 1400;
         this.dash = 600;
         this.actualDash = 600;
         this.rengarQ = 0;
+        this.canRengarQ = false;
         this.dashVector = createVector(100, 120);
         this.canDash = false;
         this.cloud = false;
-        this.ellipseSize = 0;
+        this.smokeBalls = [
+        ];
     }
     track() {
         if (this.canDash != true) {
@@ -716,23 +718,23 @@ class TheNinja extends NinjaNanny {
             moveVector.setMag(this.speed);
             this.pos.add(moveVector);
         }
-            if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
-                if (player.hasShield || player.bloodShield) {
-                    if (player.canHit == true && player.gotHit == false) {
-                        player.canHit = false;
-                        player.gotHit = true;
-                        if (player.bloodShield) {
-                            player.bloodShield = false;
-                        } else if (player.hasShield) {
-                            player.hasShield = false;
-                        }
-                    }
-                } else {
+        if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2 && player.canHit) {
+            if (player.hasShield || player.bloodShield) {
+                if (player.canHit == true && player.gotHit == false) {
                     player.canHit = false;
                     player.gotHit = true;
-                    player.lives--;
+                    if (player.bloodShield) {
+                        player.bloodShield = false;
+                    } else if (player.hasShield) {
+                        player.hasShield = false;
+                    }
                 }
+            } else {
+                player.canHit = false;
+                player.gotHit = true;
+                player.lives--;
             }
+        }
     }
     draw() {
         strokeWeight(0);
@@ -741,6 +743,7 @@ class TheNinja extends NinjaNanny {
         strokeWeight(2);
         stroke("white");
         strokeWeight(0);
+        fill("white");
         text("THE NINJA", 500, 130);
         if (this.actualHealth > 0) {
             fill("red");
@@ -781,17 +784,17 @@ class TheNinja extends NinjaNanny {
     timers() {
         this.actualClone--;
         this.actualDash--;
-        if(this.cloud = true) {
-            this.ellipseSize++;
+        if (this.cloud == true) {
+            this.cloudShow();
         }
         if (this.actualSCd <= 0) {
             this.rengarQ++;
+            this.canRengarQ = true;
         }
         if (this.actualClone <= 0 && this.actualHealth < 444) {
             this.cloneJutsu();
         }
         if (this.actualDash == 15 && this.blackHoled == false) {
-            console.log("no");
             this.dashVector.x = player.pos.x - this.pos.x;
             this.dashVector.y = player.pos.y - this.pos.y;
             this.dashVector.mult(1.8);
@@ -805,19 +808,31 @@ class TheNinja extends NinjaNanny {
         }
     }
     //crappy smoke bomb animation
-    cloudShow(){
-        
+    cloudShow() {
+        for (let i = 0; i < 3; i++) {
+            this.smokeBalls[i].size++;
+            this.smokeBalls[i].show();
+        }
+        if (this.smokeBalls[0].size >= 100) {
+            this.cloud = false;
+            for (let i = 0; i < 3; i++) {
+                this.smokeBalls.splice(0, 1);
+            }
+        }
     }
     //create 3 ninjas and tp to corners
     cloneJutsu() {
         if (enemies.length == 1) {
             this.cloud = true;
+            this.smokeBalls.push(new Smoke(this.pos.x + 10, this.pos.y));
+            this.smokeBalls.push(new Smoke(this.pos.x - 7, this.pos.y - 11));
+            this.smokeBalls.push(new Smoke(this.pos.x, this.pos.y + 5));
             this.pos.x = 100;
             this.pos.y = 120;
             enemies.push(new NinjaNanny("40", 900, 580, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
             enemies.push(new NinjaNanny("40", 900, 120, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
             enemies.push(new NinjaNanny("40", 100, 580, 60, 1, 40, 1, 6, 173, 12, 160, "white", 70, 180, 90, 40));
-            
+
         }
         this.actualClone = this.clone;
     }
@@ -836,11 +851,43 @@ class TheNinja extends NinjaNanny {
         if ((this.dashVector.mag() < this.speed || this.pos.x == 32.5 || this.pos.x == 967.5 || this.pos.y == 32.5 || this.pos.y == 679.5) && this.canDash) {
             this.actualDash = this.dash;
             this.canDash = false;
-            this.speed = 2;
+            this.speed = 1.5;
         }
     }
     //attack normally then jab
     rengarQAtk() {
+        if (this.canRengarQ == true) {
+            let tempLength = 50;
+            for (let i = 0; i < 60; i++) {
+                let length = tempLength;
+                let theta = this.attackScope.start;
+                let opposite = sin(theta) * length;
+                let adjacent = cos(theta) * length;
+                stroke(this.weaponColor);
+                strokeWeight(10);
+                line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+                this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+                if (tempLength >= 180) {
+                    this.canRengarQ = false;
+                }
+                tempLength++;
+            }
+        }
+    }
+}
 
+class Smoke {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = 0;
+    }
+
+    show() {
+        if (enemies[0].cloud == true) {
+            fill(173);
+            noStroke();
+            ellipse(this.x, this.y, this.size);
+        }
     }
 }
