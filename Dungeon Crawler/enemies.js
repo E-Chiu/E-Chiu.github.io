@@ -787,9 +787,9 @@ class TheNinja extends NinjaNanny {
         if (this.cloud == true) {
             this.cloudShow();
         }
-        if (this.actualSCd <= 0) {
+        console.log(this.actualCd);
+        if (this.actualCd <= 1) {
             this.rengarQ++;
-            this.canRengarQ = true;
         }
         if (this.actualClone <= 0 && this.actualHealth < 444) {
             this.cloneJutsu();
@@ -803,6 +803,7 @@ class TheNinja extends NinjaNanny {
             this.dashAtk();
         }
         if (this.rengarQ == 3) {
+            this.canRengarQ = true;
             this.rengarQAtk();
             this.rengarQ = 0;
         }
@@ -857,7 +858,7 @@ class TheNinja extends NinjaNanny {
     //attack normally then jab
     rengarQAtk() {
         if (this.canRengarQ == true) {
-            let tempLength = 50;
+            let tempLength = 90;
             for (let i = 0; i < 60; i++) {
                 let length = tempLength;
                 let theta = this.attackScope.start;
