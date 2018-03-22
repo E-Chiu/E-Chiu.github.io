@@ -20,7 +20,7 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    stageNum = 15;
+//    stageNum = 15;
     stages[stageNum].setup();
     items.splice(0, 1, new itemLibrary[0][2][1].create());
     //    droppedItems.push(new itemLibrary[0][2][1].create());
