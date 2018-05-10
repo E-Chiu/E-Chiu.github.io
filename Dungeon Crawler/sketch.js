@@ -20,9 +20,9 @@ function setup() {
     if (localStorage.getItem("played") == "yes") {
         stageNum = 4;
     }
-    stageNum = 15;
     stages[stageNum].setup();
-    items.splice(0, 1, new itemLibrary[0][2][1].create());
+    //    stageNum = 15;
+    //    items.splice(0, 1, new itemLibrary[0][2][1].create());
     //    droppedItems.push(new itemLibrary[0][2][1].create());
     //    droppedItems.push(new itemLibrary[2][0][3].create());
     //    droppedItems.push(new itemLibrary[2][0][3].create());
@@ -79,6 +79,10 @@ function draw() {
         }
         if (enemies[i] instanceof TheNinja) {
             enemies[i].timers();
+            if (enemies[i].canRengarQ == true) {
+                enemies[i].rengarQLength += 15;
+                enemies[i].rengarQAtk();
+            }
         }
         enemies[i].draw();
     }

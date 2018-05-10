@@ -679,11 +679,13 @@ class TheNinja extends NinjaNanny {
         this.actualDash = 600;
         this.rengarQ = 0;
         this.canRengarQ = false;
+        this.rengarQLength = 90;
         this.dashVector = createVector(100, 120);
         this.canDash = false;
         this.cloud = false;
         this.smokeBalls = [
         ];
+        this.lockOn = createVector();
     }
     track() {
         if (this.canDash != true) {
@@ -787,10 +789,11 @@ class TheNinja extends NinjaNanny {
         if (this.cloud == true) {
             this.cloudShow();
         }
-        console.log(this.actualCd);
+
         if (this.actualCd <= 1) {
             this.rengarQ++;
         }
+
         if (this.actualClone <= 0 && this.actualHealth < 444) {
             this.cloneJutsu();
         }
@@ -804,8 +807,6 @@ class TheNinja extends NinjaNanny {
         }
         if (this.rengarQ == 3) {
             this.canRengarQ = true;
-            this.rengarQAtk();
-            this.rengarQ = 0;
         }
     }
     //crappy smoke bomb animation
@@ -855,24 +856,42 @@ class TheNinja extends NinjaNanny {
             this.speed = 1.5;
         }
     }
+    //swing
+    swing() {
+        let length = this.swordLength;
+        let theta = this.attackScope.start;
+        let opposite = sin(theta) * length;
+        let adjacent = cos(theta) * length;
+        stroke(this.weaponColor);
+        strokeWeight(10);
+        line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+        if (this.attackScope.start >= this.attackScope.end) {
+            this.isAttacking = false;
+        }
+        if (this.canRengarQ == true) {
+            this.rengarQAtk();
+        }
+    }
     //attack normally then jab
     rengarQAtk() {
-        if (this.canRengarQ == true) {
-            let tempLength = 90;
-            for (let i = 0; i < 60; i++) {
-                let length = tempLength;
-                let theta = this.attackScope.start;
-                let opposite = sin(theta) * length;
-                let adjacent = cos(theta) * length;
-                stroke(this.weaponColor);
-                strokeWeight(10);
-                line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
-                this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
-                if (tempLength >= 180) {
-                    this.canRengarQ = false;
-                }
-                tempLength++;
-            }
+        console.log("ye");
+        if (this.rengarQ == 3) {
+            this.rengarQ = 0;
+            this.rengarQLength = -25;
+            this.lockOn.x = player.pos.x;
+            this.lockOn.y = player.pos.y;
+        }
+        let length = this.rengarQLength;
+        let theta = createVector(this.pos.x - this.lockOn.x, this.pos.y - this.lockOn.y).heading() + 180;
+        let opposite = sin(theta) * length;
+        let adjacent = cos(theta) * length;
+        stroke("red");
+        strokeWeight(13);
+        line(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+        this.hitbox(this.pos.x, this.pos.y, this.pos.x + adjacent, this.pos.y + opposite);
+        if (this.rengarQLength >= 140) {
+            this.canRengarQ = false;
         }
     }
 }
