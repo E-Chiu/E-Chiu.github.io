@@ -102,7 +102,7 @@ function killOff() {
             }
         }
         if (enemies[i].actualHealth <= 0) {
-            if (enemies[i] instanceof TheMachine) {
+            if (enemies[i] instanceof TheMachine || enemies[i] instanceof TheNinja) {
                 dropItem(enemies[i].rarity, enemies[i].pos.x, enemies[i].pos.y, "boss");
                 enemies.splice(i, 1);
             } else {
@@ -514,7 +514,7 @@ class TheMachine {
         this.actualShootCD = 120;
         this.lockOn = createVector(0, 0);
         this.dot = 0;
-        this.rarity = 2;
+        this.rarity = 3;
         this.timer = 0;
         this.canHit = true;
         this.marked = 0;
@@ -672,7 +672,7 @@ class DangerSpot {
 //ninja boss
 class TheNinja extends NinjaNanny {
     constructor() {
-        super(20, 100, 120, 70, 1.5, 666, 2, 8, 173, 12, 180, "white", 80, 180, 90, 40);
+        super(20, 100, 120, 70, 1.5, 666, 3, 8, 173, 12, 180, "white", 80, 180, 90, 40);
         this.clone = 1400;
         this.actualClone = 1400;
         this.dash = 600;

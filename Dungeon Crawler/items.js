@@ -216,7 +216,11 @@ let weapons = [
                     quad(this.pos.x - 5, this.pos.y - 6, this.pos.x + 2, this.pos.y + 5, this.pos.x - 10, this.pos.y + 19, this.pos.x - 20, this.pos.y + 19);
                 }
             }
-    },
+    }
+    ],
+
+    //rarity two
+    [
         {
             create: class Axe extends Weapon {
                 constructor() {
@@ -263,9 +267,8 @@ let weapons = [
                 }
             }
     }
-    ],
-
-    //rarity two
+        ],
+    //rarity three
     [
         {
             create: class SilverBolts extends Weapon {
@@ -291,7 +294,7 @@ let weapons = [
                 }
             }
         },
-        ]
+    ]
 ];
 
 //all consumables
@@ -647,6 +650,8 @@ let charms = [
     //rarity one
     [],
     //rarity two
+    [],
+    //rarity three
     [
         {
             create: class DivineCharm {
@@ -805,6 +810,9 @@ function dropItem(rarity, x, y, type) {
         dropChance = 0;
     }
     dropType = chance(0, 3);
+    if(type == "boss" && dropType == 1) {
+        dropType = 0;
+    }
     if (dropType == 3) {
         dropType = 1;
     }

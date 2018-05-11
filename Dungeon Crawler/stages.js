@@ -377,13 +377,39 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
-            player.pos.x = chance(0, 1000);
-            player.pos.y = chance(0, 700);
+            player.pos.x = 500;
+            player.pos.y = 350;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
-            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 50, 1, "grey", 40, 80));
-            enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 80, 1, "white", 65, 120));
-            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 50, 1, "grey", 40, 80));
-            enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 80, 1, "white", 65, 120));
+            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 40, 1, "white", 65, 120));
+            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 40, 1, "white", 65, 120));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+    //level 12
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            player.pos.x = 500;
+            player.pos.y = 350;
+            //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
+            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 40, 1, "white", 65, 120));
+            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 40, 1, "white", 65, 120));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
