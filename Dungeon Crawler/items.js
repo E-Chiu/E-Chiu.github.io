@@ -486,8 +486,9 @@ let consumables = [
                     }
                 }
             }
-                }]
-
+                }],
+    [
+    ]
 ];
 
 //all charms
@@ -630,7 +631,6 @@ let charms = [
                     for (let i = 0; i < 3; i++) {
                         if (items[i].type == "ranged" && items[i].ammoChanged == false) {
                             items[i].ammo = items[i].ammo * 3;
-                            items[i].actualAmmo = items[i].actualAmmo * 3;
                             items[i].ammoChanged = true;
                         }
                     }
@@ -639,10 +639,46 @@ let charms = [
                     for (let i = 0; i < 3; i++) {
                         if (items[i].type == "ranged" && items[i].ammoChanged == true) {
                             items[i].ammo = items[i].ammo / 3;
-                            items[i].actualAmmo = items[i].actualAmmo / 3;
                             items[i].ammoChanged = false;
                         }
                     }
+                }
+            }
+},
+        {
+            create: class BargainCharm {
+                constructor() {
+                    this.name = "Bargain Charm";
+                    this.type = "charm";
+                    this.pos = createVector(0, 0);
+                }
+                draw() {
+                    stroke(201, 0, 0);
+                    strokeWeight(2);
+                    noFill();
+                    ellipse(this.pos.x, this.pos.y, 40);
+                    fill(255);
+                    ellipse(this.pos.x, this.pos.y + 20, 20);
+                }
+                putOn() {
+                    this.effect = chance(1,4);
+                    if(this.effect == 2) {
+                        player.speed += 0.5;
+                        player.atkMod += 0.3;
+                        player.cdMod += 0.3
+                    } else if (this.effect == 3) {
+                        player.speed += 1;
+                        player.atkMod += 0.6;
+                        player.cdMod += 1;
+                    } else if(this.effect == 4) {
+                        player.speed += 2;
+                        player.atkMod +=2;
+                        player.cdMod += 2;
+                    }
+                    player.cursed = true;
+                }
+                takeOff() {
+                    
                 }
             }
 }
@@ -739,7 +775,7 @@ class Roar {
                     enemies[i].canHit = false;
                     enemies[i].speed = 0;
                 } else if (index == 2) {
-                    enemies[i].dot = 0.1;
+                    enemies[i].dot += 0.2;
                     enemies[i].canHit = false;
                 }
             }
@@ -810,14 +846,14 @@ function dropItem(rarity, x, y, type) {
         dropChance = 0;
     }
     dropType = chance(0, 3);
-    if(type == "boss" && dropType == 1) {
+    if (type == "boss" && dropType == 1) {
         dropType = 0;
     }
     if (dropType == 3) {
         dropType = 1;
     }
     if (dropType == 2) {
-        if (rarity != 2) {
+        if (rarity != 3) {
             rarity = 0;
         }
     }

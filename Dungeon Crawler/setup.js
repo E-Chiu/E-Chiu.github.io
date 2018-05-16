@@ -78,6 +78,9 @@ function drawHud() {
             items[i].pos.x = i * 81.5 + 217.5;
             items[i].pos.y = 758.6;
             items[i].draw();
+            if (items[i].name == "Bargain Charm") {
+                text(items[i].effect, i * 81.5 + 234, 787);
+            }
             if (items[i].type == "consumable") {
                 fill("white");
                 noStroke();
@@ -90,7 +93,7 @@ function drawHud() {
                 textSize(20);
                 text(items[i].actualAmmo, i * 81.5 + 234, 787);
             }
-            if(items[i].name == "Thirst Blade") {
+            if (items[i].name == "Thirst Blade") {
                 fill("white");
                 noStroke();
                 textSize(20);

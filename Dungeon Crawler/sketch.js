@@ -21,19 +21,19 @@ function setup() {
         stageNum = 4;
     }
     stages[stageNum].setup();
-    //    stageNum = 15;
-    //    items.splice(0, 1, new itemLibrary[0][2][1].create());
-    //    droppedItems.push(new itemLibrary[0][2][1].create());
-    //    droppedItems.push(new itemLibrary[2][0][3].create());
-    //    droppedItems.push(new itemLibrary[2][0][3].create());
-    //    droppedItems[1].pos.x = 200;
-    //    droppedItems[1].pos.y = 200;
-    //    
-    //    droppedItems[3].pos.x = 200;
-    //    droppedItems[3].pos.y = 200;
-    //
-    //    droppedItems[2].pos.x = 300;
-    //    droppedItems[2].pos.y = 300;
+    //    stageNum = 12;
+    //        items.splice(0, 1, new itemLibrary[0][2][1].create());
+//    droppedItems.push(new itemLibrary[2][0][6].create());
+//    droppedItems.push(new itemLibrary[2][0][6].create());
+//    droppedItems.push(new itemLibrary[2][0][6].create());
+//    droppedItems[1].pos.x = 200;
+//    droppedItems[1].pos.y = 200;
+//    //
+//        droppedItems[2].pos.x = 300;
+//        droppedItems[2].pos.y = 300;
+//    //
+//        droppedItems[3].pos.x = 200;
+//        droppedItems[3].pos.y = 200;
 
 }
 

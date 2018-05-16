@@ -121,6 +121,9 @@ let stages = [
             dropItem(1, 500, 355, "boss");
             player.buttonState = "notPickup";
             localStorage.setItem("played", "yes");
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -143,6 +146,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             enemies.push(new Enemy("red", width * 0.66, 700 * 0.66, 50, 1, 30, 0));
@@ -170,6 +176,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("red", 200, 700 / 2, 80, 0.8, 60, 1, "white", 120, 45, 120, 10));
@@ -192,6 +201,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
@@ -215,6 +227,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
@@ -241,6 +256,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -278,6 +296,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -301,6 +322,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 300;
             player.pos.y = 700 / 2;
             enemies.push(new ChargingChad("black", 900, 100, 30, 5, 20, 0, "blue", 10, 30));
@@ -327,6 +351,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
@@ -355,6 +382,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new TheMachine());
@@ -377,6 +407,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 500;
             player.pos.y = 350;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -403,6 +436,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 500;
             player.pos.y = 350;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
@@ -429,6 +465,9 @@ let stages = [
     {
         setup: function () {
             player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new TheNinja());
