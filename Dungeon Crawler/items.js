@@ -216,6 +216,28 @@ let weapons = [
                     quad(this.pos.x - 5, this.pos.y - 6, this.pos.x + 2, this.pos.y + 5, this.pos.x - 10, this.pos.y + 19, this.pos.x - 20, this.pos.y + 19);
                 }
             }
+    },
+        {
+            create: class DualBlades extends Weapon {
+                constructor() {
+                    // name, type, color, size, speed, damage, range, attackCd, knockback
+                    super("Dual Blades", "melee", "white", 70, 80, 10, 360, 20, 40);
+                }
+                draw() {
+                    strokeWeight(7);
+                    stroke("white");
+                    line(this.pos.x - 20, this.pos.y + 10, this.pos.x + 5, this.pos.y - 15);
+                    stroke("brown");
+                    line(this.pos.x - 20, this.pos.y + 10, this.pos.x - 12.5, this.pos.y + 2.5);
+                    line(this.pos.x - 18, this.pos.y - 3, this.pos.x - 7, this.pos.y + 8);
+                    strokeWeight(7);
+                    stroke("white");
+                    line(this.pos.x - 10, this.pos.y + 10, this.pos.x + 15, this.pos.y - 15);
+                    stroke("brown");
+                    line(this.pos.x - 10, this.pos.y + 10, this.pos.x - 2.5, this.pos.y + 2.5);
+                    line(this.pos.x - 8, this.pos.y - 3, this.pos.x + 3, this.pos.y + 8);
+                }
+            }
     }
     ],
 
@@ -487,8 +509,7 @@ let consumables = [
                 }
             }
                 }],
-    [
-    ]
+    []
 ];
 
 //all charms
@@ -631,6 +652,7 @@ let charms = [
                     for (let i = 0; i < 3; i++) {
                         if (items[i].type == "ranged" && items[i].ammoChanged == false) {
                             items[i].ammo = items[i].ammo * 3;
+                            console.log(items[i].ammo)
                             items[i].ammoChanged = true;
                         }
                     }
@@ -661,8 +683,8 @@ let charms = [
                     ellipse(this.pos.x, this.pos.y + 20, 20);
                 }
                 putOn() {
-                    this.effect = chance(1,4);
-                    if(this.effect == 2) {
+                    this.effect = chance(1, 4);
+                    if (this.effect == 2) {
                         player.speed += 0.5;
                         player.atkMod += 0.3;
                         player.cdMod += 0.3
@@ -670,15 +692,15 @@ let charms = [
                         player.speed += 1;
                         player.atkMod += 0.6;
                         player.cdMod += 1;
-                    } else if(this.effect == 4) {
+                    } else if (this.effect == 4) {
                         player.speed += 2;
-                        player.atkMod +=2;
+                        player.atkMod += 2;
                         player.cdMod += 2;
                     }
                     player.cursed = true;
                 }
                 takeOff() {
-                    
+
                 }
             }
 }
@@ -846,11 +868,11 @@ function dropItem(rarity, x, y, type) {
         dropChance = 0;
     }
     dropType = chance(0, 3);
-    if (type == "boss" && dropType == 1) {
-        dropType = 0;
-    }
     if (dropType == 3) {
         dropType = 1;
+    }
+    if (type == "boss" && dropType == 1) {
+        dropType = 0;
     }
     if (dropType == 2) {
         if (rarity != 3) {

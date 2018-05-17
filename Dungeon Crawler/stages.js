@@ -413,9 +413,9 @@ let stages = [
             player.pos.x = 500;
             player.pos.y = 350;
             //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
-            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("white", 200, 200, 30, 10, 25, 1, "grey", 40, 80));
             enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 40, 1, "white", 65, 120));
-            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 25, 1, "grey", 40, 80));
+            enemies.push(new ChargingChad("white", 800, 200, 30, 10, 25, 1, "grey", 40, 80));
             enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 40, 1, "white", 65, 120));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
@@ -441,11 +441,14 @@ let stages = [
             }
             player.pos.x = 500;
             player.pos.y = 350;
-            //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
-            enemies.push(new ChargingChad("white", 200, 200, 30, 15, 25, 1, "grey", 40, 80));
-            enemies.push(new ChargingChad("grey", 800, 600, 50, 8, 40, 1, "white", 65, 120));
-            enemies.push(new ChargingChad("white", 800, 200, 30, 15, 25, 1, "grey", 40, 80));
-            enemies.push(new ChargingChad("grey", 200, 600, 50, 8, 40, 1, "white", 65, 120));
+            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
+            enemies.push(new ShooterSam("red", 100, 100, 50, 0.2, 100, 2, 7, "green", 10, 70));
+            enemies.push(new ShooterSam("red", 100, 600, 50, 0.2, 100, 2, 7, "green", 10, 70));
+            enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
+            enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
+            //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
+            enemies.push(new SwordSwingSusan("grey", 250, 350, 70, 1.5, 120, 2, "grey", 120, 90, 100, 20));
+            enemies.push(new SwordSwingSusan("grey", 750, 350, 70, 1.5, 120, 2, "grey", 120, 90, 100, 20));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;

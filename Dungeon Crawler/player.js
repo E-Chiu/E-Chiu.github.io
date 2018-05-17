@@ -338,7 +338,7 @@ function keyPressed() {
                 items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
                 if (droppedItems[player.swapIndex].type == "ranged") {
                     if (items[7].name == "Ammo Charm" || items[8].name == "Ammo Charm" || items[9].name == "Ammo Charm") {
-                        items[keyCode - 49].ammo = items[player.swapIndex].ammo * 3;
+                        items[keyCode - 49].ammo = items[keyCode - 49].ammo * 3;
                         items[keyCode - 49].ammoChanged = true;
                     }
                 }
