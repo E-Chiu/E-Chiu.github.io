@@ -115,6 +115,47 @@ let stages = [
             }
         }
 },
+// level e
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            player.pos.x = 20;
+            player.pos.y = 355;
+            for (let i = 0; i < items.length; i++) {
+                items.splice(i, 1, 0);
+            }
+            enemies.push(new Enemy("blue", 500, 355, 50, 0, 1, 0));
+            items.splice(0, 1, new itemLibrary[0][0][0].create());
+            droppedItems.push(new itemLibrary[0][0][0].create());
+            droppedItems.push(new itemLibrary[1][0][0].create());
+            droppedItems.push(new itemLibrary[2][0][0].create());
+            droppedItems[0].pos.x = 200;
+            droppedItems[0].pos.y = 200;
+            droppedItems[1].pos.x = 500;
+            droppedItems[1].pos.y = 600;
+            droppedItems[2].pos.x = 800;
+            droppedItems[2].pos.y = 200;
+            player.lives = 3;
+        },
+        draw: function () {
+            fill("white");
+            strokeWeight(0);
+            textSize(30);
+            text("Hover over a Item to pick it up", 500, 40);
+            fill("red");
+            text("Red slots are for weapons", 500, 70);
+            fill("green");
+            text("Green slots are for consumables", 500, 100);
+            fill("blue");
+            text("Blue slots are for charms", 500, 130);
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+},
 //level 1
     {
         setup: function () {
@@ -442,13 +483,13 @@ let stages = [
             player.pos.x = 500;
             player.pos.y = 350;
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
-            enemies.push(new ShooterSam("red", 100, 100, 50, 0.2, 100, 2, 7, "green", 10, 70));
-            enemies.push(new ShooterSam("red", 100, 600, 50, 0.2, 100, 2, 7, "green", 10, 70));
+            enemies.push(new ShooterSam("red", 100, 100, 50, 0.2, 60, 2, 7, "green", 10, 70));
+            enemies.push(new ShooterSam("red", 100, 600, 50, 0.2, 60, 2, 7, "green", 10, 70));
             enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
             enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
             //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
-            enemies.push(new SwordSwingSusan("grey", 250, 350, 70, 1.5, 120, 2, "grey", 120, 90, 100, 20));
-            enemies.push(new SwordSwingSusan("grey", 750, 350, 70, 1.5, 120, 2, "grey", 120, 90, 100, 20));
+            enemies.push(new SwordSwingSusan("grey", 250, 350, 70, 1.5, 90, 2, "grey", 120, 90, 100, 20));
+            enemies.push(new SwordSwingSusan("grey", 750, 350, 70, 1.5, 90, 2, "grey", 120, 90, 100, 20));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
