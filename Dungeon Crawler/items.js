@@ -295,7 +295,7 @@ let weapons = [
         {
             create: class SilverBolts extends Weapon {
                 constructor() {
-                    super("Silver Bolts", "ranged", "white", 15, 15, 15, 0, 0, 0);
+                    super("Silver Bolts", "ranged", "white", 15, 15, 30, 0, 0, 0);
                     this.ammo = 3;
                     this.actualAmmo = 3;
                     this.ammoChanged = false;

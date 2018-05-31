@@ -483,13 +483,84 @@ let stages = [
             player.pos.x = 500;
             player.pos.y = 350;
             //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
-            enemies.push(new ShooterSam("red", 100, 100, 50, 0.2, 60, 2, 7, "green", 10, 70));
-            enemies.push(new ShooterSam("red", 100, 600, 50, 0.2, 60, 2, 7, "green", 10, 70));
+            enemies.push(new ShooterSam("red", 100, 100, 50, 0.2, 60, 2, 6, "green", 10, 70));
+            enemies.push(new ShooterSam("red", 100, 600, 50, 0.2, 60, 2, 6, "green", 10, 70));
             enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
             enemies.push(new KiterKid("green", 900, 100, 50, 1.5, 50, 1, 4, "red", 15, 60));
             //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
             enemies.push(new SwordSwingSusan("grey", 250, 350, 70, 1.5, 90, 2, "grey", 120, 90, 100, 20));
             enemies.push(new SwordSwingSusan("grey", 750, 350, 70, 1.5, 90, 2, "grey", 120, 90, 100, 20));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+    //level 13
+       {
+        setup: function () {
+            player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
+            player.pos.x = 500;
+            player.pos.y = 350;
+//normal dudes = color, x, y, size, speed, health, rarity
+            enemies.push(new Enemy("white", 100, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 200, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 300, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 400, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 500, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 600, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 700, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 800, 100, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 900, 100, 80, 0.5, 100, 1));
+            
+            enemies.push(new Enemy("white", 100, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 200, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 300, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 400, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 500, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 600, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 700, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 800, 600, 80, 0.5, 100, 1));
+            enemies.push(new Enemy("white", 900, 600, 80, 0.5, 100, 1));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+//level 14
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
+            player.pos.x = 500;
+            player.pos.y = 350;
+//ninja = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
+            enemies.push(new NinjaNanny("blue", 100, 600, 60, 1.5, 60, 2, 2, "red", 10, 70, "green", 60, 60, 110, 3));
+            enemies.push(new NinjaNanny("blue", 900, 100, 60, 1.5, 60, 2, 2, "red", 10, 70, "green", 60, 60, 110, 3));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
