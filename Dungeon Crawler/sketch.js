@@ -42,8 +42,6 @@ function draw() {
     background("black");
     //stage
     stages[stageNum].draw();
-    //draw blow up area
-
     //drops
     for (let i = 0; i < droppedItems.length; i++) {
         droppedItems[i].draw();

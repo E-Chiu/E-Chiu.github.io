@@ -238,11 +238,11 @@ class Player {
         if (this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
             stageNum++;
             canAdvance = false;
-            stages[stageNum].setup();
             for (let i = 0; i < droppedItems.length; i++) {
                 droppedItems.splice(i, 1);
                 i--;
             }
+            stages[stageNum].setup();
         }
         //losing
         if (player.lives == 0) {
@@ -364,10 +364,10 @@ function keyPressed() {
                         items[keyCode - 49].takeOff();
                     }
                 }
-                    items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
-                    droppedItems.splice(player.swapIndex, 1);
-                    player.buttonState = "notPickup";
-                    items[keyCode - 49].putOn();
+                items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
+                droppedItems.splice(player.swapIndex, 1);
+                player.buttonState = "notPickup";
+                items[keyCode - 49].putOn();
             }
         }
     }

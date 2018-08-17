@@ -687,7 +687,7 @@ let charms = [
                     if (this.effect == 2) {
                         player.speed += 0.5;
                         player.atkMod += 0.3;
-                        player.cdMod += 0.3
+                        player.cdMod += 0.3;
                     } else if (this.effect == 3) {
                         player.speed += 1;
                         player.atkMod += 0.6;
@@ -700,7 +700,20 @@ let charms = [
                     player.cursed = true;
                 }
                 takeOff() {
-
+                    if(this.effect == 2) {
+                        player.speed -= 1;
+                        player.atkMod -= 0.3;
+                        player.cdMod -= 0.3;
+                    } else if (this.effect == 3) {
+                        player.speed -= 1;
+                        player.atkMod -= 0.6;
+                        player.cdMod -= 1;
+                    } else if (this.effect == 4) {
+                        player.speed -= 2;
+                        player.atkMod -= 2;
+                        player.cdMod -= 2;
+                    }
+                    player.cursed = false;
                 }
             }
 }
