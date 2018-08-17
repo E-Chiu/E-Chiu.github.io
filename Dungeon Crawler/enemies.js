@@ -911,3 +911,9 @@ class Smoke {
         }
     }
 }
+
+// Skeletron
+class Skeletor {
+    constructor() {
+    }
+}
