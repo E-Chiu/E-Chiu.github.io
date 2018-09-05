@@ -915,5 +915,35 @@ class Smoke {
 // Skeletron
 class Skeletor {
     constructor() {
+        this.posHead = createVector(0, 0);
+        this.posL = createVector(0, 0);
+        this.posR = createVector(0, 0);
+        this.speedHead = 0.75;
+        this.speedL = 1.12;
+        this.speedR = 1.12;
+        this.headSize = 75;
+        this.handSize = 65;
+        this.punchL = chance(60, 180);
+        this.punchR = chance(60, 180);
+        this.punchBoth = 300;
+        this.charge = 600;
+        this.healthL = 200;
+        this.healthR = 200;
+        this.healthHead = 400;
+    }
+    // for timers local to the boss
+    timers() {
+        this.punchL--;
+        this.punchR--;
+        this.punchBoth--;
+        this.charge--;
+    }
+    draw() {
+        ellipse(this.posHead.x, this.posHead.y, this.headSize);
+        ellipse(this.posL.x, this.posL.y, this.handSize);
+        ellipse(this.posR.x, this.posR.y, this.handSize);
+    }
+    track() {
+
     }
 }
