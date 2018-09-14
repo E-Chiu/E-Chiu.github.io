@@ -499,6 +499,38 @@ class ChargingChad extends SwordSwingSusan {
     }
 }
 
+//releases damaging circle periodically
+class ExplodingEllen extends Enemy {
+    constructor(color, x, y, size, speed, health, rarity, explodeTime, explodeRadius) {
+        super(color, x, y, size, speed, health, rarity);
+        this.explodeTime = explodeTime;
+        this.actualExplodeTime = explodeTime;
+        this.explodeRadius = explodeRadius;
+        this.roars = [];
+    }
+    canAttack() {
+        this.actualExplodeTime--;
+        if (this.actualExplodeTime <= 0) {
+            this.actualExplodeTime = this.explodeTime;
+            this.roars.push([0, this.pos.x, this.pos.y]);
+            this.roar();
+        }
+        if (this.roars.length > 0) {
+            this.roar();
+        }
+    }
+    roar() {
+        for (let i = 0; i < this.roars.length; i++) {
+            ellipse(this.roars[i][1], this.roars[i][2], this.roars[i][0]);
+            this.roars[i][0]++;
+            if (this.roars[i][0] >= this.explodeRadius) {
+                this.roars.splice(i, 1);
+                i--;
+            }
+        }
+    }
+}
+
 //spawner boss
 class TheMachine {
     constructor() {
@@ -914,6 +946,5 @@ class Smoke {
 
 // Skeletron
 class Skeletor {
-    constructor() {
-    }
+    constructor() {}
 }

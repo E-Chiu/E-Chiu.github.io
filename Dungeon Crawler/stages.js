@@ -176,6 +176,7 @@ let stages = [
             items.splice(0, 1, new itemLibrary[0][0][0].create());
             player.lives = 3;
             enemies.push(new Enemy("green", 500, 355, 50, 1, 30, 0));
+            enemies.push(new ExplodingEllen("red", 500, 355, 50, 1, 30, 0, 60, 100));
         },
         draw: function () {
             if (enemies.length == 0) {
@@ -251,6 +252,7 @@ let stages = [
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
+            enemies.push(new SwordSwingSusan("blue", 800, 900 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;

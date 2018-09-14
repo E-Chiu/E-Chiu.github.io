@@ -63,6 +63,9 @@ function draw() {
             enemies[i].attack();
             enemies[i].canAttack();
         }
+        if (enemies[i] instanceof ExplodingEllen) {
+            enemies[i].canAttack();
+        }
         if (enemies[i] instanceof ShooterSam || enemies[i] instanceof NinjaNanny || enemies[i] instanceof TheMachine) {
             enemies[i].canShoot();
         }
