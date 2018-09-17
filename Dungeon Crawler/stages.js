@@ -176,7 +176,6 @@ let stages = [
             items.splice(0, 1, new itemLibrary[0][0][0].create());
             player.lives = 3;
             enemies.push(new Enemy("green", 500, 355, 50, 1, 30, 0));
-            enemies.push(new ExplodingEllen("red", 500, 355, 50, 1, 30, 0, 60, 100));
         },
         draw: function () {
             if (enemies.length == 0) {
@@ -252,7 +251,7 @@ let stages = [
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new SwordSwingSusan("blue", 800, 700 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
-            enemies.push(new SwordSwingSusan("blue", 800, 900 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
+            enemies.push(new SwordSwingSusan("blue", 800, 1400 * 0.33, 20, 3, 10, 0, "white", 30, 45, 40, 12));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
@@ -612,13 +611,10 @@ let stages = [
             if (player.cursed) {
                 player.lives--;
             }
-            player.pos.x = 500;
-            player.pos.y = 350;
-            //sword = color, x, y, size, speed, health, rarity, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
-            enemies.push(new SwordSwingSusan("orange", 150, 150, 100, 0, 120, 2, "red", 300, 360, 180, 8));
-            enemies.push(new SwordSwingSusan("orange", 150, 650, 100, 0, 120, 2, "red", 300, 360, 180, 8));
-            enemies.push(new SwordSwingSusan("orange", 850, 150, 100, 0, 120, 2, "red", 300, 360, 180, 8));
-            enemies.push(new SwordSwingSusan("orange", 850, 650, 100, 0, 120, 2, "red", 300, 360, 180, 8));
+            player.pos.x = 1000;
+            player.pos.y = 700;
+            //explode = color, x, y, size, speed, health, rarity, explodeTime, explodeRadius, explodeColor, increaseSpeed
+            enemies.push(new ExplodingEllen("orange", 500, 355, 400, 0, 400, 1, 300, 1000, "red", 5));
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;

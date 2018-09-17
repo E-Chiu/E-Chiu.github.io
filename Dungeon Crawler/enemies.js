@@ -501,12 +501,38 @@ class ChargingChad extends SwordSwingSusan {
 
 //releases damaging circle periodically
 class ExplodingEllen extends Enemy {
-    constructor(color, x, y, size, speed, health, rarity, explodeTime, explodeRadius) {
+    constructor(color, x, y, size, speed, health, rarity, explodeTime, explodeRadius, explodeColor, increaseSpeed) {
         super(color, x, y, size, speed, health, rarity);
         this.explodeTime = explodeTime;
         this.actualExplodeTime = explodeTime;
         this.explodeRadius = explodeRadius;
         this.roars = [];
+        this.explodeColor = explodeColor;
+        this.increaseSpeed = increaseSpeed;
+    }
+    draw() {
+        strokeWeight(0);
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill("green");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualHealth / this.maxHealth), 10);
+        fill(255, 255 * (this.actualExplodeTime / this.explodeTime), 0);
+        ellipse(this.pos.x, this.pos.y, 15);
+        for (let i = 0; i < this.marked; i++) {
+            noFill();
+            strokeWeight(3);
+            stroke(192);
+            ellipse(this.pos.x, this.pos.y, this.size + i * 10);
+        }
+        if (this.dot > 0) {
+            this.actualHealth -= this.dot;
+            killOff();
+        }
     }
     canAttack() {
         this.actualExplodeTime--;
@@ -521,8 +547,28 @@ class ExplodingEllen extends Enemy {
     }
     roar() {
         for (let i = 0; i < this.roars.length; i++) {
+            noFill();
+            strokeWeight(4);
+            stroke(this.explodeColor);
             ellipse(this.roars[i][1], this.roars[i][2], this.roars[i][0]);
-            this.roars[i][0]++;
+            this.roars[i][0] += this.increaseSpeed;
+            if (dist(this.roars[i][1], this.roars[i][2], player.pos.x, player.pos.y) < this.roars[i][0] / 2 && player.canHit) {
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
+            }
             if (this.roars[i][0] >= this.explodeRadius) {
                 this.roars.splice(i, 1);
                 i--;
@@ -946,4 +992,37 @@ class Smoke {
 
 // Skeletron
 class Skeletor {
+    //HEAD
+    constructor() {
+        this.posHead = createVector(0, 0);
+        this.posL = createVector(0, 0);
+        this.posR = createVector(0, 0);
+        this.speedHead = 0.75;
+        this.speedL = 1.12;
+        this.speedR = 1.12;
+        this.headSize = 75;
+        this.handSize = 65;
+        this.punchL = chance(60, 180);
+        this.punchR = chance(60, 180);
+        this.punchBoth = 300;
+        this.charge = 600;
+        this.healthL = 200;
+        this.healthR = 200;
+        this.healthHead = 400;
+    }
+    // for timers local to the boss
+    timers() {
+        this.punchL--;
+        this.punchR--;
+        this.punchBoth--;
+        this.charge--;
+    }
+    draw() {
+        ellipse(this.posHead.x, this.posHead.y, this.headSize);
+        ellipse(this.posL.x, this.posL.y, this.handSize);
+        ellipse(this.posR.x, this.posR.y, this.handSize);
+    }
+    track() {
+
+    }
 }
