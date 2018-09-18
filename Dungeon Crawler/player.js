@@ -28,7 +28,7 @@ class Player {
         this.timer = 0;
         this.pos = createVector(20, 20);
         this.size = 60;
-        this.speed = 2;
+        this.speed = 2.2;
         this.lives = 3;
         this.maxLives = 3;
         this.activeWeapon = 0;

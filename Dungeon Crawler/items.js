@@ -162,7 +162,7 @@ let weapons = [
     [{
             create: class Sword extends Weapon {
                 constructor() {
-                    super("Sword", "melee", 178, 120, 20, 15, 120, 80, 50);
+                    super("Sword", "melee", 178, 120, 20, 20, 120, 70, 50);
                 }
                 draw() {
                     strokeWeight(10);
@@ -296,8 +296,8 @@ let weapons = [
             create: class SilverBolts extends Weapon {
                 constructor() {
                     super("Silver Bolts", "ranged", "white", 15, 15, 30, 0, 0, 0);
-                    this.ammo = 3;
-                    this.actualAmmo = 3;
+                    this.ammo = 4;
+                    this.actualAmmo = 4;
                     this.ammoChanged = false;
                 }
                 draw() {
@@ -797,7 +797,7 @@ class Roar {
             if (dist(player.pos.x, player.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.roarSize / 2 + enemies[i].size / 2 && enemies[i].canHit == true) {
                 if (index == 0) {
                     enemies[i].canHit = false;
-                    enemies[i].actualHealth -= 10;
+                    enemies[i].actualHealth -= enemies[i].actualHealth * 0.5;
                     if (enemies[i] instanceof KiterKid) {
                         enemies[i].speed = enemies[i].speed * 0.5;
                     } else {

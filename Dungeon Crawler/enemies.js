@@ -371,6 +371,7 @@ class NinjaNanny extends SwordSwingSusan {
         }
     }
     canShoot() {
+        console.log(this.actualSCd);
         if (this.actualSCd == 30) {
             this.lockOn.x = player.pos.x;
             this.lockOn.y = player.pos.y;

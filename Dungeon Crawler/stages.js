@@ -614,7 +614,39 @@ let stages = [
             player.pos.x = 1000;
             player.pos.y = 700;
             //explode = color, x, y, size, speed, health, rarity, explodeTime, explodeRadius, explodeColor, increaseSpeed
-            enemies.push(new ExplodingEllen("orange", 500, 355, 400, 0, 400, 1, 300, 1000, "red", 5));
+            enemies.push(new ExplodingEllen("orange", 500, 355, 400, 0, 250, 1, 300, 1000, "red", 5));
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
+    // level 17
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            if (player.cursed) {
+                player.lives--;
+            }
+            player.pos.x = 900;
+            player.pos.y = 355;
+            //explode = color, x, y, size, speed, health, rarity, explodeTime, explodeRadius, explodeColor, increaseSpeed
+            enemies.push(new ExplodingEllen("purple", 100, 100, 100, 2, 120, 2, 80, 300, "blue", 5));
+            enemies.push(new ExplodingEllen("purple", 900, 100, 100, 2, 120, 2, 80, 300, "blue", 5));
+            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
+            enemies.push(new KiterKid("grey", 500, 355, 100, 0.5, 200, 2, 2, "white", 10, 40));
+            //ninja = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
+            enemies.push(new NinjaNanny("black", 200, 355, 120, 1.75, 190, 2, 4, "red", 20, 31, "yellow", 250, 60, 190, 4));
+
             for (let i = 0; i < 3; i++) {
                 if (items[i].type == "ranged") {
                     items[i].actualAmmo = items[i].ammo;
