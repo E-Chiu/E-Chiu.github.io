@@ -259,7 +259,7 @@ class ShooterSam extends Enemy {
         }
     }
     canShoot() {
-        if (this.actualSCd == 30) {
+        if (this.actualSCd == 20) {
             this.lockOn.x = player.pos.x;
             this.lockOn.y = player.pos.y;
         }
@@ -372,7 +372,7 @@ class NinjaNanny extends SwordSwingSusan {
     }
     canShoot() {
         console.log(this.actualSCd);
-        if (this.actualSCd == 30) {
+        if (this.actualSCd == 20) {
             this.lockOn.x = player.pos.x;
             this.lockOn.y = player.pos.y;
         }
