@@ -166,7 +166,21 @@ let stages = [
             player.buttonState = "notPickup";
             localStorage.setItem("played", "yes");
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -191,7 +205,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -221,7 +249,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -246,7 +288,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -272,7 +328,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -301,7 +371,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -341,7 +425,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = width / 2;
             player.pos.y = 700 / 2;
@@ -367,7 +465,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 300;
             player.pos.y = 700 / 2;
@@ -396,7 +508,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = chance(0, 1000);
             player.pos.y = chance(0, 700);
@@ -427,7 +553,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -452,7 +592,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 500;
             player.pos.y = 350;
@@ -481,7 +635,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 500;
             player.pos.y = 350;
@@ -513,7 +681,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 500;
             player.pos.y = 350;
@@ -557,7 +739,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 500;
             player.pos.y = 350;
@@ -584,7 +780,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 20;
             player.pos.y = 355;
@@ -609,7 +819,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 1000;
             player.pos.y = 700;
@@ -635,7 +859,21 @@ let stages = [
         setup: function () {
             player.buttonState = "notPickup";
             if (player.cursed) {
-                player.lives--;
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
             }
             player.pos.x = 900;
             player.pos.y = 355;

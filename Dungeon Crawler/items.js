@@ -583,7 +583,7 @@ let charms = [
                     player.cdMod += 1;
                 }
                 takeOff() {
-                    player.speed -= 1;
+                    player.cdMod -= 1;
                 }
             }
 },
