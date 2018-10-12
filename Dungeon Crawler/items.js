@@ -41,6 +41,23 @@ class Bullet {
             } else if (this.direction == 360) {
                 this.pos.x += this.speed;
             }
+            if (items[player.activeWeapon].name == "Flame Thrower") {
+                if (this.direction == 90) {
+                    this.lockOnDest.x = chance(player.pos.x - 75, player.pos.x + 75);
+                    this.lockOnDest.y = chance(player.pos.y, player.pos.y + 50);
+                } else if (this.direction == 180) {
+                    this.lockOnDest.x = chance(player.pos.x - 50, player.pos.x);
+                    this.lockOnDest.y = chance(player.pos.y - 75, player.pos.y + 75);
+                } else if (this.direction == 270) {
+                    this.lockOnDest.x = chance(player.pos.x - 75, player.pos.x + 75);
+                    this.lockOnDest.y = chance(player.pos.y - 50, player.pos.y);
+                } else if (this.direction == 360) {
+                    this.lockOnDest.x = chance(player.pos.x, player.pos.x + 50);
+                    this.lockOnDest.y = chance(player.pos.y - 75, player.pos.y + 75);
+                }
+                this.moveVector.setMag(this.speed);
+                this.pos.add(this.moveVector);
+            }
             noStroke();
             fill(this.color);
             ellipse(this.pos.x, this.pos.y, this.size);
@@ -313,6 +330,19 @@ let weapons = [
                 }
                 draw() {
                     image(thirstBlade, this.pos.x, this.pos.y, 40, 40);
+                }
+            }
+        }, 
+        {
+            create: class FlameThrower extends Weapon {
+                constructor() {
+                    super("Flame Thrower", "ranged", "orange", 5, 5, 1, 0, 0, 0);
+                    this.ammo = 100;
+                    this.actualAmmo = 100;
+                    this.ammoChanged = false;
+                }
+                draw() {
+                    ellipse(this.pos.x, this.pos.y, 50);
                 }
             }
         },
@@ -700,7 +730,7 @@ let charms = [
                     player.cursed = true;
                 }
                 takeOff() {
-                    if(this.effect == 2) {
+                    if (this.effect == 2) {
                         player.speed -= 1;
                         player.atkMod -= 0.3;
                         player.cdMod -= 0.3;
