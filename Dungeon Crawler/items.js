@@ -27,6 +27,19 @@ class Bullet {
         this.used = false;
         this.type = type;
         this.lockOnDest = createVector(lockOnDestX, lockOnDestY);
+        if (this.direction == 270) {
+            this.lockOnDest.x = chance(player.pos.x - 60, player.pos.x + 60);
+            this.lockOnDest.y = chance(player.pos.y - 125, player.pos.y - 100);
+        } else if (this.direction == 180) { //y
+            this.lockOnDest.x = chance(player.pos.x - 125, player.pos.x - 100);
+            this.lockOnDest.y = chance(player.pos.y - 60, player.pos.y + 60);
+        } else if (this.direction == 90) {
+            this.lockOnDest.x = chance(player.pos.x - 60, player.pos.x + 60);
+            this.lockOnDest.y = chance(player.pos.y + 100, player.pos.y + 125);
+        } else if (this.direction == 360) { //y
+            this.lockOnDest.x = chance(player.pos.x + 100, player.pos.x + 125);
+            this.lockOnDest.y = chance(player.pos.y - 60, player.pos.y + 60);
+        }
         this.moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
     }
 
@@ -42,21 +55,25 @@ class Bullet {
                 this.pos.x += this.speed;
             }
             if (items[player.activeWeapon].name == "Flame Thrower") {
-                if (this.direction == 90) {
-                    this.lockOnDest.x = chance(player.pos.x - 75, player.pos.x + 75);
-                    this.lockOnDest.y = chance(player.pos.y, player.pos.y + 50);
-                } else if (this.direction == 180) {
-                    this.lockOnDest.x = chance(player.pos.x - 50, player.pos.x);
-                    this.lockOnDest.y = chance(player.pos.y - 75, player.pos.y + 75);
-                } else if (this.direction == 270) {
-                    this.lockOnDest.x = chance(player.pos.x - 75, player.pos.x + 75);
-                    this.lockOnDest.y = chance(player.pos.y - 50, player.pos.y);
-                } else if (this.direction == 360) {
-                    this.lockOnDest.x = chance(player.pos.x, player.pos.x + 50);
-                    this.lockOnDest.y = chance(player.pos.y - 75, player.pos.y + 75);
-                }
                 this.moveVector.setMag(this.speed);
                 this.pos.add(this.moveVector);
+                if (this.direction == 90) {
+                    if (this.pos.y >= this.lockOnDest.y) {
+                        this.used = true;
+                    }
+                } else if (this.direction == 180) {
+                    if (this.pos.x <= this.lockOnDest.x) {
+                        this.used = true;
+                    }
+                } else if (this.direction == 270) {
+                    if (this.pos.y <= this.lockOnDest.y) {
+                        this.used = true;
+                    }
+                } else if (this.direction == 360) {
+                    if (this.pos.x >= this.lockOnDest.x) {
+                        this.used = true;
+                    };
+                }
             }
             noStroke();
             fill(this.color);
@@ -77,6 +94,9 @@ class Bullet {
                             }
                             enemies[i].marked = 0;
                         }
+                    } if(items[player.activeWeapon].name == "Flame Thrower") {
+                        enemies[i].dot += 0.05;
+                        this.used = true;
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
                     this.used = true;
@@ -332,13 +352,13 @@ let weapons = [
                     image(thirstBlade, this.pos.x, this.pos.y, 40, 40);
                 }
             }
-        }, 
+        },
         {
             create: class FlameThrower extends Weapon {
                 constructor() {
-                    super("Flame Thrower", "ranged", "orange", 5, 5, 1, 0, 0, 0);
-                    this.ammo = 100;
-                    this.actualAmmo = 100;
+                    super("Flame Thrower", "ranged", "orange", 15, 0.75, 0, 0, 0, 0);
+                    this.ammo = 50;
+                    this.actualAmmo = 50;
                     this.ammoChanged = false;
                 }
                 draw() {
@@ -415,7 +435,7 @@ let consumables = [
                     this.name = "Roar of Fear";
                     this.type = "consumable";
                     this.amount = 1;
-                    this.maxAmount = 3;
+                    this.maxAmount = 4;
                     this.pos = createVector(0, 0);
                 }
                 draw() {
@@ -441,7 +461,7 @@ let consumables = [
                     this.name = "Roar of Fire";
                     this.type = "consumable";
                     this.amount = 1;
-                    this.maxAmount = 4;
+                    this.maxAmount = 2;
                     this.pos = createVector(0, 0);
                 }
                 draw() {
@@ -468,7 +488,7 @@ let consumables = [
                     this.name = "Roar of Ice";
                     this.type = "consumable";
                     this.amount = 1;
-                    this.maxAmount = 2;
+                    this.maxAmount = 3;
                     this.pos = createVector(0, 0);
                 }
                 draw() {
