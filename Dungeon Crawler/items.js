@@ -28,17 +28,17 @@ class Bullet {
         this.type = type;
         this.lockOnDest = createVector(lockOnDestX, lockOnDestY);
         if (this.direction == 270) {
-            this.lockOnDest.x = chance(player.pos.x - 60, player.pos.x + 60);
+            this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
             this.lockOnDest.y = chance(player.pos.y - 125, player.pos.y - 100);
-        } else if (this.direction == 180) { //y
+        } else if (this.direction == 180) {
             this.lockOnDest.x = chance(player.pos.x - 125, player.pos.x - 100);
-            this.lockOnDest.y = chance(player.pos.y - 60, player.pos.y + 60);
+            this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
         } else if (this.direction == 90) {
-            this.lockOnDest.x = chance(player.pos.x - 60, player.pos.x + 60);
+            this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
             this.lockOnDest.y = chance(player.pos.y + 100, player.pos.y + 125);
-        } else if (this.direction == 360) { //y
+        } else if (this.direction == 360) {
             this.lockOnDest.x = chance(player.pos.x + 100, player.pos.x + 125);
-            this.lockOnDest.y = chance(player.pos.y - 60, player.pos.y + 60);
+            this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
         }
         this.moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
     }
@@ -95,7 +95,7 @@ class Bullet {
                             enemies[i].marked = 0;
                         }
                     } if(items[player.activeWeapon].name == "Flame Thrower") {
-                        enemies[i].dot += 0.05;
+                        enemies[i].dot += 0.005;
                         this.used = true;
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
@@ -357,12 +357,12 @@ let weapons = [
             create: class FlameThrower extends Weapon {
                 constructor() {
                     super("Flame Thrower", "ranged", "orange", 15, 0.75, 0, 0, 0, 0);
-                    this.ammo = 50;
-                    this.actualAmmo = 50;
+                    this.ammo = 40;
+                    this.actualAmmo = 40;
                     this.ammoChanged = false;
                 }
                 draw() {
-                    ellipse(this.pos.x, this.pos.y, 50);
+                    image(flameThrower, this.pos.x, this.pos.y, 500 / 4, 259/ 4);
                 }
             }
         },
