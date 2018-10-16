@@ -17,7 +17,7 @@ class Weapon {
 }
 
 class Bullet {
-    constructor(x, y, direction, size, color, speed, damage, type, lockOnDestX, lockOnDestY) {
+    constructor(x, y, direction, size, color, speed, damage, type, lockOnDestX, lockOnDestY, parent) {
         this.pos = createVector(x, y);
         this.size = size;
         this.color = color;
@@ -27,18 +27,34 @@ class Bullet {
         this.used = false;
         this.type = type;
         this.lockOnDest = createVector(lockOnDestX, lockOnDestY);
-        if (this.direction == 270) {
-            this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
-            this.lockOnDest.y = chance(player.pos.y - 125, player.pos.y - 100);
-        } else if (this.direction == 180) {
-            this.lockOnDest.x = chance(player.pos.x - 125, player.pos.x - 100);
-            this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
-        } else if (this.direction == 90) {
-            this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
-            this.lockOnDest.y = chance(player.pos.y + 100, player.pos.y + 125);
-        } else if (this.direction == 360) {
-            this.lockOnDest.x = chance(player.pos.x + 100, player.pos.x + 125);
-            this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
+        if (parent == "fire") {
+            if (this.direction == 270) {
+                this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
+                this.lockOnDest.y = chance(player.pos.y - 125, player.pos.y - 100);
+            } else if (this.direction == 180) {
+                this.lockOnDest.x = chance(player.pos.x - 125, player.pos.x - 100);
+                this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
+            } else if (this.direction == 90) {
+                this.lockOnDest.x = chance(player.pos.x - 80, player.pos.x + 80);
+                this.lockOnDest.y = chance(player.pos.y + 100, player.pos.y + 125);
+            } else if (this.direction == 360) {
+                this.lockOnDest.x = chance(player.pos.x + 100, player.pos.x + 125);
+                this.lockOnDest.y = chance(player.pos.y - 80, player.pos.y + 80);
+            }
+        } else if (parent == "pellet") {
+            if (this.direction == 270) {
+                this.lockOnDest.x = chance(player.pos.x - 100, player.pos.x + 100);
+                this.lockOnDest.y = chance(player.pos.y - 160, player.pos.y - 100);
+            } else if (this.direction == 180) {
+                this.lockOnDest.x = chance(player.pos.x - 160, player.pos.x - 100);
+                this.lockOnDest.y = chance(player.pos.y - 100, player.pos.y + 100);
+            } else if (this.direction == 90) {
+                this.lockOnDest.x = chance(player.pos.x - 100, player.pos.x + 100);
+                this.lockOnDest.y = chance(player.pos.y + 100, player.pos.y + 160);
+            } else if (this.direction == 360) {
+                this.lockOnDest.x = chance(player.pos.x + 100, player.pos.x + 160);
+                this.lockOnDest.y = chance(player.pos.y - 100, player.pos.y + 100);
+            }
         }
         this.moveVector = p5.Vector.sub(this.lockOnDest, this.pos);
     }
@@ -54,7 +70,7 @@ class Bullet {
             } else if (this.direction == 360) {
                 this.pos.x += this.speed;
             }
-            if (items[player.activeWeapon].name == "Flame Thrower") {
+            if (items[player.activeWeapon].name == "Flame Thrower" || items[player.activeWeapon].name == "Shotgun") {
                 this.moveVector.setMag(this.speed);
                 this.pos.add(this.moveVector);
                 if (this.direction == 90) {
@@ -94,8 +110,9 @@ class Bullet {
                             }
                             enemies[i].marked = 0;
                         }
-                    } if(items[player.activeWeapon].name == "Flame Thrower") {
-                        enemies[i].dot += 0.005;
+                    }
+                    if (items[player.activeWeapon].name == "Flame Thrower") {
+                        enemies[i].dot += 0.003;
                         this.used = true;
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
@@ -325,7 +342,28 @@ let weapons = [
                     rect(this.pos.x - 40, this.pos.y + 3, 18, 10);
                 }
             }
-    }
+    },
+        {
+            create: class Shotgun extends Weapon {
+                constructor() {
+                    //name, type, color, size, speed, damage, range, attackCd, knockback
+                    super("Shotgun", "ranged", "brown", 10, 2, 5, 0, 0, 0);
+                    this.ammo = 8;
+                    this.actualAmmo = 8;
+                    this.ammoChanged = false;
+                }
+                draw() {
+                    fill(30);
+                    stroke(255);
+                    strokeWeight(1);
+                    rect(this.pos.x - 28.5, this.pos.y - 2.5, 55, 5);
+                    noStroke();
+                    fill("brown");
+                    rect(this.pos.x - 10, this.pos.y + 2, 25, 5);
+                    quad(this.pos.x + 24.5, this.pos.y - 3.5, this.pos.x + 22, this.pos.y + 3.5, this.pos.x + 42, this.pos.y + 14, this.pos.x + 47, this.pos.y + 4);
+                }
+            }
+        }
         ],
     //rarity three
     [
@@ -362,7 +400,7 @@ let weapons = [
                     this.ammoChanged = false;
                 }
                 draw() {
-                    image(flameThrower, this.pos.x, this.pos.y, 500 / 4, 259/ 4);
+                    image(flameThrower, this.pos.x, this.pos.y, 500 / 4, 259 / 4);
                 }
             }
         },

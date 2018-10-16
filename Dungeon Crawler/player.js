@@ -49,7 +49,7 @@ class Player {
                     this.meleeAttack();
                 }
             } else if (items[this.activeWeapon].type == "ranged") {
-                if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name !== "Silver Bolts" && items[this.activeWeapon].name !== "Flame Thrower") {
+                if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name !== "Silver Bolts" && items[this.activeWeapon].name !== "Flame Thrower" && items[this.activeWeapon].name !== "Shotgun") {
                     this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "normal"));
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
@@ -58,8 +58,14 @@ class Player {
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
                 } else if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name == "Flame Thrower") {
-                    for (let i = 0; i < chance(4, 7); i++) {
+                    for (let i = 0; i < chance(20, 30); i++) {
                         this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "fire"));
+                    }
+                    this.isAttacking = false;
+                    items[this.activeWeapon].actualAmmo--;
+                } else if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name == "Shotgun") {
+                    for (let i = 0; i < 12; i++) {
+                        this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "pellet"));
                     }
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
