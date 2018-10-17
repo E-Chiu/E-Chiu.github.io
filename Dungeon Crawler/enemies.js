@@ -751,7 +751,7 @@ class DangerSpot {
 //ninja boss
 class TheNinja extends NinjaNanny {
     constructor() {
-        super(20, 100, 120, 70, 1.5, 666, 3, 8, 173, 12, 180, "white", 80, 180, 90, 40);
+        super(20, 100, 120, 70, 1.5, 1200, 3, 8, 173, 12, 180, "white", 80, 180, 90, 40);
         this.clone = 1400;
         this.actualClone = 1400;
         this.dash = 600;
@@ -830,25 +830,25 @@ class TheNinja extends NinjaNanny {
             fill("red");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 222) {
+            if (this.actualHealth > 400) {
                 rect(10, 10, 900, 50);
             } else {
-                rect(10, 10, 900 * (this.actualHealth / 222), 50);
+                rect(10, 10, 900 * (this.actualHealth / 400), 50);
             }
         }
-        if (this.actualHealth > 222) {
+        if (this.actualHealth > 400) {
             fill("green");
             stroke("grey");
             strokeWeight(2);
-            if (this.actualHealth > 444) {
+            if (this.actualHealth > 800) {
                 rect(30, 30, 900, 50);
             } else {
-                rect(30, 30, 900 * ((this.actualHealth - 222) / 222), 50);
+                rect(30, 30, 900 * ((this.actualHealth - 400) / 400), 50);
             }
         }
-        if (this.actualHealth > 444) {
+        if (this.actualHealth > 800) {
             fill("blue")
-            rect(50, 50, 900 * ((this.actualHealth - 444) / 222), 50);
+            rect(50, 50, 900 * ((this.actualHealth - 800) / 400), 50);
         }
         for (let i = 0; i < this.marked; i++) {
             noFill();
