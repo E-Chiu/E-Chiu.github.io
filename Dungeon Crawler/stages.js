@@ -947,4 +947,50 @@ let stages = [
             }
         }
     },
+    {
+        setup: function () {
+            player.buttonState = "notPickup";
+            if (player.cursed) {
+                if (player.hasShield || player.bloodShield) {
+                    if (player.canHit == true && player.gotHit == false) {
+                        player.canHit = false;
+                        player.gotHit = true;
+                        if (player.bloodShield) {
+                            player.bloodShield = false;
+                        } else if (player.hasShield) {
+                            player.hasShield = false;
+                        }
+                    }
+                } else {
+                    player.canHit = false;
+                    player.gotHit = true;
+                    player.lives--;
+                }
+            }
+            player.pos.x = 500;
+            player.pos.y = 355;
+            //explode = color, x, y, size, speed, health, rarity, explodeTime, explodeRadius, explodeColor, increaseSpeed
+            enemies.push(new ExplodingEllen("red", 100, 100, 70, 1.5, 80, 2, 60, 350, "white", 1));
+            enemies.push(new ExplodingEllen("blue", 900, 100, 70, 1.5, 80, 2, 60, 350, "white", 1));
+            enemies.push(new ExplodingEllen("yellow", 100, 900, 70, 1.5, 80, 2, 60, 350, "white", 1));
+            enemies.push(new ExplodingEllen("green", 900, 900, 70, 1.5, 80, 2, 60, 350, "white", 1));
+            //shoot/kite = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd
+            enemies.push(new KiterKid("grey", 200, 355, 50, 1, 150, 2, 0.5, "gray", 30, 60));
+            enemies.push(new KiterKid("grey", 800, 355, 50, 1, 150, 2, 0.5, "gray", 30, 60));
+
+            for (let i = 0; i < 3; i++) {
+                if (items[i].type == "ranged") {
+                    items[i].actualAmmo = items[i].ammo;
+                }
+            }
+        },
+        draw: function () {
+            if (enemies.length == 0) {
+                noStroke();
+                fill("yellow");
+                rect(990, 305, 10, 100);
+                canAdvance = true;
+            }
+        }
+    },
             ]

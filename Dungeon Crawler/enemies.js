@@ -371,7 +371,6 @@ class NinjaNanny extends SwordSwingSusan {
         }
     }
     canShoot() {
-        console.log(this.actualSCd);
         if (this.actualSCd == 20) {
             this.lockOn.x = player.pos.x;
             this.lockOn.y = player.pos.y;
@@ -954,7 +953,6 @@ class TheNinja extends NinjaNanny {
     }
     //attack normally then jab
     rengarQAtk() {
-        console.log("ye");
         if (this.rengarQ == 3) {
             this.rengarQ = 0;
             this.rengarQLength = -25;

@@ -12,6 +12,7 @@ class Player {
         this.buttonState = "notPickup";
         this.swapIndex;
         this.bulletArray = [];
+        this.petArray = [];
         this.cdMod = 0;
         this.atkMod = 1;
         this.starred = false;
@@ -69,6 +70,11 @@ class Player {
                     }
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
+                }
+            } else if(items[this.activeWeapon].type == "pet") {
+                if(items[this.activeWeapon].summoned == false) {
+                    this.petArray.push(new Pet(items[this.activeWeapon]));
+                    items[this.activeWeapon].summoned = true;
                 }
             }
         }
@@ -345,13 +351,19 @@ function keyPressed() {
     }
     //picking up items
     if (player.buttonState == "pickup") {
-        if (droppedItems[player.swapIndex].type == "melee" || droppedItems[player.swapIndex].type == "ranged") {
+        if (droppedItems[player.swapIndex].type == "melee" || droppedItems[player.swapIndex].type == "ranged" || droppedItems[player.swapIndex].type == "pet") {
             if (keyCode > 48 && keyCode < 52) {
                 items.splice(keyCode - 49, 1, droppedItems[player.swapIndex]);
                 if (droppedItems[player.swapIndex].type == "ranged") {
                     if (items[7].name == "Ammo Charm" || items[8].name == "Ammo Charm" || items[9].name == "Ammo Charm") {
                         items[keyCode - 49].ammo = items[keyCode - 49].ammo * 3;
                         items[keyCode - 49].ammoChanged = true;
+                    }
+                }
+                if (droppedItems[player.swapIndex].type == "pet") {
+                    if (items[7].name == "Ammo Charm" || items[8].name == "Ammo Charm" || items[9].name == "Ammo Charm") {
+                        items[keyCode - 49].energy = items[keyCode - 49].energy * 3;
+                        items[keyCode - 49].energyChanged = true;
                     }
                 }
                 droppedItems.splice(player.swapIndex, 1);

@@ -103,12 +103,13 @@ class Bullet {
                         if (enemies[i].marked == 3) {
                             if (enemies[i] instanceof Enemy) {
                                 enemies[i].actualHealth -= enemies[i].maxHealth * 0.12;
+                                enemies[i].marked = 0;
                                 this.used = true;
                                 killOff();
                             } else if (enemies[i] instanceof TheMachine) {
                                 enemies[i].actualHealth -= enemies[i].health * 0.12;
+                                enemies[i].marked = 0;
                             }
-                            enemies[i].marked = 0;
                         }
                     }
                     if (items[player.activeWeapon].name == "Flame Thrower") {
@@ -394,13 +395,27 @@ let weapons = [
         {
             create: class FlameThrower extends Weapon {
                 constructor() {
-                    super("Flame Thrower", "ranged", "orange", 15, 0.75, 0, 0, 0, 0);
+                    super("Flame Thrower", "ranged", "orange", 15, 0.75, 0.1, 0, 0, 0);
                     this.ammo = 40;
                     this.actualAmmo = 40;
                     this.ammoChanged = false;
                 }
                 draw() {
                     image(flameThrower, this.pos.x, this.pos.y, 500 / 4, 259 / 4);
+                }
+            }
+        },
+        {
+            create: class Bug extends Weapon {
+                constructor() {
+                    //name, type, color, size, speed, damage, range, attackCd, knockback
+                    super("Bug", "pet", "green", 20, 3, 5, 200, 20, 0);
+                    this.energy = 480;
+                    this.energyChanged = false;
+                    this.summoned = false;
+                }
+                draw() {
+                    image(kinsect, this.pos.x, this.pos.y, 1000 / 20, 1000 / 20);
                 }
             }
         },
@@ -740,8 +755,11 @@ let charms = [
                     for (let i = 0; i < 3; i++) {
                         if (items[i].type == "ranged" && items[i].ammoChanged == false) {
                             items[i].ammo = items[i].ammo * 3;
-                            console.log(items[i].ammo)
                             items[i].ammoChanged = true;
+                        }
+                        if (itms[i].type == "bug" && items[i].ammoChanged == false) {
+                            items[i].energy = items[i].energy * 3;
+                            items[i].energyChanged = true;
                         }
                     }
                 }
@@ -750,6 +768,10 @@ let charms = [
                         if (items[i].type == "ranged" && items[i].ammoChanged == true) {
                             items[i].ammo = items[i].ammo / 3;
                             items[i].ammoChanged = false;
+                        }
+                        if (itms[i].type == "bug" && items[i].ammoChanged == true) {
+                            items[i].energy = items[i].energy / 3;
+                            items[i].energyChanged = false;
                         }
                     }
                 }
@@ -952,6 +974,67 @@ class BlackHole {
         }
     }
 }
+
+//pet that attacks enemies
+class Pet {
+    constructor(stats) {
+        this.energy = stats.energy;
+        this.actualEnergy = stats.energy;
+        this.speed = stats.speed;
+        this.color = stats.color;
+        this.damage = stats.damage;
+        this.range = stats.range;
+        this.attackCd = stats.attackCd;
+        this.actualAttackCd = stats.attackCd;
+        this.pos = createVector(player.pos.x, player.pos.y);
+        this.size = stats.size;
+        this.target = -1;
+    }
+
+    draw() {
+        noStroke();
+        fill(this.color);
+        ellipse(this.pos.x, this.pos.y, this.size);
+        noFill();
+        stroke("white");
+        strokeWeight(1);
+        ellipse(this.pos.x, this.pos.y, this.range);
+    }
+
+    track() {
+        if (enemies.length > 0) {
+            for (let i = 0; i < enemies.length; i++) {
+                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.range / 2) {
+                    console.log("yup");
+                    this.target = i;
+                }
+            }
+        }
+        if (this.target != -1) {
+            let moveVector;
+            moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
+            if (this.pos.x <= 32.5) {
+                this.pos.x = 32.5;
+            }
+            if (this.pos.x >= 967.5) {
+                this.pos.x = 967.5;
+            }
+            if (this.pos.y <= 32.5) {
+                this.pos.y = 32.5;
+            }
+            if (this.pos.y >= 679.5) {
+                this.pos.y = 679.5;
+            }
+            moveVector.setMag(this.speed);
+            this.pos.add(moveVector);
+            if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target] / 2 && enemies[this.target].canHit) {
+                console.log("yes");
+                enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
+            }
+        }
+    }
+}
+
 //generate a random number
 function chance(min, max) {
     return (Math.floor(random(min, max + 1)));
