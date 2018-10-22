@@ -75,6 +75,7 @@ class Player {
                 if(items[this.activeWeapon].summoned == false) {
                     this.petArray.push(new Pet(items[this.activeWeapon]));
                     items[this.activeWeapon].summoned = true;
+                    this.petArray[this.petArray.length - 1].source = this.activeWeapon;
                 }
             }
         }

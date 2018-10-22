@@ -9,7 +9,7 @@ class Weapon {
         this.damage = damage;
         this.range = range;
         this.atkCd = attackCd;
-        this.actualCd = attackCd;
+        this.actualCd = 0;
         this.knockback = knockback;
         this.canDraw = false;
         this.pos = createVector(0, 0);
@@ -409,7 +409,7 @@ let weapons = [
             create: class Bug extends Weapon {
                 constructor() {
                     //name, type, color, size, speed, damage, range, attackCd, knockback
-                    super("Bug", "pet", "green", 20, 3, 5, 200, 20, 0);
+                    super("Bug", "pet", "green", 20, 3, 0.2, 200, 940, 0);
                     this.energy = 480;
                     this.energyChanged = false;
                     this.summoned = false;
@@ -757,7 +757,7 @@ let charms = [
                             items[i].ammo = items[i].ammo * 3;
                             items[i].ammoChanged = true;
                         }
-                        if (itms[i].type == "bug" && items[i].ammoChanged == false) {
+                        if (items[i].type == "bug" && items[i].ammoChanged == false) {
                             items[i].energy = items[i].energy * 3;
                             items[i].energyChanged = true;
                         }
@@ -989,6 +989,7 @@ class Pet {
         this.pos = createVector(player.pos.x, player.pos.y);
         this.size = stats.size;
         this.target = -1;
+        this.source;
     }
 
     draw() {
@@ -999,18 +1000,26 @@ class Pet {
         stroke("white");
         strokeWeight(1);
         ellipse(this.pos.x, this.pos.y, this.range);
+        strokeWeight(2);
+        stroke("white");
+        fill("red");
+        rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size, 10);
+        strokeWeight(0);
+        fill("yellow");
+        if (this.actualEnergy > 0) {
+            rect(this.pos.x - this.size / 2, this.pos.y + this.size / 2, this.size * (this.actualEnergy / this.energy), 10);
+        }
     }
 
     track() {
-        if (enemies.length > 0) {
+        if (enemies.length > 0 && this.target == -1) {
             for (let i = 0; i < enemies.length; i++) {
                 if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.range / 2) {
-                    console.log("yup");
                     this.target = i;
                 }
             }
         }
-        if (this.target != -1) {
+        if (this.target > -1 && enemies.length > 0) {
             let moveVector;
             moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
             if (this.pos.x <= 32.5) {
@@ -1027,10 +1036,40 @@ class Pet {
             }
             moveVector.setMag(this.speed);
             this.pos.add(moveVector);
-            if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target] / 2 && enemies[this.target].canHit) {
-                console.log("yes");
+            if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target].size / 2 && enemies[this.target].canHit) {
                 enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
+                if(enemies[this.target].actualHealth >= 0) {
+                    this.target = -1;
+                }
             }
+        }
+        if (this.target == -2) {
+            let moveVector;
+            moveVector = p5.Vector.sub(player.pos, this.pos);
+            if (this.pos.x <= 32.5) {
+                this.pos.x = 32.5;
+            }
+            if (this.pos.x >= 967.5) {
+                this.pos.x = 967.5;
+            }
+            if (this.pos.y <= 32.5) {
+                this.pos.y = 32.5;
+            }
+            if (this.pos.y >= 679.5) {
+                this.pos.y = 679.5;
+            }
+            moveVector.setMag(this.speed);
+            this.pos.add(moveVector);
+            if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2) {
+                this.target = -3;
+            }
+        }
+    }
+
+    timer() {
+        this.actualEnergy--;
+        if (this.actualEnergy <= 0 && this.target != -3) {
+            this.target = -2;
         }
     }
 }

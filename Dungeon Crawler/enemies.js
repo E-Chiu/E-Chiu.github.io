@@ -119,6 +119,13 @@ function killOff() {
             }
         }
     }
+    for (let i = 0; i < player.petArray.length; i++) {
+        if (player.petArray[i].target == -3) {
+            items[player.petArray[i].source].summoned = false;
+            player.petArray.splice(i, 1);
+            break;
+        }
+    }
 }
 
 //Swings a sword

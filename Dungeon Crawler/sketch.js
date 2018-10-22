@@ -90,6 +90,7 @@ function draw() {
     for (let i = 0; i < player.petArray.length; i++) {
         player.petArray[i].draw();
         player.petArray[i].track();
+        player.petArray[i].timer();
     }
     //splicing
     killOff();
