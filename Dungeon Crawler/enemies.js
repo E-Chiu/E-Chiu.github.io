@@ -37,7 +37,6 @@ class Enemy {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     //following player
@@ -225,7 +224,6 @@ class SwordSwingSusan extends Enemy {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
 }
@@ -262,7 +260,6 @@ class ShooterSam extends Enemy {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     canShoot() {
@@ -374,7 +371,6 @@ class NinjaNanny extends SwordSwingSusan {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     canShoot() {
@@ -415,7 +411,6 @@ class ChargingChad extends SwordSwingSusan {
 
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     track() {
@@ -538,7 +533,6 @@ class ExplodingEllen extends Enemy {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     canAttack() {
@@ -611,9 +605,6 @@ class TheMachine {
         fill(210);
         noStroke();
         rect(this.pos.x - 150, this.pos.y - 150, 250, 250);
-        if (this.actualHealth == 0) {
-            killOff();
-        }
         if (this.actualHealth > 0) {
             fill("red");
             stroke("grey");
@@ -650,7 +641,6 @@ class TheMachine {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
 
         if (this.actualHealth <= 222) {
@@ -749,7 +739,6 @@ class DangerSpot {
                     player.lives--;
                 }
             }
-            killOff();
         }
     }
 }
@@ -864,7 +853,6 @@ class TheNinja extends NinjaNanny {
         }
         if (this.dot > 0) {
             this.actualHealth -= this.dot;
-            killOff();
         }
     }
     //for timers local to the boss

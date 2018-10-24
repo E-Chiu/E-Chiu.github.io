@@ -76,9 +76,11 @@ class Player {
                     this.petArray.push(new Pet(items[this.activeWeapon]));
                     items[this.activeWeapon].summoned = true;
                     this.petArray[this.petArray.length - 1].source = this.activeWeapon;
+                    this.isAttacking = false;
                 }
             }
         }
+        //ticking down item cooldowns
         for (let i = 0; i < 3; i++) {
             if (items[i].actualCd > 0) {
                 items[i].actualCd -= 1 + this.cdMod;
@@ -254,11 +256,17 @@ class Player {
                 this.pos.y = 205;
             }
         }
+        //moving to new stage
         if (this.pos.x == 967.5 && this.pos.y < 405 && this.pos.y > 305 && enemies.length == 0 && canAdvance) {
             stageNum++;
             canAdvance = false;
             for (let i = 0; i < droppedItems.length; i++) {
                 droppedItems.splice(i, 1);
+                i--;
+            }
+            for(let i = 0; i < player.petArray.length; i ++) {
+                items[player.petArray[i].source].summoned = false;
+                player.petArray.splice(i, 1);
                 i--;
             }
             stages[stageNum].setup();

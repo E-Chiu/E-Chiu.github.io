@@ -99,13 +99,11 @@ class Bullet {
                     if (items[player.activeWeapon].name == "Silver Bolts") {
                         enemies[i].marked++;
                         this.used = true;
-                        killOff();
                         if (enemies[i].marked == 3) {
                             if (enemies[i] instanceof Enemy) {
                                 enemies[i].actualHealth -= enemies[i].maxHealth * 0.12;
                                 enemies[i].marked = 0;
                                 this.used = true;
-                                killOff();
                             } else if (enemies[i] instanceof TheMachine) {
                                 enemies[i].actualHealth -= enemies[i].health * 0.12;
                                 enemies[i].marked = 0;
@@ -118,7 +116,6 @@ class Bullet {
                     }
                     enemies[i].actualHealth -= this.damage * player.atkMod;
                     this.used = true;
-                    killOff();
                     break;
                 }
             }
@@ -144,7 +141,6 @@ class Bullet {
                     player.gotHit = true;
                     player.lives--;
                     this.used = true;
-                    killOff();
                 }
             }
         }
@@ -409,7 +405,7 @@ let weapons = [
             create: class Bug extends Weapon {
                 constructor() {
                     //name, type, color, size, speed, damage, range, attackCd, knockback
-                    super("Bug", "pet", "green", 20, 3, 0.2, 200, 940, 0);
+                    super("Bug", "pet", "green", 20, 3, 0.2, 200, 740, 0);
                     this.energy = 480;
                     this.energyChanged = false;
                     this.summoned = false;
@@ -914,7 +910,6 @@ class Roar {
                         enemies[i].speed = enemies[i].speed * -0.5;
                     }
                     enemies[i].timer = 120;
-                    killOff();
                 } else if (index == 1) {
                     enemies[i].color = [0, 255, 255, 200];
                     enemies[i].canHit = false;
@@ -1021,26 +1016,31 @@ class Pet {
         }
         if (this.target > -1 && enemies.length > 0) {
             let moveVector;
-            moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
-            if (this.pos.x <= 32.5) {
-                this.pos.x = 32.5;
-            }
-            if (this.pos.x >= 967.5) {
-                this.pos.x = 967.5;
-            }
-            if (this.pos.y <= 32.5) {
-                this.pos.y = 32.5;
-            }
-            if (this.pos.y >= 679.5) {
-                this.pos.y = 679.5;
-            }
-            moveVector.setMag(this.speed);
-            this.pos.add(moveVector);
-            if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target].size / 2 && enemies[this.target].canHit) {
-                enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
-                if(enemies[this.target].actualHealth >= 0) {
-                    this.target = -1;
+            if (typeof enemies[this.target] !== "undefined") {
+                moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
+                if (this.pos.x <= 32.5) {
+                    this.pos.x = 32.5;
                 }
+                if (this.pos.x >= 967.5) {
+                    this.pos.x = 967.5;
+                }
+                if (this.pos.y <= 32.5) {
+                    this.pos.y = 32.5;
+                }
+                if (this.pos.y >= 679.5) {
+                    this.pos.y = 679.5;
+                }
+                moveVector.setMag(this.speed);
+                this.pos.add(moveVector);
+                if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target].size / 2 && enemies[this.target].canHit) {
+                    enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
+                    if (enemies[this.target].actualHealth <= 0) {
+                        this.target = -1;
+                    }
+                }
+            }
+            else {
+                this.target =  -1;
             }
         }
         if (this.target == -2) {
