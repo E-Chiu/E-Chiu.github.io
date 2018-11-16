@@ -22,11 +22,12 @@ function setup() {
     balls.push(new Ball(610, 200, "green", 14, "stripe"));
     balls.push(new Ball(650, 180, "brown", 7, "solid"));
     balls.push(new Ball(670, 230, "brown", 15, "stripe"));
-    cueBalls.push(new Ball(200, 200, "white", "", "cue"));
+    cueBalls.push(new cueBall(200, 200, "white", "", "cue"));
 }
 
 function draw() {
     noStroke();
+    background(132, 79, 0);
     fill(21, 142, 0);
     rect(25, 25, 800, 400);
     fill("black");
@@ -53,15 +54,19 @@ function draw() {
     stroke("red");
     ellipse();
     //get rid of explosions
-    for (let i = 0; i < explosions.length; i++) {
-        if (explosions[i].size >= 200) {
-            explosions.splice(i, 1);
-            i--;
-        }
-    }
+    killOff();
     //draw explosions
     for (let i = 0; i < explosions.length; i++) {
         explosions[i].draw();
+    }
+}
+
+function killOff() {
+    for (let i = 0; i < explosions.length; i++) {
+        if (explosions[i].size >= 200 || explosions[i].hit) {
+            explosions.splice(i, 1);
+            i--;
+        }
     }
 }
 
@@ -79,7 +84,6 @@ class Ball {
         this.type = type;
         this.size = 20;
         this.moving = false;
-        this.accel = 0;
         this.veloc = 0;
     }
 
@@ -109,22 +113,43 @@ class Ball {
             noStroke();
         }
         text(this.number, this.pos.x, this.pos.y + 4.5);
+        //moves the ball
+        if (this.moving == true) {
+            this.moveVector.setMag(this.veloc);
+            this.pos.sub(this.moveVector);
+            this.veloc -= 0.04;
+            if (this.veloc <= 0) {
+                this.moving = false;
+            }
+        }
+        for (let i = 0; i < balls.length; i++) {
+            if (dist(this.pos.x, this.pos.y, balls[i].pos.x, balls[i].pos.y) < this.size / 2) {
+                balls[i].hit(this.pos, this.size, "ball");
+                this.veloc = this.veloc * 0.9;
+            }
+        }
     }
 
-    hit(x, y, input) {
-
+    hit(pos, size, parent) {
+        this.moveVector = p5.Vector.sub(pos, this.pos);
+        this.moving = true;
+        if (parent == "explosion") {
+            this.veloc = 500 / size;
+        } else if (parent == "cue") {
+            this.veloc = cueBalls[0].veloc / 2;
+        }
     }
 }
 
 class cueBall {
     constructor(x, y, color, number, type) {
         this.pos = createVector(x, y);
+        this.moveVector;
         this.color = color;
         this.number = number;
         this.type = type;
         this.size = 20;
         this.moving = false;
-        this.accel = 0;
         this.veloc = 0;
     }
 
@@ -147,22 +172,41 @@ class cueBall {
         text(this.number, this.pos.x, this.pos.y + 4.5);
         //moves the ball
         if (this.moving == true) {
-            console.log("yes2");
-            this.veloc = this.accel;
-            moveVector.setMag(this.veloc);
-            this.pos.sub(moveVector);
-            this.acel--;
-            if (this.veloc <= 0) {
-                this.moving == false;
+            this.moveVector.setMag(this.veloc);
+            this.pos.sub(this.moveVector);
+            this.veloc -= 0.04;
+            if (this.veloc <= 1 && this.veloc <= 1) {
+                this.moving = false;
             }
+        }
+        //calculates if hits other balls
+        for (let i = 0; i < balls.length; i++) {
+            if (dist(this.pos.x, this.pos.y, balls[i].pos.x, balls[i].pos.y) < this.size / 2) {
+                console.log("ye");
+                balls[i].hit(this.pos, this.size, "cue");
+                this.veloc = this.veloc * 0.9;
+            }
+        }
+        //calculates if hits a wall
+        if (this.pos.x < 25) {
+            this.moveVector = p5.Vector.sub(createVector(this.pos.x * -1, this.pos.y), this.pos);
+            this.veloc = this.veloc * 0.8;
+        } else if (this.pos.y < 25) {
+            this.moveVector = p5.Vector.sub(createVector(this.pos.x, this.pos.y * -1), this.pos);
+            this.veloc = this.veloc * 0.8;
+        } else if (this.pos.x > 825) {
+            this.moveVector = p5.Vector.sub(this.pos, createVector(this.pos.x * -1, this.pos.y));
+            this.veloc = this.veloc * 0.8;
+        } else if (this.pos.y > 425) {
+            this.moveVector = p5.Vector.sub(this.pos, createVector(this.pos.x, this.pos.y * -1));
+            this.veloc = this.veloc * 0.8;
         }
     }
 
     hit(pos, size) {
-        console.log("yes1");
-        moveVector = p5.Vector.sub(pos, this.pos);
+        this.moveVector = p5.Vector.sub(pos, this.pos);
         this.moving = true;
-        this.accel = 10 / size;
+        this.veloc = 500 / size;
     }
 }
 
@@ -170,6 +214,7 @@ class explosion {
     constructor(x, y, size) {
         this.pos = createVector(x, y);
         this.size = size;
+        this.hit = false;
     }
 
     draw() {
@@ -183,10 +228,11 @@ class explosion {
         this.size += 30;
         if (dist(this.pos.x, this.pos.y, cueBalls[0].pos.x, cueBalls[0].pos.y) < this.size / 2) {
             cueBalls[0].hit(this.pos, this.size);
+            this.hit = true;
         }
         for (let i = 0; i < balls.length; i++) {
             if (dist(this.pos.x, this.pos.y, balls[i].pos.x, balls[i].pos.y) < this.size / 2) {
-                balls[i].hit(this.pos, this.size);
+                balls[i].hit(this.pos, this.size, "explosion");
             }
         }
     }
