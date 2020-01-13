@@ -344,7 +344,7 @@ let weapons = [
             create: class Shotgun extends Weapon {
                 constructor() {
                     //name, type, color, size, speed, damage, range, attackCd, knockback
-                    super("Shotgun", "ranged", "brown", 10, 2, 5, 0, 0, 0);
+                    super("Shotgun", "ranged", "brown", 10, 2, 3, 0, 0, 0);
                     this.ammo = 8;
                     this.actualAmmo = 8;
                     this.ammoChanged = false;
@@ -360,8 +360,23 @@ let weapons = [
                     quad(this.pos.x + 24.5, this.pos.y - 3.5, this.pos.x + 22, this.pos.y + 3.5, this.pos.x + 42, this.pos.y + 14, this.pos.x + 47, this.pos.y + 4);
                 }
             }
+        },
+        {
+            create: class Mushroom extends Weapon {
+                constructor() {
+                    //name, type, color, size, speed, damage, range, attackCd, knockback
+                    super("Mushroom", "pet", "purple", 40, 0, 5, 275, 600, 0);
+                    this.energy = 300;
+                    this.energyChanged = false;
+                    this.summoned = false;
+                }
+                draw() {
+                    fill(this.color);
+                    ellipse(this.pos.x, this.pos.y, this.size)
+                }
+            }
         }
-        ],
+    ],
     //rarity three
     [
         {
@@ -392,26 +407,12 @@ let weapons = [
             create: class FlameThrower extends Weapon {
                 constructor() {
                     super("Flame Thrower", "ranged", "orange", 15, 0.75, 0.1, 0, 0, 0);
-                    this.ammo = 40;
-                    this.actualAmmo = 40;
+                    this.ammo = 20;
+                    this.actualAmmo = 20;
                     this.ammoChanged = false;
                 }
                 draw() {
                     image(flameThrower, this.pos.x, this.pos.y, 500 / 4, 259 / 4);
-                }
-            }
-        },
-        {
-            create: class Bug extends Weapon {
-                constructor() {
-                    //name, type, color, size, speed, damage, range, attackCd, knockback
-                    super("Bug", "pet", "green", 20, 3, 0.2, 200, 740, 0);
-                    this.energy = 480;
-                    this.energyChanged = false;
-                    this.summoned = false;
-                }
-                draw() {
-                    image(kinsect, this.pos.x, this.pos.y, 1000 / 20, 1000 / 20);
                 }
             }
         },
@@ -896,6 +897,10 @@ class Roar {
             stroke("orange");
             strokeWeight(12);
             noFill();
+        } else if (index == 4) {
+            stroke("green");
+            this.strokeWeight(20);
+            noFill();
         }
         ellipse(player.pos.x, player.pos.y, this.roarSize);
         this.roarSize += 20;
@@ -917,6 +922,10 @@ class Roar {
                 } else if (index == 2) {
                     enemies[i].dot += 0.2;
                     enemies[i].canHit = false;
+                } else if (index == 4) {
+                    enemies[i].actualHealth -= 5
+                    enemies[i].dot += 0.1
+                    enemies[i].speed = enemies[i].speed * 0.75
                 }
             }
         }
@@ -973,6 +982,7 @@ class BlackHole {
 //pet that attacks enemies
 class Pet {
     constructor(stats) {
+        this.name = stats.name
         this.energy = stats.energy;
         this.actualEnergy = stats.energy;
         this.speed = stats.speed;
@@ -1006,18 +1016,47 @@ class Pet {
         }
     }
 
-    track() {
-        if (enemies.length > 0 && this.target == -1) {
-            for (let i = 0; i < enemies.length; i++) {
-                if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.range / 2) {
-                    this.target = i;
+    action() {
+        if(this.name = "bug") {
+            if (enemies.length > 0 && this.target == -1) {
+                for (let i = 0; i < enemies.length; i++) {
+                    if (dist(this.pos.x, this.pos.y, enemies[i].pos.x, enemies[i].pos.y) < this.range / 2) {
+                        this.target = i;
+                    }
                 }
             }
-        }
-        if (this.target > -1 && enemies.length > 0) {
-            let moveVector;
-            if (typeof enemies[this.target] !== "undefined") {
-                moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
+            if (this.target > -1 && enemies.length > 0) {
+                let moveVector;
+                if (typeof enemies[this.target] !== "undefined") {
+                    moveVector = p5.Vector.sub(enemies[this.target].pos, this.pos);
+                    if (this.pos.x <= 32.5) {
+                        this.pos.x = 32.5;
+                    }
+                    if (this.pos.x >= 967.5) {
+                        this.pos.x = 967.5;
+                    }
+                    if (this.pos.y <= 32.5) {
+                        this.pos.y = 32.5;
+                    }
+                    if (this.pos.y >= 679.5) {
+                        this.pos.y = 679.5;
+                    }
+                    moveVector.setMag(this.speed);
+                    this.pos.add(moveVector);
+                    if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target].size / 2 && enemies[this.target].canHit) {
+                        enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
+                        if (enemies[this.target].actualHealth <= 0) {
+                            this.target = -1;
+                        }
+                    }
+                }
+                else {
+                    this.target =  -1;
+                }
+            }
+            if (this.target == -2) {
+                let moveVector;
+                moveVector = p5.Vector.sub(player.pos, this.pos);
                 if (this.pos.x <= 32.5) {
                     this.pos.x = 32.5;
                 }
@@ -1032,36 +1071,15 @@ class Pet {
                 }
                 moveVector.setMag(this.speed);
                 this.pos.add(moveVector);
-                if (dist(this.pos.x, this.pos.y, enemies[this.target].pos.x, enemies[this.target].pos.y) < enemies[this.target].size / 2 && enemies[this.target].canHit) {
-                    enemies[this.target].actualHealth = enemies[this.target].actualHealth - this.damage;
-                    if (enemies[this.target].actualHealth <= 0) {
-                        this.target = -1;
-                    }
+                if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2) {
+                    this.target = -3;
                 }
             }
-            else {
-                this.target =  -1;
-            }
         }
-        if (this.target == -2) {
-            let moveVector;
-            moveVector = p5.Vector.sub(player.pos, this.pos);
-            if (this.pos.x <= 32.5) {
-                this.pos.x = 32.5;
-            }
-            if (this.pos.x >= 967.5) {
-                this.pos.x = 967.5;
-            }
-            if (this.pos.y <= 32.5) {
-                this.pos.y = 32.5;
-            }
-            if (this.pos.y >= 679.5) {
-                this.pos.y = 679.5;
-            }
-            moveVector.setMag(this.speed);
-            this.pos.add(moveVector);
-            if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < player.size / 2) {
-                this.target = -3;
+        else if(this.name = "mushroom") {
+            if (player.roars[4] == 0) {
+                //stroke, strokeWeight, roarSize, maxRoar
+                player.roars.splice(1, 1, new Roar("purple", 20, 0, 400));
             }
         }
     }

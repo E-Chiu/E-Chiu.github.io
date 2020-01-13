@@ -8,7 +8,7 @@ class Player {
         this.shieldGetTimer = 0;
         this.hasShield = false;
         this.bloodShield = false;
-        this.roars = [0, 0, 0, 0];
+        this.roars = [0, 0, 0, 0, 0];
         this.buttonState = "notPickup";
         this.swapIndex;
         this.bulletArray = [];
@@ -59,13 +59,13 @@ class Player {
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
                 } else if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name == "Flame Thrower") {
-                    for (let i = 0; i < chance(20, 30); i++) {
+                    for (let i = 0; i < chance(10, 15); i++) {
                         this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "fire"));
                     }
                     this.isAttacking = false;
                     items[this.activeWeapon].actualAmmo--;
                 } else if (items[this.activeWeapon].actualAmmo > 0 && items[this.activeWeapon].name == "Shotgun") {
-                    for (let i = 0; i < 12; i++) {
+                    for (let i = 0; i < 6; i++) {
                         this.bulletArray.push(new Bullet(this.pos.x, this.pos.y, this.attackScope.start, items[this.activeWeapon].size, items[this.activeWeapon].color, items[this.activeWeapon].speed, items[this.activeWeapon].damage, "player", 0, 0, "pellet"));
                     }
                     this.isAttacking = false;

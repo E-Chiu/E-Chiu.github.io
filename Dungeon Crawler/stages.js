@@ -8,13 +8,18 @@ let canAdvance = false;
 //ninja = color, x, y, size, speed, health, rarity, bulletSpeed, bulletColor, bulletSize, shootCd, weaponColor, attackCd, attackAngle, swordLength, swordSpeed
 //charger = color, x, y, size, speed, health, rarity, weaponColor, swordLength, chargeTimer
 
+//preps general stuff for every stage
+function stageprep() {
+    player.buttonstate = "notPickup";
+    player.bulletArray = []
+}
 //all stages
 let stages = [
 //tutorial
 //level a
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             player.pos.x = 20;
             player.pos.y = 355;
             enemies.push(new Enemy("blue", 500, 355, 50, 0, 1, 0));
@@ -36,7 +41,7 @@ let stages = [
 // level b
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             player.pos.x = 20;
             player.pos.y = 355;
             player.lives = 3;
@@ -64,7 +69,7 @@ let stages = [
 // level c
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -91,7 +96,7 @@ let stages = [
 // level d
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -118,7 +123,7 @@ let stages = [
 // level e
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             player.pos.x = 20;
             player.pos.y = 355;
             for (let i = 0; i < items.length; i++) {
@@ -163,7 +168,7 @@ let stages = [
     {
         setup: function () {
             dropItem(1, 500, 355, "boss");
-            player.buttonState = "notPickup";
+            stageprep();
             localStorage.setItem("played", "yes");
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
@@ -203,7 +208,7 @@ let stages = [
 //level 2
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -247,7 +252,7 @@ let stages = [
 // level 3
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -286,7 +291,7 @@ let stages = [
 // level 4
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -326,7 +331,7 @@ let stages = [
 // level 5
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -369,7 +374,7 @@ let stages = [
 // level 6
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -423,7 +428,7 @@ let stages = [
 // level 7    
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -463,7 +468,7 @@ let stages = [
 // level 8
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -506,7 +511,7 @@ let stages = [
 // level 9
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -551,7 +556,7 @@ let stages = [
 //level 10: THE MACHINE
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -590,7 +595,7 @@ let stages = [
 //level 11
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -633,7 +638,7 @@ let stages = [
     //level 12
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -679,7 +684,7 @@ let stages = [
     //level 13
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -737,7 +742,7 @@ let stages = [
 //level 14
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -778,7 +783,7 @@ let stages = [
 //level 15: THE NINJA
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -817,7 +822,7 @@ let stages = [
     // level 16
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -857,7 +862,7 @@ let stages = [
     // level 17
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -903,7 +908,7 @@ let stages = [
     //level 18
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
@@ -949,7 +954,7 @@ let stages = [
     },
     {
         setup: function () {
-            player.buttonState = "notPickup";
+            stageprep();
             if (player.cursed) {
                 if (player.hasShield || player.bloodShield) {
                     if (player.canHit == true && player.gotHit == false) {
