@@ -23,7 +23,7 @@ function setup() {
 
     // stageNum = 22;
     stages[stageNum].setup();
-        items.splice(0, 1, new itemLibrary[0][2][3].create());
+        //items.splice(0, 1, new itemLibrary[0][2][3].create());
     //        droppedItems.push(new itemLibrary[0][3][3].create());
     //        droppedItems.push(new itemLibrary[2][3][0].create());
     //        droppedItems.push(new itemLibrary[2][3][0].create());
