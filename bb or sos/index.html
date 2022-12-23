@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blue Buff or Shojin</title>
+</head>
+
+<form>
+    <label for="mana">Mana Pool:</label><br>
+    <input type="text" id="mana" name="mana"><br>
+    <label for="tears">Number of Tears:</label><br>
+    <input type="text" id="tears" name="tears"><br>
+    <label for="tears">Number of Star Guardians:</label><br>
+    <input type="text" id="starGuardians" name="starGuardians"><br>
+    <input type="checkbox" id="blueBattery" name="blueBattery" value="checked">
+    <label for="blueBattery">Do you have blue battery</label><br>
+    <input type="checkBox" id="blue" name="blue" value="checked">
+    <label for="blue">Assume every cast gets one blue buff takedown</label><br>
+    <input type="checkBox" id="axiom" name="axiom" value="checked">
+    <label for="axiom">Assume every cast gets one axiom takedown</label><br>
+    <input type="button" value="Calculate" id="calculate"><br>
+</form>
+
+<body>
+    <div id="chart_div"></div>
+    <p id="results"></p>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
