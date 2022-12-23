@@ -5,11 +5,22 @@
     <title>Blue Buff or Shojin</title>
 </head>
 
+<body>
+    <h1><img src="Yuumi.jpg" alt="Satan" style="width:50px;height:50px;"> Blue Buff vs Shojin Calculator <img src="Vayne.jpg" alt="Silver" style="width:50px;height:50px;"></h1>
+    <p>Really crude calculator for whether blue buff or shojin results in more casts for a unit.<br>
+        Calculated over 30 seconds becuase that is how long a round goes for before overtime.</p>
+</body>
+
 <form>
     <label for="mana">Mana Pool:</label><br>
-    <input type="text" id="mana" name="mana"><br>
-    <label for="tears">Number of Tears:</label><br>
-    <input type="text" id="tears" name="tears"><br>
+    <input type="number" id="mana" name="mana" min="0" step="5" value="50"><br>
+
+    <label for="tears">Number of Tears (Don't include blue/shojin tears):</label><br>
+    <input type="number" id="tears" name="tears" min="0" max="2" value="0"><br>
+
+    <label for="atkSpeed">Attack Speed:</label><br>
+    <input type="number" id="atkSpeed" name="atkSpeed" min="0.10" max="5.00" step="0.01" value="0.50"><br>
+
     <label for="starGuardians">Number of Star Guardians:</label><br>
     <input type="radio" id="sg0" name="starGuardianTrait" value="0">
     <label for="sg0">0</label>
@@ -21,21 +32,37 @@
     <label for="sg7">7</label>
     <input type="radio" id="sg9" name="starGuardianTrait" value="9">
     <label for="sg9">9</label><br>
+
+    <label for="civilians">Number of Civilians:</label><br>
+    <input type="radio" id="civ0" name="civilianTrait" value="0">
+    <label for="civ0">0</label>
+    <input type="radio" id="civ1" name="civilianTrait" value="1">
+    <label for="civ1">1</label>
+    <input type="radio" id="civ2" name="civilianTrait" value="2">
+    <label for="civ2">2</label>
+    <input type="radio" id="civ3" name="civilianTrait" value="3">
+    <label for="civ3">3</label><br>
+
     <input type="checkbox" id="blueBattery" name="blueBattery" value="checked">
-    <label for="blueBattery">Do you have blue battery</label><br>
+    <label for="blueBattery">Assume with blue battery.</label><br>
+
     <input type="checkBox" id="blue" name="blue" value="checked">
-    <label for="blue">Assume every cast gets one blue buff takedown</label><br>
+    <label for="blue">Assume every cast gets one blue buff takedown.</label><br>
+
     <input type="checkBox" id="axiom" name="axiom" value="checked">
-    <label for="axiom">Assume every cast gets one axiom takedown</label><br>
+    <label for="axiom">Assume every cast gets one axiom takedown.</label><br>
+
+    <input type="checkBox" id="manaChart" name="manaChart" value="checked">
+    <label for="manaChart">Graph mana over time.</label><br>
+
     <input type="button" value="Calculate" id="calculate"><br>
 </form>
 
 <body>
-    <div id="chart_div"></div>
+    <div id="castChart_div"></div>
     <p id="results"></p>
+    <div id="manaChart_div"></div>
     <br><br><br>
-    <p>Really crude calculator for whether blue buff or shojin results in more casts for a unit.<br>
-       Calculated using 60 autos because casters usually never auto more than 60 times in a round.</p>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
