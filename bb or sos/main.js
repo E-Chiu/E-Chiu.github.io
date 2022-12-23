@@ -16,20 +16,19 @@ $(document).ready(function() {
 
         // if star guardian is active figure out new mod
         switch(starGuardians) {
-            case 3:
+            case '3':
                 modifier = 1.4;
                 break;
-            case 5:
+            case '5':
                 modifier = 1.7;
                 break;
-            case 7:
+            case '7':
                 modifier = 2.2;
                 break;
-            case 9:
+            case '9':
                 modifier = 3.0;
                 break;
         }
-
         // simulate for 60 autos becuase thats usually how much ap casters can get in
         var shojinCasts = 0;
         var blueCasts = 0;
