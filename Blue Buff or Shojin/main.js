@@ -12,7 +12,7 @@ $(document).ready(function() {
         var plots = [];
         mana = $("#mana").val();
         tears = $("#tears").val();
-        starGuardians = $("#starGuardians").val();
+        starGuardians = $('input[name="starGuardianTrait"]:checked').val();
 
         // if star guardian is active figure out new mod
         switch(starGuardians) {
@@ -29,6 +29,7 @@ $(document).ready(function() {
                 modifier = 3.0;
                 break;
         }
+        console.log(modifier);
         // simulate for 60 autos becuase thats usually how much ap casters can get in
         var shojinCasts = 0;
         var blueCasts = 0;
