@@ -19,7 +19,7 @@
     <input type="number" id="tears" name="tears" min="0" max="2" value="0"><br>
 
     <label for="atkSpeed">Attack Speed:</label><br>
-    <input type="number" id="atkSpeed" name="atkSpeed" min="0.10" max="5.00" step="0.01" value="0.50"><br>
+    <input type="number" id="atkSpeed" name="atkSpeed" min="0.10" max="5.00" step="0.01" value="0.70"><br>
 
     <label for="starGuardians">Number of Star Guardians:</label><br>
     <input type="radio" id="sg0" name="starGuardianTrait" value="0">
@@ -43,14 +43,51 @@
     <input type="radio" id="civ3" name="civilianTrait" value="3">
     <label for="civ3">3</label><br>
 
+    <label for="windy">Windy Janna Star Level:</label><br>
+    <input type="radio" id="windy0" name="windyJanna" value="0">
+    <label for="windy0">0</label>
+    <input type="radio" id="windy1" name="windyJanna" value="1">
+    <label for="windy1">1</label>
+    <input type="radio" id="windy2" name="windyJanna" value="2">
+    <label for="windy2">2</label><br>
+
+    <label for="admin">Admin Perk:</label><br>
+    <input type="radio" id="admin0" name="adminPerk" value="0">
+    <label for="admin0">None.</label><br>
+    <input type="radio" id="admin1" name="adminPerk" value="1">
+    <label for="admin1">Admin Combat Start: Gain 50 Mana.</label><br>
+    <input type="radio" id="admin2" name="adminPerk" value="2">
+    <label for="admin2">Team Combat Start: Gain 25 Mana.</label><br>
+    <input type="radio" id="admin3" name="adminPerk" value="3">
+    <label for="admin3">Every 5s Team: Gain 12 Mana</label><br>
+    <input type="checkbox" id="sameAdmin" name="sameAdmin" value="checked">
+    <label for="sameAdmin">Assume 2 and 4 admin are the same (Double effect).</label><br>
+    <input type="checkbox" id="6Admin" name="6Admin" value="checked">
+    <label for="6Admin">Include 6 Admin (Increase effect by 80%).</label><br>
+
     <input type="checkbox" id="blueBattery" name="blueBattery" value="checked">
-    <label for="blueBattery">Assume with blue battery.</label><br>
+    <label for="blueBattery">Include Blue Battery.</label><br>
+
+    <input type="checkbox" id="uplink1" name="uplink1" value="checked">
+    <label for="uplink1">Include Cybernetic Uplink I.</label><br>
+
+    <input type="checkbox" id="uplink2" name="uplink2" value="checked">
+    <label for="uplink2">Include Cybernetic Uplink II.</label><br>
+
+    <input type="checkbox" id="uplink3" name="uplink3" value="checked">
+    <label for="uplink3">Include Cybernetic Uplink III.</label><br>
+
+    <input type="checkbox" id="undercurrent" name="undercurrent" value="checked">
+    <label for="undercurrent">Include Undercurrent (Sona Support Augment).</label><br>
 
     <input type="checkBox" id="blue" name="blue" value="checked">
     <label for="blue">Assume every cast gets one blue buff takedown.</label><br>
 
     <input type="checkBox" id="axiom" name="axiom" value="checked">
     <label for="axiom">Assume every cast gets one axiom takedown.</label><br>
+
+    <input type="checkBox" id="autoOnly" name="autoOnly" value="checked">
+    <label for="autoOnly">Graph no mana generation item line.</label><br>
 
     <input type="checkBox" id="manaChart" name="manaChart" value="checked">
     <label for="manaChart">Graph mana over time.</label><br>
